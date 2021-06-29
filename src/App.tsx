@@ -1,5 +1,5 @@
+import { Login } from "./components/Login"
 import {GlobalStyle} from "./styles/global"
-import {Login} from "./containers/Login";
 
 export function App() {
 

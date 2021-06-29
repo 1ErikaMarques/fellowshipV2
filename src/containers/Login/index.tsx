@@ -4,7 +4,7 @@ import { Container, Content, Form, LabelEmail, LabelSenha, InputEmail, InputSenh
 import { ForgotPassword } from '../Forgot-Password'
 import { Register } from '../Register'
 
-export function Login()
+export function Login2()
 {
 
     return (
