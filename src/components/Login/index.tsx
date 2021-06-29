@@ -1,15 +1,23 @@
 import React from 'react';
-import ilustracaoLogin from '../../assets/login/ilustracao-login.svg'
+import ilustracaoLogin from '../../assets/login/ilustracao1.svg'
+import ilustracaoLoginDown from '../../assets/login/ilustracao2.svg'
 import logoImg from '../../logo.svg';
-import { Container, Content, Form, LabelEmail, LabelSenha, InputEmail, InputSenha} from './styles'
+import { Container, ContentForm, Content, Form, LabelEmail, LabelSenha, InputEmail, InputSenha} from './styles'
 export function Login() {
     return(
-        <Container>
+        <Container>        
             <Content>
-              <img src={ilustracaoLogin} />
-            </Content>
+                 <img src={ilustracaoLogin} />
+                <img src={ilustracaoLoginDown} />   
+                
+             </Content> 
+             
+                 
 
-            <Content>
+                           
+          
+
+           <ContentForm>
                 <Form>
                     <img src={logoImg} />
                     
@@ -31,8 +39,11 @@ export function Login() {
                     <h6>Ainda não tem conta? </h6>
                     <strong> Cadastre-se</strong>
                     <h5>Esqueceu a senha?</h5>
-                    </Form>    
-            </Content>
+                  
+                    </Form>   
+                      
+           </ContentForm>
+         {/*   <ButtonColor color='orange'></ButtonColor>  */}
         </Container>
     );
 

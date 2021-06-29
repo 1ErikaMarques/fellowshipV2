@@ -3,33 +3,49 @@ import { darken, transparentize,lighten } from 'polished';
 
 export const Container = styled.main `
   display: flex;
-  text-align: center;
-  margin-top: 10rem;  
+  text-align: center;  
   justify-content: center;
+   
 `;
 
-export const Content = styled.div `
-      
-     img {
-      height: 35rem;
-      width:  100%;
+export const Content = styled.div`
+
+  img {     
       padding:  0;      
-      margin-top: 2rem;
-  }
+      margin-top: 5rem;
+      margin-left:18rem; 
+      width: 48%;
+      margin-bottom: -3rem;
+     }
+
+`
+
+export const ContentForm = styled.div`   
+    background: var(--blue);   
+    display: flex;
+    max-width: 550px;
+    height: 37rem;
+    width: 100%;
+    padding-top: 0rem;
+    padding-bottom: 6rem;    
+    justify-content: flex-start;
+    margin: 10rem 15rem 0rem 16rem;
+    padding-left: -8rem;
+    border-radius: 8px;
 `;
 
-export const Form = styled.form `  
-    max-width: 250px; 
-    height: auto;
-    margin-top: 5rem;
-    padding: 3rem 2rem;    
-    margin-right: 2rem;
-    margin-left:2rem;
+    export const Form = styled.form `  
+    max-width: 250px;
+    height: 26rem;
+    margin-top: 7rem;
+    padding: 3.5rem 3rem;
+    position: absolute;
+    margin-inline-start: -4%;    
     align-items: center;
-    border-radius: 4px;    
-    background-color: var(--white-100);   
-    box-shadow: 0 10px 70px rgb(0 0 0 /5%);
-    
+    border-radius: 4px;
+    background-color: var(--white-100);
+    box-shadow: 0 10px 70px rgb(0 0 0 / 15%);
+        
     img { 
         margin-top: 0;
         height: 3rem;
@@ -40,21 +56,26 @@ export const Form = styled.form `
       height: 2.7rem;
       margin-top: 2rem;
       margin-bottom: 1rem;
-      background: var(--blue);
-      color: var(--white-100);
+      background-color: var(--white-100);
+      color: var(--blue);
       font-weight: 600;
       font-size: 0.9rem;
       border-radius: 4px;
-      border: none;
+      border: 1px solid var(--blue);
       transition: background 0.2s;
       cursor: pointer;
-      letter-spacing: 0.05rem;
+      letter-spacing: 0.05rem;         
 
-        &:hover {
-          background: ${ darken(0.1, '#4285f4')};
-         
+        &:hover {        
+         transition: 0.25s;
+         box-shadow: inset 8.8em 0 0 0 var(--blue);
+         color: white;           
+        }
+        &:focus {
+          box-shadow: inset 8.5em 0 0 0 var(--blue);
+          color: white;
         }        
-    }  
+ }  
 
     h6 {
       font-weight: 600;
@@ -166,6 +187,16 @@ export const LabelSenha = styled(Label) `
       
       
 `
+
+/* interface ButtonColor {
+  color: string;
+
+}
+
+export const ButtonColor = styled.button<ButtonColor>`
+  background-color: ${props => props.color}
+
+` */
 
 
 
