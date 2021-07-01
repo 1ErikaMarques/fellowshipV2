@@ -1,12 +1,16 @@
-export function ForgotPassword()
+import Modal from 'react-modal' 
+ import { Modals } from '../../components/Modals' 
+
+ export function ForgotPassword()
 {
 
-  function alertMsg()
-  {
-    alert('Esqueceu a senha')
-  }
 
   return (
-    <h5 onClick={alertMsg}>Esqueceu a senha?</h5>
+    <>
+    <h5>Esqueceu a senha?</h5>
+   <Modals>    
+     <h2>Modal</h2>
+   </Modals>
+   </>
   );
-}
+} 

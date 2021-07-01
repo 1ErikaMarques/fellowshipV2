@@ -1,42 +1,54 @@
-import ilustracaoLogin from '../../assets/login/ilustracao-login.svg'
+import React from 'react';
+/* import {Button} from '../Button' */
+import {ForgotPassword} from '../Forgot-Password'
+import ilustracaoLogin from '../../assets/login/ilustration-first.svg'
+import ilustracaoLoginDown from '../../assets/login/ilustration-second.svg'
 import logoImg from '../../logo.svg';
-import { Container, Content, Form, LabelEmail, LabelSenha, InputEmail, InputSenha } from './styles'
-import { ForgotPassword } from '../Forgot-Password'
-import { Register } from '../Register'
+import { Container, ContentForm, Content, Form, LabelEmail, LabelSenha, InputEmail, InputSenha } from './styles'
 
-export function Login2()
-{
 
-    return (
-        <Container>
+export function Login() {
+    return(
+        <Container>        
             <Content>
-                <img src={ilustracaoLogin} />
-            </Content>
+                 <img src={ilustracaoLogin} />
+                <img src={ilustracaoLoginDown} />   
+                
+             </Content>      
 
-            <Content>
+           <ContentForm>
                 <Form>
                     <img src={logoImg} />
-
+                    
                     <InputEmail
-                        type="email"
-                        name="email"
-                        required
-                    />
-                    <LabelEmail>Email</LabelEmail>
-
-                    <InputSenha
-                        type="password"
-                        required
-                        name="password"
-                    />
-                    <LabelSenha>Senha</LabelSenha>
-
+                     type="email" 
+                     name="email"
+                     required                     
+                     />
+                    <LabelEmail>Email</LabelEmail>   
+                    
+                     <InputSenha                 
+                    type="password"                    
+                    required
+                    name="password"
+                    />  
+                    <LabelSenha>Senha</LabelSenha> 
+        
                     <button type="submit">Entrar</button>
                     <h6>Ainda não tem conta? </h6>
-                    <Register></Register>
-                    <ForgotPassword></ForgotPassword>
-                </Form>
-            </Content>
+                    <strong> Cadastre-se</strong>
+                  {/*   <Button title='Publicar'></Button> */}
+                    <ForgotPassword />
+                  
+                    </Form>   
+                      
+           </ContentForm>
+         {/*   <ButtonColor color='orange'></ButtonColor>  */}
         </Container>
     );
-}
+
+}                    
+                   
+
+                    
+         
