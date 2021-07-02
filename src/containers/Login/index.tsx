@@ -6,9 +6,9 @@ import ilustracaoLoginDown from '../../assets/login/ilustration-second.svg'
 import logoImg from '../../logo.svg';
 import { Container, ContentForm, Content, Form, LabelEmail, LabelSenha, InputEmail, InputSenha } from './styles'
 
-
 export function Login() {
-    return(
+
+  return(
         <Container>        
             <Content>
                  <img src={ilustracaoLogin} />

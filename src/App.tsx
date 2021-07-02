@@ -1,15 +1,20 @@
+import { useState } from 'react';
 import { Header } from './components/Header'
 import { Login } from "./containers/Login"
-import {GlobalStyle} from "./styles/global"
+import { GlobalStyle } from "./styles/global"
+import { ModalProvider } from './hooks/useModals'
 
-export function App() {
+export function App()
+{
+
 
     return (
         <>
-             <Header />
-            {/* <Login/> */} 
-            <GlobalStyle/>
-           
+            <ModalProvider>
+                <Header />
+                {/*  <Login /> */}
+                <GlobalStyle />
+            </ModalProvider>
         </>
     )
 }

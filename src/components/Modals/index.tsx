@@ -1,30 +1,23 @@
- import React, { ReactNode, useState } from 'react';
-import ReactDOM from 'react-dom';
-import Modal from 'react-modal' 
+import { ReactNode, useState } from 'react';
+import Modal from 'react-modal'
 
+Modal.setAppElement('#root')// por questao de acessibilidade 
 
-interface ModalsProps {
+interface ModalsProps
+{
+  isOpen: boolean;
+  onRequestClose: () => void;
   children: ReactNode; //tipando que os filhos do provider sao do tipo ReactNode=qualquer elemento do react  
 }
 
-export function Modals(props: ModalsProps) {
-    const [modalIsOpen, setIsOpen] = useState(false);
+export function Modals({ isOpen, children, onRequestClose }: ModalsProps)
+{
 
-   function openModal() {
-    setIsOpen(true);
-  } 
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-  return(
-     <Modal
-        isOpen={modalIsOpen}        
-        onRequestClose={closeModal}        
-         contentElement={
-    (props, children) => <div {...props}>{children}</div>
-   }
-      ></Modal>
+  return (
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}>
+      <div>{children}</div>
+    </Modal>
   )
 }
- 
