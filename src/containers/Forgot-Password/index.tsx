@@ -1,20 +1,32 @@
-import { Modals } from '../../components/Modals'
-import { useModalsContext } from '../../hooks/useModals';
+import {Input} from '../../components/Input';
+import {Modals} from '../../components/Modals'
+import {useModalsContext} from '../../hooks/useModals';
+import {Container} from './styles';
 
-export function ForgotPassword()
-{
+export function ForgotPassword() {
 
-  const { isModalOpen, handleOpenModal, handleCloseModal} = useModalsContext();
+    const modalStyle = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+        },
+    }
 
-  return (
-    <>
-      <h5 onClick={handleOpenModal}>Esqueceu a senha?</h5>
-      <Modals isOpen={isModalOpen} onRequestClose={handleCloseModal}>
+    const {isModalOpen, handleOpenModal, handleCloseModal} = useModalsContext();
 
-        <button onClick={handleCloseModal}>X</button>
-        <h2>Modal</h2>
-
-      </Modals>
-    </>
-  );
+    return (
+        <Container>
+            <h5 onClick={handleOpenModal}>Esqueceu a senha?</h5>
+            <Modals isOpen={isModalOpen} onRequestClose={handleCloseModal} customStyles={modalStyle}>
+                <button onClick={handleCloseModal}>X</button>
+                <Input
+                    type="email"
+                    name="email"
+                    required={true}
+                    labelTitle="Email"/>
+            </Modals>
+        </Container>
+    );
 }
