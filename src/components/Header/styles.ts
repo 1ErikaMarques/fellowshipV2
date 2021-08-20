@@ -1,8 +1,19 @@
 import styled from 'styled-components';
 
+export const Container = styled.header`
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-top: 1rem;
+
+`;
+
 export const Content = styled.div`
-  display: grid;
-  grid-template-rows: 1fr  1fr; 
-  grid-template-columns:repeat(6, 1fr);
-  column-gap: 30px;
+max-width: 1120px;
+display: flex;
+align-items: center;
+margin-right: 10%;
 `
+export const NeighborhoodName = styled.h3`
+  color: var(--grey-500)
+`;

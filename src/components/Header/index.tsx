@@ -1,14 +1,19 @@
-import { LogoImg } from '../Svgs/index'
-import { NotificationImg } from '../Svgs/index'
-import { Content } from './styles'
+import { HomeImg, LogoImg ,NotificationImg, UserImg  } from '../Svgs/index'
+import { Container, Content, NeighborhoodName } from './styles'
 
 export function Header() {
 
   return(
 
-    <Content>
-    <LogoImg />
-    <NotificationImg />
-    </Content>
+    <Container>
+      <LogoImg />
+      <NeighborhoodName>Moema</NeighborhoodName>
+      <Content>
+        <NotificationImg />
+        <HomeImg />
+        <UserImg />
+      </Content>
+     
+    </Container>
   );
 }

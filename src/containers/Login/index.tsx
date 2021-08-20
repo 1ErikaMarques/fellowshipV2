@@ -1,10 +1,11 @@
 import React from 'react';
-/* import {Button} from '../Button' */
+
 import {ForgotPassword} from '../Forgot-Password'
 import ilustracaoLogin from '../../assets/login/ilustration-first.svg'
 import ilustracaoLoginDown from '../../assets/login/ilustration-second.svg'
 import logoImg from '../../logo.svg';
 import { Container, ContentForm, Content, Form, LabelEmail, LabelSenha, InputEmail, InputSenha } from './styles'
+import { Button } from '../../components/Button';
 
 export function Login() {
 
@@ -34,7 +35,7 @@ export function Login() {
                     />  
                     <LabelSenha>Senha</LabelSenha> 
         
-                    <button type="submit">Entrar</button>
+                    <Button title="Entrar"></Button>
                     <h6>Ainda não tem conta? </h6>
                     <strong> Cadastre-se</strong>
                   {/*   <Button title='Publicar'></Button> */}

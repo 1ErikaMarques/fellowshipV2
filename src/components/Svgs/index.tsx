@@ -1,13 +1,19 @@
-import { ReactComponent as Logo } from '../../assets/header/logo.svg';
+import { ReactComponent as LogoIcon} from '../../assets/header/logo.svg';
 import { ReactComponent as NotificationIcon} from '../../assets/header/notification.svg';
-import { Notification } from './styles'
+import { ReactComponent as  HomeIcon } from '../../assets/header/home.svg';
+import { ReactComponent as UserIcon } from '../../assets/header/user.svg';
+import { Notification, Home, User, Logo} from './styles';
+
+
 
 
 export const LogoImg = () => {
   return (
+   <Logo>
+     <LogoIcon />
+   </Logo>
     
-    <Logo />
-  );
+  )
 }
 
 export const NotificationImg = () => {
@@ -17,3 +23,20 @@ export const NotificationImg = () => {
     </Notification>
   )
 }
+
+export const HomeImg = () => {
+  return (
+    <Home>
+      <HomeIcon />
+    </Home>
+  )
+}
+
+export const UserImg = () => {
+  return (
+    <User>
+      <UserIcon />
+    </User>
+  )
+}
+
