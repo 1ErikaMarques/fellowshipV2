@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import tw from "tailwind-styled-components";
+
 
 export const Container = styled.header`
 display: flex;
@@ -14,6 +16,6 @@ display: flex;
 align-items: center;
 margin-right: 10%;
 `
-export const NeighborhoodName = styled.h3`
-  color: var(--grey-500)
+export const NeighborhoodName = tw.h3`
+ text-gray-300
 `;

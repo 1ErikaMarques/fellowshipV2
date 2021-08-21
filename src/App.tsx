@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import './assets/tailwind.css';
 
 import { GlobalStyle } from "./styles/global"
 import { ThemeProvider } from 'styled-components';
@@ -18,7 +18,7 @@ export function App() {
         
             <ModalProvider>
                 <Header />
-                  <Login /> 
+                 {/*  <Login />  */}
                 <GlobalStyle />
             </ModalProvider>
         </ThemeProvider>
