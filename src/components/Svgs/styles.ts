@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 
+
 export const Logo = styled.div `
   svg {
   width: 12rem;
@@ -12,7 +13,7 @@ export const Logo = styled.div `
 
 export const Notification = styled.div `
  svg, svg *{      
-    width: 100%;
+    width: 90%;
     height: 2.2rem;    
     padding: 0 15px;
     margin-top: 0.4rem;
@@ -21,19 +22,19 @@ export const Notification = styled.div `
       &:hover, &:hover * {      
         transition: 200ms;
         stroke-width: 1;
-        stroke: var(--blue);
+        stroke: ${({theme}) => theme.colors.primary};
       }
 
       path, path * {
       fill: white;
-      stroke:var(--grey-500);
-      stroke-width: 1.5;      
+      stroke:${({theme}) => theme.colors.gray_dark};
+      stroke-width: 1.4;      
     }
  }
 `
 export const Home = styled.div `
   svg, svg *{      
-    width: 100%;
+    width: 90%;
     height: 2.5rem;      
     padding: 0 15px;
     cursor: pointer;
@@ -41,22 +42,22 @@ export const Home = styled.div `
       &:hover, &:hover *{       
         transition: 200ms;
         stroke-width: 1;
-        stroke: var(--blue);
+        stroke: ${({theme}) => theme.colors.primary};
       }
       
     path, path * {
       fill: white;
-      stroke:var(--grey-500);
-      stroke-width: 1.5;      
+      stroke: ${({theme}) => theme.colors.gray_dark};
+      stroke-width: 1.3;      
     }
   
 }
 `
 export const User = styled.div `
   svg, svg *{      
-    width: 100%;
+    width: 90%;
     height: 2.5rem;
-    stroke-width: 1.5;
+    stroke-width: 1.3;
     padding: 0 15px;
     margin-top: 0.4rem;
     cursor: pointer;
@@ -64,7 +65,90 @@ export const User = styled.div `
       &:hover, &:hover *{       
         transition: 200ms;
         stroke-width: 1;
-        stroke: var(--blue);        
+        stroke: ${({theme}) => theme.colors.primary};        
       } 
 }
+`;
+
+export interface ProfileIcons {
+  fill?: string;
+  stroke?: string;
+}
+
+export const Work = styled.div<ProfileIcons>`
+  svg, svg *{      
+    width: 90%;
+    height: 2.5rem;
+    stroke-width: 1;
+      path, path * {
+        fill: ${props => props.fill};
+        stroke: ${props => props.stroke};
+      }
+  }
+
+`;
+
+export const City = styled.div<ProfileIcons>`
+  svg, svg *{      
+    width: 90%;
+    height: 2.5rem;
+    stroke-width: 1.3;
+      path, path * {
+        fill: ${props => props.fill};
+        stroke: ${props => props.stroke};
+      }
+  }
+
+`;
+
+export const Relationship = styled.div<ProfileIcons>`
+  svg, svg *{      
+    width: 90%;
+    height: 2.5rem;
+    stroke-width: 1.3;
+      path, path * {
+        fill: ${props => props.fill};
+        stroke: ${props => props.stroke};
+      }
+  }
+
+`;
+
+export const Hobbies = styled.div<ProfileIcons>`
+  svg{      
+    width: 90%;
+    height: 2.5rem;
+    
+      path, path * {
+        fill: ${props => props.fill};
+        stroke: ${props => props.stroke};
+      }
+  }
+
+`;
+
+export const Birthday = styled.div<ProfileIcons>`
+  svg, svg *{      
+    width: 90%;
+    height: 2.5rem;
+    stroke-width: 0.6;
+      path, path * {
+        fill: ${props => props.fill};
+        stroke: ${props => props.stroke};
+      }
+  }
+
+`;
+
+export const Phone = styled.div<ProfileIcons>`
+  svg, svg *{      
+    width: 90%;
+    height: 2.5rem;
+    stroke-width: 1.3;
+      path, path * {
+        fill: ${props => props.fill};
+        stroke: ${props => props.stroke};
+      }
+  }
+
 `;

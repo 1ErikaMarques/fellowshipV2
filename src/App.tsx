@@ -9,6 +9,7 @@ import { ModalProvider } from './hooks/useModals'
 import { Feed } from "./containers/Feed"
 import { Header } from './components/Header'
 import { Login } from "./containers/Login"
+import { Profile } from './containers/Profile'
 
 
 export function App() {
@@ -17,8 +18,9 @@ export function App() {
         <ThemeProvider theme={theme}>
         
             <ModalProvider>
-                <Header />
+                <Header neighborhoodName="Moema" />
                  {/*  <Login />  */}
+                 <Profile profileId=''/>
                 <GlobalStyle />
             </ModalProvider>
         </ThemeProvider>

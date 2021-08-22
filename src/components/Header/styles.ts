@@ -1,21 +1,38 @@
+import SelectSearch from 'react-select-search';
 import styled from 'styled-components';
 import tw from "tailwind-styled-components";
+import theme from '../../styles/theme';
+
 
 
 export const Container = styled.header`
-display: flex;
-align-items: center;
-justify-content: space-between;
-margin-top: 1rem;
-
+  max-width: 100%;
+  padding: 0.25rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+  border-bottom: 1px solid ${({theme}) => theme.colors.gray_light}
 `;
 
 export const Content = styled.div`
-max-width: 1120px;
-display: flex;
-align-items: center;
-margin-right: 10%;
+  max-width: 200px;
+  display: flex;
+  align-items: center;
+  margin-right: 2rem;  
 `
-export const NeighborhoodName = tw.h3`
- text-gray-300
+
+export const NeighborhoodName = styled.h3`  
+  color: ${({theme}) => theme.colors.gray_dark};
+  font-weight: 500;
+  font-size: 1.5rem;
+  margin-top: 0.3rem;
+  padding: 1rem;  
 `;
+
+export const Search = styled.input`
+ height: 2rem;
+ border: 2px solid ${({theme}) => theme.colors.border_dark};
+ border-radius: 0.25rem; 
+`;
+
