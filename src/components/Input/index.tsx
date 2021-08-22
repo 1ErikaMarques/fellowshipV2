@@ -1,18 +1,20 @@
-import {InputForm, Label} from "./styles";
+import {InputStyle, Label} from "./styles";
 
 interface InputProps {
-    type: string;
-    name: string;
-    required: boolean;
     labelTitle: string;
+    required: boolean,
+    type: string;
 }
 
-export function Input({type, name, required, labelTitle}: InputProps) {
+
+export function Input({labelTitle, required, type}: InputProps) {
 
     return (
         <>
-            <InputForm type={type} name={name} required={required}/>
+            <InputStyle type={type} required={required}/>
             <Label>{labelTitle}</Label>
         </>
     )
+
+
 }

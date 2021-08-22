@@ -1,14 +1,15 @@
-import { ButtonStyle } from "./styles";
+import {ButtonStyle} from "./styles";
 
 interface ButtonProps{
   title: string;
+  onClick?: () => void;
 }
 
 
-export function Button(props: ButtonProps) {
+export function Button({title,onClick}: ButtonProps) {
 
   return(
-    <ButtonStyle>{props.title}</ButtonStyle>
+    <ButtonStyle onClick={onClick}>{title}</ButtonStyle>
   )
 
   

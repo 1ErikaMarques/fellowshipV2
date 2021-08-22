@@ -1,7 +1,5 @@
-
-import SelectSearch from 'react-select-search'
-import { HomeImg, LogoImg ,NotificationImg, UserImg  } from '../Svgs/index'
-import { Container, Content, NeighborhoodName, Search } from './styles'
+import {Container, Content, NeighborhoodName, Search} from './styles'
+import {HomeImg, LogoImg, NotificationImg, UserImg} from '../Svgs'
 
 
 interface HeaderProps {
@@ -19,12 +17,12 @@ const options = [{name:'Jabaquara',value:''},{name:'Interlagos',value:''}]
       </NeighborhoodName>
 
       <Search>
-     
+
       </Search>
-      
+
 
       <Content>
-        
+
         <HomeImg />
         <NotificationImg />
         <UserImg />
