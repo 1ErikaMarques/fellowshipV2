@@ -2,63 +2,75 @@ import styled from "styled-components";
 import tw from "tailwind-styled-components";
 
 const ContainerStyle = styled.div`
-  max-width: 750px;
+  max-width: 750px;  
+  margin-top: 120px;
+  padding: 3rem;  
+  border: 1px solid ${({theme}) => theme.colors.gray_light};
 `;
 
 export const Container = tw(ContainerStyle)`
-    container mx-auto
+    container mx-auto    
 `;
 
 const HeaderStyle = styled.header`
   width: 100%;
   height: auto;
-  background-color: darkred;
+  
 
   img {
-    height: 3rem;
-    width: 3rem;
-    border-radius: 30px;
+    grid-column-start: 1;
+    height: 4rem;
+    width: 4rem;    
+    border-radius: 60px;
     border: none;
-    cursor: pointer;
-    margin-inline-start: 0.5rem;
+    cursor: pointer;         
   }
 
   h3 {
-    font-size: 1rem;
-    margin-left: 1rem;
-    font-weight: 400;
-    padding: 0.25rem;
-    background-color: orange;
+    grid-column-start: 2;  
+    width: 10rem;
+    padding: 1rem;
+    font-size: 1rem;    
+    font-weight: 400;     
   }
 
   button {
+    grid-column-start: 10;
     width: 120px;
     height: 38px;
     padding: 0 15px;
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.04rem;
-    border-radius: 4px;
-    background: #F4F5F7;
-    color: #666572;
+    color: #666572;    
+    border-radius: 4px;        
     border: 1px solid #e9e9e9;
+    background: #F4F5F7;
     cursor: pointer;
     transition: 200ms ease;
-
-
-    :hover {
-      color: #7e7e7e;
-      filter: brightness(0.9);
-      transition: 200ms ease;
-    }
+      :hover {
+        color: #7e7e7e;
+        filter: brightness(0.9);
+        transition: 200ms ease;
+      }
   }
 
 `;
 
 export const Header = tw(HeaderStyle)`
-grid grid-cols-1 md:grid-cols-3
+  grid grid-cols-1 md:grid-cols-12
+  items-center
 `;
-
+export const Content = styled.div`
+  display: grid;
+  grid-template-columns: 0.2fr 2fr;
+  gap: 1rem;
+  margin-top: 4rem;    
+  align-items: center;
+`;
 export const Span = styled.span`
-
+background-color: lavenderblush;
+grid-column-start: 2;
+padding: 0.7rem;
+cursor: text;
 `;

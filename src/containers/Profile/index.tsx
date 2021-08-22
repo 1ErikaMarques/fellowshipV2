@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CityImg, RelationshipImg, WorkImg, BirthdayImg, HobbiesImg, PhoneImg } from '../../components/Svgs';
 import theme from '../../styles/theme';
-import { Container, Header, Span } from './styles'
+import { Container, Content, Header, Span } from './styles'
 
 interface ProfileData {
   work?: string;
@@ -36,38 +36,46 @@ export function Profile({profileId}: ProfileProps){
          <button onClick={handleEditButton}>{editButton}</button>
        </Header>
        
-       
-       <Span>Enfermeiro</Span>
-       <WorkImg 
-        fill={data.relationship ?  theme.colors.primary : theme.colors.gray_dark} 
-        stroke={data.relationship ?  theme.colors.primary : theme.colors.gray_medium}
-       />
+       <Content>
+              
+          <WorkImg 
+            fill={data.relationship ?  theme.colors.primary : theme.colors.gray_dark} 
+            stroke={data.relationship ?  theme.colors.primary : theme.colors.gray_medium}
+            
+          />
+          <Span contentEditable>CTO</Span>
+              
           
-       
-       <CityImg 
-        fill={data.relationship ?  theme.colors.green : theme.colors.gray_light} 
-        stroke={data.relationship ?  theme.colors.green : theme.colors.gray_medium}
-       />
-       
-       <RelationshipImg 
-        fill={data.relationship ?  theme.colors.pink : theme.colors.gray_light} 
-        stroke={data.relationship ?  theme.colors.pink : theme.colors.gray_medium} 
-       />
+          <CityImg 
+            fill={data.relationship ?  theme.colors.green : theme.colors.gray_light} 
+            stroke={data.relationship ?  theme.colors.green : theme.colors.gray_medium}
+          />
+          <Span>São Paulo</Span>
+          
+          <RelationshipImg 
+            fill={data.relationship ?  theme.colors.pink : theme.colors.gray_light} 
+            stroke={data.relationship ?  theme.colors.pink : theme.colors.gray_medium} 
+          />
+          <Span>Casado</Span>
 
-       <BirthdayImg 
-        fill={data.relationship ?  theme.colors.yellow_light : theme.colors.gray_light} 
-        stroke={data.relationship ?  theme.colors.yellow : theme.colors.gray_medium} 
-       />
+          <BirthdayImg 
+            fill={data.relationship ?  theme.colors.yellow_light : theme.colors.gray_light} 
+            stroke={data.relationship ?  theme.colors.yellow : theme.colors.gray_medium} 
+          />
+          <Span>19/01/1993</Span>
 
-       <HobbiesImg        
-        stroke={data.relationship ?  theme.colors.primary : theme.colors.gray_medium} 
-       />
+          <HobbiesImg        
+            stroke={data.relationship ?  theme.colors.primary : theme.colors.gray_medium} 
+          />
+          <Span>Jogar video game</Span>
 
-       <PhoneImg 
-        fill={data.relationship ?  theme.colors.red : theme.colors.gray_light} 
-        stroke={data.relationship ?  theme.colors.red : theme.colors.gray_medium} 
-       />
-
+          <PhoneImg 
+            fill={data.relationship ?  theme.colors.red : theme.colors.gray_light} 
+            stroke={data.relationship ?  theme.colors.red : theme.colors.gray_medium} 
+          />
+          <Span>00000-000</Span>
+          
+      </Content>
        
        
     </Container>
