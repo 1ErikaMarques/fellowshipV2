@@ -1,8 +1,4 @@
-import SelectSearch from 'react-select-search';
 import styled from 'styled-components';
-import tw from "tailwind-styled-components";
-import theme from '../../styles/theme';
-
 
 
 export const Container = styled.header`
