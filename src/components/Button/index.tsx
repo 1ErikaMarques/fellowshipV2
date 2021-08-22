@@ -1,16 +1,22 @@
 import {ButtonStyle} from "./styles";
 
-interface ButtonProps{
-  title: string;
-  onClick?: () => void;
+interface ButtonProps {
+    title: string;
+    onClick?: () => void;
+    style: {
+        width?: string
+        boxShadowLength?: string;
+        fontWeight?: string;
+        fontSize?: string;
+    }
 }
 
 
-export function Button({title,onClick}: ButtonProps) {
+export function Button({title, onClick, style}: ButtonProps) {
 
-  return(
-    <ButtonStyle onClick={onClick}>{title}</ButtonStyle>
-  )
+    return (
+        <ButtonStyle width={style.width} boxShadowLength={style.boxShadowLength} onClick={onClick}>{title}</ButtonStyle>
+    )
 
-  
+
 }

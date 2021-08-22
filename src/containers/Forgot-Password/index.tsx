@@ -17,6 +17,7 @@ const modalStyle = {
         borderRadius: '4px',
     }
 }
+
 export function ForgotPassword() {
 
     const {isModalOpen, handleOpenModal, handleCloseModal} = useModalsContext();
@@ -38,7 +39,7 @@ export function ForgotPassword() {
                     <Message>Após clicar em recuperar senha, você receberá as instruções por e-mail</Message>
                     <form onSubmit={handleRecoveryPassword}>
                         <Input type="email" required={true} labelTitle="E-mail"/>
-                        <Button title="Recuperar senha"/>
+                        <Button style={{width: '8.8rem', boxShadowLength: "9.8em",fontSize:'0.5rem'}} title="Recuperar senha"/>
                     </form>
                 </Content>
             </Modals>

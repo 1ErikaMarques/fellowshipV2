@@ -35,7 +35,7 @@ export function Login() {
                         name="password"
                     />
                     <LabelSenha>Senha</LabelSenha>
-                    <Button title="Entrar" onClick={login}/>
+                    <Button title="Entrar" onClick={login} style={{}}/>
                     <hr/>
                     <h6>Ainda não tem conta? </h6>
                     <strong> Cadastre-se</strong>
