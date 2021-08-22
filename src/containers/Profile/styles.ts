@@ -1,39 +1,37 @@
 import styled from "styled-components";
+import tw from "tailwind-styled-components";
 
-export const Container = styled.div`
-  max-width: 985px;
-  margin-top: 120px;  
-  background-color: blue; 
-  
-  
+const ContainerStyle = styled.div`
+  max-width: 750px;
 `;
 
-export const Header = styled.header`
+export const Container = tw(ContainerStyle)`
+    container mx-auto
+`;
+
+const HeaderStyle = styled.header`
   width: 100%;
   height: auto;
-  display: flex; 
-  
-  align-items: center;
-  
   background-color: darkred;
-  
-  img{
+
+  img {
     height: 3rem;
     width: 3rem;
-    border-radius: 30px;    
+    border-radius: 30px;
     border: none;
     cursor: pointer;
-      
+    margin-inline-start: 0.5rem;
   }
-  h3{
+
+  h3 {
     font-size: 1rem;
     margin-left: 1rem;
     font-weight: 400;
     padding: 0.25rem;
     background-color: orange;
-    
   }
-  button{    
+
+  button {
     width: 120px;
     height: 38px;
     padding: 0 15px;
@@ -46,16 +44,19 @@ export const Header = styled.header`
     border: 1px solid #e9e9e9;
     cursor: pointer;
     transition: 200ms ease;
-    
-    
 
-      :hover{
-        color: #7e7e7e;
-        filter: brightness(0.9);
-        transition: 200ms ease;
-      }
+
+    :hover {
+      color: #7e7e7e;
+      filter: brightness(0.9);
+      transition: 200ms ease;
+    }
   }
-  
+
+`;
+
+export const Header = tw(HeaderStyle)`
+grid grid-cols-1 md:grid-cols-3
 `;
 
 export const Span = styled.span`
