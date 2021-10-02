@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
 
-export const Logo = styled.div `
+export const Logo = styled.div`
   svg {
-  width: 12rem;
+  max-width: 16rem;
   height: 3.5rem;
   margin-top: 0.7rem;
   margin-left: 2rem;  
@@ -11,7 +11,7 @@ export const Logo = styled.div `
   
 `;
 
-export const Notification = styled.div `
+export const Notification = styled.div`
  svg, svg *{      
     width: 90%;
     height: 2.2rem;    
@@ -22,17 +22,17 @@ export const Notification = styled.div `
       &:hover, &:hover * {      
         transition: 200ms;
         stroke-width: 1;
-        stroke: ${({theme}) => theme.colors.primary};
+        stroke: ${({ theme }) => theme.colors.primary};
       }
 
       path, path * {
       fill: white;
-      stroke:${({theme}) => theme.colors.gray_dark};
+      stroke:${({ theme }) => theme.colors.gray_dark};
       stroke-width: 1.4;      
     }
  }
 `
-export const Home = styled.div `
+export const Home = styled.div`
   svg, svg *{      
     width: 90%;
     height: 2.5rem;      
@@ -42,18 +42,18 @@ export const Home = styled.div `
       &:hover, &:hover *{       
         transition: 200ms;
         stroke-width: 1;
-        stroke: ${({theme}) => theme.colors.primary};
+        stroke: ${({ theme }) => theme.colors.primary};
       }
       
     path, path * {
       fill: white;
-      stroke: ${({theme}) => theme.colors.gray_dark};
+      stroke: ${({ theme }) => theme.colors.gray_dark};
       stroke-width: 1.3;      
     }
   
 }
 `
-export const User = styled.div `
+export const User = styled.div`
   svg, svg *{      
     width: 90%;
     height: 2.5rem;
@@ -65,7 +65,7 @@ export const User = styled.div `
       &:hover, &:hover *{       
         transition: 200ms;
         stroke-width: 1;
-        stroke: ${({theme}) => theme.colors.primary};        
+        stroke: ${({ theme }) => theme.colors.primary};        
       } 
 }
 `;
