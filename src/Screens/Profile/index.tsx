@@ -1,121 +1,140 @@
-import { useState } from 'react';
-import {
-  CityImg,
-  RelationshipImg,
-  WorkImg,
-  BirthdayImg,
-  HobbiesImg,
-  PhoneImg
-} from '../../components/Svgs';
+import {useState} from 'react';
+import {CityImg, RelationshipImg, WorkImg, BirthdayImg, HobbiesImg, PhoneImg} from '../../components/Svgs';
+import {useForm} from 'react-hook-form';
+import {useTheme} from 'styled-components';
+import {Button, Container, Content, Input, TextArea} from './styles'
+import {Header} from '../Register/styles';
 
-import { useTheme } from 'styled-components';
-import {
-  Container,
-  Content,
-  HeaderProfile,
-  Span,
-  Button
-} from './styles'
-import { Header } from '../../components/Header';
+enum profileButton {
+    EDITAR = 'Editar',
+    SALVAR = 'Salvar'
+}
 
-interface ProfileData {
-  work?: string;
-  city?: string;
-  relationship?: string;
-  birthday?: string;
-  hobbies?: string;
-  phone?: string;
-  name: string;
-  photoUrl?: string;
+interface userInfo {
+    name: string;
+    photoUrl: string;
+}
+
+interface userDetails {
+    work?: string;
+    city?: string;
+    relationship?: string;
+    birthday?: string;
+    hobbies?: string;
+    phone?: string;
+    about?: string;
 }
 
 interface ProfileProps {
-  profileId: string;
+    profileId: string;
 }
 
-export function Profile({ profileId }: ProfileProps) {
-  const [data, setData] = useState<ProfileData>({} as ProfileData)
-  const [editButton, setEditButton] = useState('Editar')
-  const [allowEditing, setAllowEditing] = useState(false)
+export function Profile({profileId}: ProfileProps) {
 
+    const [userDetails, setUserDetails] = useState<userDetails>({} as userDetails)
+    const [userInfo, setUserInfo] = useState<userInfo>({} as userInfo)
 
-  const theme = useTheme();
+    const {register, handleSubmit} = useForm<userDetails>();
 
-  function handleEditButton() {
+    const [buttonText, setButtonText] = useState(profileButton.EDITAR)
+    const [allowEditing, setAllowEditing] = useState(false)
 
-    if (allowEditing === true) {
-      setEditButton('Editar')
-      setAllowEditing(false)
-      setData({
-        name: data.name,
-        work: data.work
-      })
-      console.log(data)
+    const theme = useTheme();
 
-    } else {
-      setEditButton('Salvar')
-      setAllowEditing(true)
+    /**
+     * Salva as informacoes preenchidas no profile.
+     * @param profileEvent dados dos usuario
+     */
+    const handleSaveUserDetails = (profileEvent: userDetails) => {
+
+        setUserDetails({
+            work: profileEvent.work,
+            birthday: profileEvent.birthday,
+            city: profileEvent.city,
+            hobbies: profileEvent.hobbies,
+            phone: profileEvent.phone,
+            relationship: profileEvent.relationship
+        })
     }
-  }
 
-  return (
-    <Container>
-      <HeaderProfile>
-        <img src={data.photoUrl} alt="foto perfil"></img>
-        <h3>{data.name}</h3>
-        <Button
-          onClick={handleEditButton}
-          backgroundColor={allowEditing ? theme.colors.primary : theme.colors.gray_light}
-          color={allowEditing ? theme.colors.shape : theme.colors.gray_medium}
-        >
-          {editButton}
-        </Button>
-      </HeaderProfile>
+    /**
+     * Altera texto do botao e libera/bloqueia os inputs.
+     *
+     */
+    const handleChangeButtonName = () => {
 
-      <Content>
+        if (allowEditing) {
+            setButtonText(profileButton.EDITAR)
+            setAllowEditing(false)
 
-        <WorkImg
-          fill={data.work ? theme.colors.primary : theme.colors.gray_dark}
-          stroke={data.work ? theme.colors.primary : theme.colors.gray_medium}
-
-        />
-        <Span contentEditable={allowEditing}>{data.work}</Span>
-
-
-        <CityImg
-          fill={data.city ? theme.colors.green : theme.colors.gray_light}
-          stroke={data.city ? theme.colors.green : theme.colors.gray_medium}
-        />
-        <Span>São Paulo</Span>
-
-        <RelationshipImg
-          fill={data.relationship ? theme.colors.pink : theme.colors.gray_light}
-          stroke={data.relationship ? theme.colors.pink : theme.colors.gray_medium}
-        />
-        <Span>Casado</Span>
-
-        <BirthdayImg
-          fill={data.birthday ? theme.colors.yellow_light : theme.colors.gray_light}
-          stroke={data.birthday ? theme.colors.yellow : theme.colors.gray_medium}
-        />
-        <Span>19/01/1993</Span>
-
-        <HobbiesImg
-          stroke={data.hobbies ? theme.colors.primary : theme.colors.gray_medium}
-        />
-        <Span>Jogar video game</Span>
-
-        <PhoneImg
-          fill={data.phone ? theme.colors.red : theme.colors.gray_light}
-          stroke={data.phone ? theme.colors.red : theme.colors.gray_medium}
-        />
-        <Span>00000-000</Span>
-
-      </Content>
+        } else {
+            setButtonText(profileButton.SALVAR)
+            setAllowEditing(true)
+        }
+    }
+    return (
+        <Container>
+            <Header>
+                <img src={userInfo.photoUrl} alt="foto perfil"/>
+                <h3>{userInfo.name}</h3>
+                <Button form={'profile'}
+                        onClick={handleChangeButtonName}
+                        type={"submit"}
+                        backgroundColor={allowEditing ? theme.colors.primary : theme.colors.gray_light}
+                        color={allowEditing ? theme.colors.shape : theme.colors.gray_medium}>
+                    {buttonText}
+                </Button>
+            </Header>
 
 
-    </Container>
+            <form id={"profile"} onSubmit={handleSubmit(handleSaveUserDetails)}>
+                <Content>
+                    <WorkImg
+                        fill={userDetails.work ? theme.colors.primary : theme.colors.gray_dark}
+                        stroke={userDetails.work ? theme.colors.primary : theme.colors.gray_medium}
 
-  );
+                    />
+                    <Input {...register("work")} disabled={!allowEditing} defaultValue={userDetails.work}/>
 
+                    <CityImg
+                        fill={userDetails.city ? theme.colors.green : theme.colors.gray_light}
+                        stroke={userDetails.city ? theme.colors.green : theme.colors.gray_medium}
+                    />
+                    <Input {...register("city")} disabled={!allowEditing} defaultValue={userDetails.city}/>
+
+                    <RelationshipImg
+                        fill={userDetails.relationship ? theme.colors.pink : theme.colors.gray_light}
+                        stroke={userDetails.relationship ? theme.colors.pink : theme.colors.gray_medium}
+                    />
+                    <Input {...register("relationship")} disabled={!allowEditing}
+                           defaultValue={userDetails.relationship}/>
+
+                    <BirthdayImg
+                        fill={userDetails.birthday ? theme.colors.yellow_light : theme.colors.gray_light}
+                        stroke={userDetails.birthday ? theme.colors.yellow : theme.colors.gray_medium}
+                    />
+                    <Input {...register("birthday")} type={'date'} disabled={!allowEditing}
+                           defaultValue={userDetails.birthday}/>
+
+                    <HobbiesImg
+                        stroke={userDetails.hobbies ? theme.colors.primary : theme.colors.gray_medium}
+                    />
+                    <Input {...register("hobbies")} disabled={!allowEditing}
+                           defaultValue={userDetails.hobbies}/>
+
+                    <PhoneImg
+                        fill={userDetails.phone ? theme.colors.red : theme.colors.gray_light}
+                        stroke={userDetails.phone ? theme.colors.red : theme.colors.gray_medium}
+                    />
+                    <Input {...register("phone")} disabled={!allowEditing}
+                           defaultValue={userDetails.phone}/>
+
+                    <TextArea disabled={!allowEditing} placeholder="Nós conte um pouco mais sobre você.."
+                              defaultValue={userDetails.about} {...register('about')}/>
+
+                </Content>
+            </form>
+
+        </Container>
+    );
 }

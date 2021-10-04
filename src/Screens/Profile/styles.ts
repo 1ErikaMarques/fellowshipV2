@@ -72,10 +72,19 @@ export const Content = styled.div`
   align-items: center;
 `;
 
-export const Span = styled.span`
+export const Input = styled.input`
+  background-color: #f9f9f9;
+  grid-column-start: 2;
+  padding: 0.7rem;
+  border-radius: 0.25rem;
+  cursor: text;
+`;
+
+export const TextArea = styled.textarea`
 background-color: #f9f9f9;
 grid-column-start: 2;
 padding: 0.7rem;
 border-radius: 0.25rem;
 cursor: text;
+  height: 10rem;
 `;
