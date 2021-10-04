@@ -2,8 +2,7 @@ import {useState} from 'react';
 import {CityImg, RelationshipImg, WorkImg, BirthdayImg, HobbiesImg, PhoneImg} from '../../components/Svgs';
 import {useForm} from 'react-hook-form';
 import {useTheme} from 'styled-components';
-import {Button, Container, Content, Input, TextArea} from './styles'
-import {Header} from '../Register/styles';
+import {Button, Container, Content, Input, TextArea , HeaderProfile} from './styles'
 
 enum profileButton {
     EDITAR = 'Editar',
@@ -74,7 +73,7 @@ export function Profile({profileId}: ProfileProps) {
     }
     return (
         <Container>
-            <Header>
+            <HeaderProfile>
                 <img src={userInfo.photoUrl} alt="foto perfil"/>
                 <h3>{userInfo.name}</h3>
                 <Button form={'profile'}
@@ -84,7 +83,7 @@ export function Profile({profileId}: ProfileProps) {
                         color={allowEditing ? theme.colors.shape : theme.colors.gray_medium}>
                     {buttonText}
                 </Button>
-            </Header>
+            </HeaderProfile>
 
 
             <form id={"profile"} onSubmit={handleSubmit(handleSaveUserDetails)}>
