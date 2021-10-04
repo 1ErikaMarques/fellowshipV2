@@ -1,14 +1,25 @@
-import {Container, Content, NeighborhoodName, Search} from './styles'
-import {HomeImg, LogoImg, NotificationImg, UserImg} from '../Svgs'
+import {
+  HomeImg,
+  LogoImg,
+  NotificationImg,
+  UserImg
+} from '../Svgs'
+
+import {
+  Container,
+  Content,
+  NeighborhoodName,
+  Search
+} from './styles'
 
 
 interface HeaderProps {
   neighborhoodName: string;
 }
-export function Header({neighborhoodName}: HeaderProps ) {
-const options = [{name:'Jabaquara',value:''},{name:'Interlagos',value:''}]
+export function Header({ neighborhoodName }: HeaderProps) {
+  const options = [{ name: 'Jabaquara', value: '' }, { name: 'Interlagos', value: '' }]
 
-  return(
+  return (
 
     <Container>
       <LogoImg />
@@ -19,15 +30,13 @@ const options = [{name:'Jabaquara',value:''},{name:'Interlagos',value:''}]
       <Search>
 
       </Search>
-
-
       <Content>
 
         <HomeImg />
         <NotificationImg />
         <UserImg />
       </Content>
-     
+
     </Container>
   );
 }

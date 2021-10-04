@@ -1,4 +1,4 @@
-import {createGlobalStyle} from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   
@@ -428,4 +428,17 @@ export const GlobalStyle = createGlobalStyle`
   :-moz-placeholder { /* Firefox 18- */
     color: #B5B5B5;
   }
+
+  .ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 200ms ease;
+}
+
+.ReactModal__Overlay--after-open{
+    opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+    opacity: 0;
+}
 `

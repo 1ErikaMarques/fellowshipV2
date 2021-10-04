@@ -1,4 +1,9 @@
-import {createContext, ReactNode, useContext, useState} from "react";
+import {
+    createContext,
+    ReactNode,
+    useContext,
+    useState
+} from 'react';
 
 interface ModalsContextData {
     isModalOpen: boolean;
@@ -12,7 +17,7 @@ interface ModalProviderProps {
 
 const ModalsContext = createContext({} as ModalsContextData);
 
-export function ModalProvider({children}: ModalProviderProps) {
+export function ModalProvider({ children }: ModalProviderProps) {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -25,7 +30,7 @@ export function ModalProvider({children}: ModalProviderProps) {
     }
 
     return (
-        <ModalsContext.Provider value={{isModalOpen, handleOpenModal, handleCloseModal: handleCloseModal}}>
+        <ModalsContext.Provider value={{ isModalOpen, handleOpenModal, handleCloseModal: handleCloseModal }}>
             {children}
         </ModalsContext.Provider>
     )

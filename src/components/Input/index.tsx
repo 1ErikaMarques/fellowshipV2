@@ -1,4 +1,7 @@
-import {InputStyle, Label} from "./styles";
+import {
+    InputStyle,
+    Label
+} from './styles';
 
 interface InputProps {
     labelTitle: string;
@@ -7,11 +10,11 @@ interface InputProps {
 }
 
 
-export function Input({labelTitle, required, type}: InputProps) {
+export function Input({ labelTitle, required, type }: InputProps) {
 
     return (
         <>
-            <InputStyle type={type} required={required}/>
+            <InputStyle type={type} required={required} />
             <Label>{labelTitle}</Label>
         </>
     )

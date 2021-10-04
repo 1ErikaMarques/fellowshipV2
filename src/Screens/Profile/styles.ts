@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import tw from "tailwind-styled-components";
+import styled from 'styled-components';
+import tw from 'tailwind-styled-components';
 
 interface ButtonProps {
   backgroundColor: string;
@@ -36,8 +36,7 @@ const HeaderStyle = styled.header`
     padding: 1rem;
     font-size: 1rem;    
     font-weight: 400;     
-  } 
-   
+  }    
 `;
 
 export const Button = styled.button<ButtonProps>`
@@ -60,7 +59,7 @@ export const Button = styled.button<ButtonProps>`
       }  
 `;
 
-export const Header = tw(HeaderStyle)`
+export const HeaderProfile = tw(HeaderStyle)`
   grid grid-cols-1 md:grid-cols-12
   items-center
 `;

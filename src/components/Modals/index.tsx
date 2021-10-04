@@ -1,4 +1,4 @@
-import {ReactNode} from 'react';
+import { ReactNode } from 'react';
 import Modal from 'react-modal'
 
 Modal.setAppElement('#root')// por questao de acessibilidade 
@@ -10,14 +10,16 @@ interface ModalsProps {
     customStyles?: {};
 }
 
-export function Modals({isOpen, children, onRequestClose, customStyles}: ModalsProps) {
+export function Modals({ isOpen, children, onRequestClose, customStyles }: ModalsProps) {
 
     return (
         <Modal
             isOpen={isOpen}
             style={customStyles}
-            onRequestClose={onRequestClose}>
-              {children}
+            onRequestClose={onRequestClose}
+            closeTimeoutMS={200}
+        >
+            {children}
         </Modal>
     )
 }

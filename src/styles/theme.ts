@@ -1,4 +1,3 @@
-
 const theme = {
   colors: {
 
@@ -15,13 +14,13 @@ const theme = {
     pink_light: '#FA81A2',
     pink: '#FF1778',
 
-  gray_light: '#F4F5F7',
+    gray_light: '#F4F5F7',
 
     border: '#E9E9E9',
     border_dark: '#EEEEEE',
 
-  gray_medium: '#7E7E7E',
-  gray_dark: '#53525D',
+    gray_medium: '#7E7E7E',
+    gray_dark: '#53525D',
   },
 
   fonts: {

@@ -1,8 +1,22 @@
 import { useState } from 'react';
-import { CityImg, RelationshipImg, WorkImg, BirthdayImg, HobbiesImg, PhoneImg } from '../../components/Svgs';
+import {
+  CityImg,
+  RelationshipImg,
+  WorkImg,
+  BirthdayImg,
+  HobbiesImg,
+  PhoneImg
+} from '../../components/Svgs';
 
 import { useTheme } from 'styled-components';
-import { Container, Content, Header, Span, Button } from './styles'
+import {
+  Container,
+  Content,
+  HeaderProfile,
+  Span,
+  Button
+} from './styles'
+import { Header } from '../../components/Header';
 
 interface ProfileData {
   work?: string;
@@ -46,7 +60,7 @@ export function Profile({ profileId }: ProfileProps) {
 
   return (
     <Container>
-      <Header>
+      <HeaderProfile>
         <img src={data.photoUrl} alt="foto perfil"></img>
         <h3>{data.name}</h3>
         <Button
@@ -56,7 +70,7 @@ export function Profile({ profileId }: ProfileProps) {
         >
           {editButton}
         </Button>
-      </Header>
+      </HeaderProfile>
 
       <Content>
 

@@ -1,25 +1,22 @@
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyle } from './styles/global';
+import theme from './styles/theme';
 import './assets/tailwind.css';
 
-import {GlobalStyle} from "./styles/global"
-import {ThemeProvider} from 'styled-components';
-import theme from './styles/theme';
-
-import {ModalProvider} from './hooks/useModals'
-import {Header} from './components/Header'
-import {Profile} from './containers/Profile'
-
+import { ModalProvider } from './hooks/useModals';
+import { Routes } from './routes';
+import { AuthProvider } from './hooks/AuthContext';
 
 export function App() {
 
     return (
         <ThemeProvider theme={theme}>
-        
-            <ModalProvider>
-                <Header neighborhoodName="Moema" />
-{/*                   <Login />*/}
-                 <Profile profileId=''/>
-                <GlobalStyle />
-            </ModalProvider>
+            <AuthProvider>
+                <ModalProvider>
+                    <Routes />
+                    <GlobalStyle />
+                </ModalProvider>
+            </AuthProvider>
         </ThemeProvider>
     )
 }

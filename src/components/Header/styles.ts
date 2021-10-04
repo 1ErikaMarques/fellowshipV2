@@ -1,20 +1,18 @@
 import styled from 'styled-components';
 
-
 export const Container = styled.header`
   max-width: 100%;
-  padding: 0.25rem 2rem;
+  padding: 0.25rem 1rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin-top: 1rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray_light};
 `;
 
 export const Content = styled.div`
   display: flex;
-  align-items: center;
-  margin-right: 2rem;  
+  align-items: center;  
 `;
 
 export const NeighborhoodName = styled.h3`  
@@ -27,7 +25,8 @@ export const NeighborhoodName = styled.h3`
 
 export const Search = styled.input`
  height: 2rem;
- border: 2px solid ${({ theme }) => theme.colors.border_dark};
- border-radius: 0.25rem; 
+ border: 1px solid #E9E9E9;
+ background-color:#FAFAFA;
+ border-radius: 0.25rem;
 `;
 
