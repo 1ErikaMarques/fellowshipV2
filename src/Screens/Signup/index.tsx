@@ -2,11 +2,9 @@ import { FormEvent, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Eye } from 'react-feather';
 import { EyeOff } from 'react-feather';
-import { useModalsContext } from '../../hooks/useModals';
 
 import { Modals } from '../../components/Modals';
 import { Button } from '../../components/Button'
-
 
 import theme from '../../styles/theme';
 
@@ -45,8 +43,18 @@ const modalStyle = {
   }
 }
 
-export function Register() {
-  const { isModalOpen, handleOpenModal, handleCloseModal } = useModalsContext();
+export function Signup() {
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  function handleOpenModal() {
+    setIsModalOpen(true);
+  }
+
+  function handleCloseModal() {
+    setIsModalOpen(false);
+  }
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -58,10 +66,6 @@ export function Register() {
   const handleShowPassword = () => {
     setShowPassword(showPassword ? false : true);
   };
-
-  function alertMsg() {
-    alert("Cadastre-se")
-  }
 
   function handleAccountCreated(event: FormEvent) {
     event.preventDefault();

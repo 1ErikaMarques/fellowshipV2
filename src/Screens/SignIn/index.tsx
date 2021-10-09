@@ -8,7 +8,7 @@ import ilustracaoLogin from '../../assets/login/ilustration-first.svg';
 import ilustracaoLoginDown from '../../assets/login/ilustration-second.svg';
 import logoImg from '../../logo.svg';
 
-import { Register } from '../Register';
+import { Signup } from '../Signup';
 import { ForgotPassword } from '../Forgot-Password';
 import { Button } from '../../components/Button';
 
@@ -42,7 +42,7 @@ export function SignIn() {
             password,
         }
         signIn(data);
-    };
+    }
 
     return (
         <Container>
@@ -89,8 +89,8 @@ export function SignIn() {
                     <Button title="Entrar" form="sign-in" style={{ width: '12rem', marginBottom: '2rem' }} />
                     <hr />
                     <h6>Ainda não tem conta? </h6>
-                    <Register />
-                    {/*<ForgotPassword />*/}
+                    <Signup />
+                    <ForgotPassword />
                 </Form>
             </ContentForm>
         </Container>

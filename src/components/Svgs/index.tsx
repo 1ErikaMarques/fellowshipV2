@@ -15,15 +15,13 @@ import {
   User,
   Logo,
   Relationship,
-  ProfileIcons,
+  IconsProps,
   Work,
   City,
   Birthday,
   Hobbies,
   Phone
 } from './styles';
-
-
 
 
 export const LogoImg = () => {
@@ -35,9 +33,9 @@ export const LogoImg = () => {
   )
 }
 
-export const NotificationImg = () => {
+export const NotificationImg = (props: IconsProps) => {
   return (
-    <Notification title="Notificações">
+    <Notification title="Notificações" fill={props.fill} stroke={props.stroke}>
       <NotificationIcon />
     </Notification>
   )
@@ -51,14 +49,14 @@ export const HomeImg = () => {
   )
 }
 
-export const UserImg = () => {
+export const UserImg = (props: IconsProps) => {
   return (
-    <User>
+    <User fill={props.fill} stroke={props.stroke}>
       <UserIcon />
     </User>
   )
 }
-export const WorkImg = (props: ProfileIcons) => {
+export const WorkImg = (props: IconsProps) => {
   return (
     <Work fill={props.fill} stroke={props.stroke}>
       <WorkIcon />
@@ -66,7 +64,7 @@ export const WorkImg = (props: ProfileIcons) => {
   )
 }
 
-export const CityImg = (props: ProfileIcons) => {
+export const CityImg = (props: IconsProps) => {
   return (
     <City fill={props.fill} stroke={props.stroke}>
       <CityIcon />
@@ -74,7 +72,7 @@ export const CityImg = (props: ProfileIcons) => {
   )
 }
 
-export const RelationshipImg = (props: ProfileIcons) => {
+export const RelationshipImg = (props: IconsProps) => {
   return (
     <Relationship fill={props.fill} stroke={props.stroke}>
       <RelationshipIcon />
@@ -82,21 +80,21 @@ export const RelationshipImg = (props: ProfileIcons) => {
   )
 }
 
-export const BirthdayImg = (props: ProfileIcons) => {
+export const BirthdayImg = (props: IconsProps) => {
   return (
     <Birthday fill={props.fill} stroke={props.stroke}>
       <BirthdayIcon />
     </Birthday>
   )
 }
-export const HobbiesImg = (props: ProfileIcons) => {
+export const HobbiesImg = (props: IconsProps) => {
   return (
     <Hobbies fill={props.fill} stroke={props.stroke}>
       <HobbiesIcon />
     </Hobbies>
   )
 }
-export const PhoneImg = (props: ProfileIcons) => {
+export const PhoneImg = (props: IconsProps) => {
   return (
     <Phone fill={props.fill} stroke={props.stroke}>
       <PhoneIcon />

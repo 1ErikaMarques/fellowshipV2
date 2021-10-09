@@ -1,5 +1,3 @@
-import { useModalsContext } from '../../hooks/useModals';
-
 import PadlockImgUrl from '../../assets/login/cadeado.svg';
 
 import { Modals } from '../../components/Modals';
@@ -17,6 +15,7 @@ import {
     InputEmail,
     LabelEmail
 } from './styles';
+import {useState} from "react";
 
 const modalStyle = {
     overlay: {
@@ -37,7 +36,15 @@ const modalStyle = {
 
 export function ForgotPassword() {
 
-    const { isModalOpen, handleOpenModal, handleCloseModal } = useModalsContext();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    function handleOpenModal() {
+        setIsModalOpen(true);
+    }
+
+    function handleCloseModal() {
+        setIsModalOpen(false);
+    }
 
     function handleRecoveryPassword() {
         alert('test')
