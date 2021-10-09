@@ -3,6 +3,7 @@ const theme = {
 
     background: '#FBFCFF',
     shape: '#FFFFFF',
+    shape_dark: '#FAFAFA',
     ice: '#FEFEFE',
 
     primary: '#4285F4',
@@ -15,12 +16,12 @@ const theme = {
     pink: '#FF1778',
 
     gray_light: '#F4F5F7',
+    gray_medium: '#7E7E7E',
+    gray_dark: '#53525D',
 
     border: '#E9E9E9',
     border_dark: '#EEEEEE',
 
-    gray_medium: '#7E7E7E',
-    gray_dark: '#53525D',
   },
 
   fonts: {
