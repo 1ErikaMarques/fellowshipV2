@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useTheme } from 'styled-components';
+import { useParams } from 'react-router-dom';
 
 import {
     CityImg,
@@ -19,6 +19,7 @@ import {
     TextArea,
     HeaderProfile
 } from './styles'
+import {useTheme} from "styled-components";
 
 enum profileButton {
     EDITAR = 'Editar',
@@ -40,16 +41,13 @@ interface userDetails {
     about?: string;
 }
 
-interface ProfileProps {
-    profileId: string;
-}
-
-export function Profile({ profileId }: ProfileProps) {
+export function Profile() {
 
     const [userDetails, setUserDetails] = useState<userDetails>({} as userDetails)
     const [userInfo, setUserInfo] = useState<userInfo>({} as userInfo)
     const [buttonText, setButtonText] = useState(profileButton.EDITAR)
     const [allowEditing, setAllowEditing] = useState(false)
+    const { userId } = useParams<{ userId: string }>();
 
     const { register, handleSubmit } = useForm<userDetails>();
 

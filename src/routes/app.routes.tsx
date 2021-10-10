@@ -7,7 +7,6 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
 } from "react-router-dom";
 
 export function AppRoutes() {
@@ -16,8 +15,8 @@ export function AppRoutes() {
             <Router>
                 <Header neighborhoodName="Jabaquara"/>
                 <Switch>
-                    <Route path="/profile">
-                        <Profile profileId={""}/>
+                    <Route path="/profile/:userId">
+                        <Profile/>
                     </Route>
                     <Route path="/feed">
                         <Feed/>

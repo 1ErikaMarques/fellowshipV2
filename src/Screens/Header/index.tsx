@@ -67,7 +67,7 @@ export function Header({neighborhoodName}: HeaderProps) {
 
             <Search/>
             <Content>
-                <HomeImg/>
+                <Link to="/"><HomeImg/></Link>
                 <Button
                     id="notification"
                     aria-controls="notifications-specifics-menu"
@@ -128,7 +128,8 @@ export function Header({neighborhoodName}: HeaderProps) {
                         'aria-labelledby': 'user-specifics',
                     }}>
                     <MenuItem onClick={handleClose}><Link to="/profile">Perfil</Link></MenuItem>
-                    <MenuItem divider={true} onClick={handleClose}>Configurações</MenuItem>
+                    <MenuItem divider={true} onClick={handleClose}><Link
+                        to="/configurations">Configurações</Link></MenuItem>
                     <MenuItem onClick={handleClose}>Logout</MenuItem>
                 </Menu>
             </Content>
