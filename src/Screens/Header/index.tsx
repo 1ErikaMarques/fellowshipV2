@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 
 import theme from "../../styles/theme";
+import {BrowserRouter as Router, Link} from "react-router-dom";
 
 interface HeaderProps {
     neighborhoodName: string;
@@ -126,12 +127,10 @@ export function Header({neighborhoodName}: HeaderProps) {
                     MenuListProps={{
                         'aria-labelledby': 'user-specifics',
                     }}>
-                    <MenuItem onClick={handleClose}>Perfil</MenuItem>
+                    <MenuItem onClick={handleClose}><Link to="/profile">Perfil</Link></MenuItem>
                     <MenuItem divider={true} onClick={handleClose}>Configurações</MenuItem>
                     <MenuItem onClick={handleClose}>Logout</MenuItem>
                 </Menu>
-
-
             </Content>
 
         </Container>

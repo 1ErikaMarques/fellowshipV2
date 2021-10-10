@@ -4,14 +4,15 @@ import theme from './styles/theme';
 import './assets/tailwind.css';
 import {Routes} from './routes';
 import {AuthProvider} from './hooks/AuthContext';
+import {Router} from "react-router-dom";
 
 export function App() {
 
     return (
         <ThemeProvider theme={theme}>
             <AuthProvider>
-                    <Routes />
-                    <GlobalStyle />
+                <Routes/>
+                <GlobalStyle/>
             </AuthProvider>
         </ThemeProvider>
     )
