@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 
 import theme from "../../styles/theme";
-import {BrowserRouter as Router, Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 interface HeaderProps {
     neighborhoodName: string;

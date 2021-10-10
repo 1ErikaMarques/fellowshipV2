@@ -1,17 +1,3 @@
-import {createTheme} from '@mui/material/styles';
-
-const muiTheme = createTheme({
-        palette: {
-            primary: {
-                main: '#4285F4',
-            },
-            secondary: {
-                // This is green.A700 as hex.
-                main: '#11cb5f',
-            },
-        },
-    },
-);
 const theme = {
     colors: {
         background: '#FBFCFF',
