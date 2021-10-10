@@ -17,18 +17,15 @@ export function AppRoutes() {
         <>
             <Router>
                 <Header neighborhoodName="Jabaquara" />
-                <MenuNav />
-                <NewPost />
                 <Switch>
                     <Route path="/profile/:userId">
                         <Profile />
                     </Route>
-                    <Route path="/feed">
-                    </Route>
                     <Route path="/">
+                        <MenuNav />
+                        <NewPost />
                     </Route>
                     <Route path="/configuration">
-
                     </Route>
                 </Switch>
             </Router>

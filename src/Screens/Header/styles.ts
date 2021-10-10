@@ -1,18 +1,27 @@
 import styled from 'styled-components';
+import tw from "tailwind-styled-components";
 
-export const Container = styled.header`
+const ContainerStyle = styled.header`
   max-width: 100%;
   padding: 0.25rem 5rem;
-  display: flex;
-  align-items: center;  
-  justify-content: space-between;
+  align-items: center;
   margin-top: 1rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray_light};
 `;
 
+export const Container = tw(ContainerStyle) `
+grid 
+gap-1
+md:grid-cols-5
+grid-flow-row
+auto-rows-auto
+`;
+
+
 export const Content = styled.div`
   display: flex;
   align-items: center;
+  justify-self: end;
 `;
 
 export const NeighborhoodName = styled.h3`  

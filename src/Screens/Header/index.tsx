@@ -16,7 +16,9 @@ import {
 } from "@mui/material";
 
 import theme from "../../styles/theme";
-import {Link} from "react-router-dom";
+import {Link, generatePath} from "react-router-dom";
+import {ROUTES} from "../../routes";
+
 
 interface HeaderProps {
     neighborhoodName: string;
@@ -53,7 +55,6 @@ export function Header({neighborhoodName}: HeaderProps) {
                     break;
             }
         }
-
         setAnchorEl(null);
     };
 
@@ -65,9 +66,11 @@ export function Header({neighborhoodName}: HeaderProps) {
                 {neighborhoodName}
             </NeighborhoodName>
 
-            <Search/>
+            <Search className={"row-start-1 col-end-4"}/>
             <Content>
-                <Link to="/"><HomeImg/></Link>
+                <Link to={generatePath(ROUTES.HOME)}>
+                    <HomeImg/>
+                </Link>
                 <Button
                     id="notification"
                     aria-controls="notifications-specifics-menu"
@@ -127,9 +130,12 @@ export function Header({neighborhoodName}: HeaderProps) {
                     MenuListProps={{
                         'aria-labelledby': 'user-specifics',
                     }}>
-                    <MenuItem onClick={handleClose}><Link to="/profile">Perfil</Link></MenuItem>
-                    <MenuItem divider={true} onClick={handleClose}><Link
-                        to="/configurations">Configurações</Link></MenuItem>
+                    <MenuItem onClick={handleClose}>
+                        <Link to={generatePath(ROUTES.PROFILE, {id: 1})}>Perfil</Link>
+                    </MenuItem>
+                    <MenuItem divider={true} onClick={handleClose}>
+                        <Link to={generatePath(ROUTES.CONFIGURATIONS)}>Configurações</Link>
+                    </MenuItem>
                     <MenuItem onClick={handleClose}>Logout</MenuItem>
                 </Menu>
             </Content>
