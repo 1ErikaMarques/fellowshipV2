@@ -1,10 +1,6 @@
-import { Header } from "../Header";
-
-
 export function Feed() {
   return (
-    <Header neighborhoodName="Jabaquara" />
-    
+    <h1>Feed</h1>
   )
 
 }

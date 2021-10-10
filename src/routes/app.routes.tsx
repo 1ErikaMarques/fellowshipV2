@@ -1,13 +1,15 @@
 import React from 'react';
 
-import { Feed } from '../Screens/Feed';
-import { Profile } from '../Screens/Profile';
+import {Feed} from '../Screens/Feed';
+import {Profile} from '../Screens/Profile';
+import {Header} from "../Screens/Header";
 
 export function AppRoutes() {
-  return (
-    <>
-      <Feed />
-      <Profile profileId="" />
-    </>
-  )
+    return (
+        <>
+            <Header neighborhoodName="Jabaquara"/>
+            <Feed/>
+            <Profile profileId=""/>
+        </>
+    )
 }
