@@ -1,8 +1,11 @@
 import React from 'react';
 
-import {Feed} from '../Screens/Feed';
-import {Profile} from '../Screens/Profile';
-import {Header} from "../Screens/Header";
+
+import { Profile } from '../Screens/Profile';
+import { Header } from "../Screens/Header";
+import { MenuNav } from '../Screens/Feed/MenuNav';
+import { NewPost } from '../Screens/Feed/NewPost';
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -13,16 +16,16 @@ export function AppRoutes() {
     return (
         <>
             <Router>
-                <Header neighborhoodName="Jabaquara"/>
+                <Header neighborhoodName="Jabaquara" />
+                <MenuNav />
+                <NewPost />
                 <Switch>
                     <Route path="/profile/:userId">
-                        <Profile/>
+                        <Profile />
                     </Route>
                     <Route path="/feed">
-                        <Feed/>
                     </Route>
                     <Route path="/">
-                        <Feed/>
                     </Route>
                     <Route path="/configuration">
 

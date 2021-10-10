@@ -1,17 +1,17 @@
-import {GlobalStyle} from './styles/global';
+import { GlobalStyle } from './styles/global';
 import './assets/tailwind.css';
-import {Routes} from './routes';
-import {AuthProvider} from './hooks/AuthContext';
+import { Routes } from './routes';
+import { AuthProvider } from './hooks/AuthContext';
 import customThemeConst from "./styles/theme";
 
-import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {ThemeProvider as CustomTheme} from "styled-components";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider as CustomTheme } from "styled-components";
 
 const theme = createTheme({
     palette: {
         primary: {
             light: '#757ce8',
-            main: '#3f50b5',
+            main: '#4285F4',
             dark: '#002884',
             contrastText: '#fff',
         },
@@ -32,8 +32,8 @@ export function App() {
             <CustomTheme theme={customThemeConst}>
 
                 <AuthProvider>
-                    <Routes/>
-                    <GlobalStyle/>
+                    <Routes />
+                    <GlobalStyle />
                 </AuthProvider>
 
             </CustomTheme>

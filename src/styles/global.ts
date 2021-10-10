@@ -14,7 +14,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background: var(--background);
+    background: #FBFCFF;
   }
 
   body, button {
@@ -126,7 +126,7 @@ export const GlobalStyle = createGlobalStyle`
 
   b,
   strong {
-    font-weight: bolder;
+    font-weight: bold;
   }
 
   /**
