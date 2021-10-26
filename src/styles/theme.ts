@@ -13,6 +13,8 @@ const theme = {
         yellow: '#FFBE21',
         pink_light: '#FA81A2',
         pink: '#FF1778',
+        super_light_blue: '#E8F0FE',
+        light_blue: '#F0F6FB',
 
         gray_light: '#F4F5F7',
         gray_medium: '#7E7E7E',

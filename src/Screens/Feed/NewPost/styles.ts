@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import tw from 'tailwind-styled-components';
+import { darken, transparentize } from 'polished';
 
 export const ContainerStyle = styled.div`
   display: flex;
@@ -27,5 +28,9 @@ export const Button = styled.button`
   color: ${({ theme }) => theme.colors.gray_dark};
   text-align: left;
   font-weight: 500;
-  letter-spacing: 0.03rem;  
+  letter-spacing: 0.03rem;
+  :hover {
+        filter: brightness(0.9);
+        transition: 200ms ease;
+      }
 `;

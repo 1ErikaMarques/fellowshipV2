@@ -16,6 +16,8 @@ import {
   Title,
   InputName,
   LabelName,
+  InputBirthDate,
+  LabelBirthDate,
   InputEmail,
   LabelEmail,
   InputPassword,
@@ -58,7 +60,8 @@ export function Signup() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [address, setAddress] = useState('');
+  const [postal_code, setPostalCode] = useState('');
+  const [birthday_date, setBirthdayDate] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const { signUp } = useAuth();
@@ -74,7 +77,8 @@ export function Signup() {
       name,
       email,
       password,
-      address
+      postal_code,
+      birthday_date
     }
     signUp(data);
   }
@@ -99,6 +103,15 @@ export function Signup() {
               required
             />
             <LabelName>Nome</LabelName>
+
+            <InputBirthDate
+              type="date"
+              value={birthday_date}
+              onChange={e => setBirthdayDate(e.target.value)}
+              name="calender"
+              required
+            />
+            <LabelBirthDate>Data de nascimento</LabelBirthDate>
 
             <InputEmail
               type="email"
@@ -132,10 +145,10 @@ export function Signup() {
               />
             }
             <InputAddress
-              type="number"
-              value={address}
-              onChange={e => setAddress(e.target.value)}
-              name="address"
+              type="string"
+              value={postal_code}
+              onChange={e => setPostalCode(e.target.value)}
+              name="postal_code"
               placeholder="ex: 04444-044"
               maxLength={8}
               required

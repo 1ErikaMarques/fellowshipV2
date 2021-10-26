@@ -12,6 +12,7 @@ import { Signup } from '../Signup';
 import { ForgotPassword } from '../Forgot-Password';
 import { Button } from '../../components/Button';
 
+import { useTheme } from 'styled-components'
 import {
     Container,
     Content,
@@ -29,6 +30,8 @@ export function SignIn() {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const { signIn } = useAuth();
+
+    const theme = useTheme();
 
     const handleShowPassword = () => {
         setShowPassword(showPassword ? false : true);

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import tw from "tailwind-styled-components";
+import tw from 'tailwind-styled-components';
 
 const ContainerStyle = styled.header`
   max-width: 100%;
@@ -9,7 +9,7 @@ const ContainerStyle = styled.header`
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray_light};
 `;
 
-export const Container = tw(ContainerStyle) `
+export const Container = tw(ContainerStyle)`
 grid 
 gap-1
 md:grid-cols-5
@@ -33,8 +33,8 @@ export const NeighborhoodName = styled.h3`
 `;
 
 export const Search = styled.input`
- height: 2rem;
- margin-right: 2rem;
+ height: 2rem; 
+ max-width: 18rem;
  border: 1px solid #E9E9E9;
  background-color: ${({ theme }) => theme.colors.shape_dark};
  border-radius: 0.25rem;

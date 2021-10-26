@@ -1,0 +1,42 @@
+{
+  "users": [
+    {
+      "id": "",
+      "name": "",
+      "birth_date": "",
+      "photo": "",
+      "post_code": "",
+      "work": "",
+      "post": [
+        {
+          "id": "",
+          "text": "",
+          "media": "",
+          "comments": [
+            {
+              "id": "",
+              "id_user": "",
+              "text": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Erika Marques",
+      "email": "1erikagouvea@gmail.com",
+      "password": "123",
+      "postCode": "04348-04",
+      "birthDate": "2021-10-13",
+      "id": "gubu3Fi"
+    },
+    {
+      "name": "Erika Marques",
+      "email": "1erikagouvea@gmail.com",
+      "password": "123",
+      "postCode": "04348-04",
+      "birthDate": "2021-10-29",
+      "id": "oJ6fE48"
+    }
+  ]
+}

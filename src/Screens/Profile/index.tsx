@@ -19,7 +19,9 @@ import {
     TextArea,
     HeaderProfile
 } from './styles'
-import {useTheme} from "styled-components";
+import { useTheme } from 'styled-components';
+import { api } from '../../services/api';
+import { useAuth } from '../../hooks/AuthContext';
 
 enum profileButton {
     EDITAR = 'Editar',
@@ -57,7 +59,20 @@ export function Profile() {
      * Salva as informacoes preenchidas no profile.
      * @param profileEvent dados dos usuario
      */
-    const handleSaveUserDetails = (profileEvent: userDetails) => {
+    async function handleSaveUserDetails(profileEvent: userDetails) {
+
+
+
+        const response = await api.put('/user/update_profile', {
+            work: profileEvent.work,
+            birthday: profileEvent.birthday,
+            city: profileEvent.city,
+            hobbies: profileEvent.hobbies,
+            phone: profileEvent.phone,
+            relationship: profileEvent.relationship
+        });
+
+        console.log(response)
 
         setUserDetails({
             work: profileEvent.work,
@@ -104,7 +119,7 @@ export function Profile() {
             <form id={"profile"} onSubmit={handleSubmit(handleSaveUserDetails)}>
                 <Content>
                     <WorkImg
-                        fill={userDetails.work ? theme.colors.primary : theme.colors.gray_dark}
+                        fill={userDetails.work ? theme.colors.primary : theme.colors.gray_medium}
                         stroke={userDetails.work ? theme.colors.primary : theme.colors.gray_medium}
 
                     />

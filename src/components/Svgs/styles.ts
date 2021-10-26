@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
 export interface IconsProps {
-    fill?: string;
-    stroke?: string;
+  fill?: string;
+  stroke?: string;
 }
 
 export const Logo = styled.div`
@@ -17,13 +17,13 @@ export const Logo = styled.div`
 export const Notification = styled.div<IconsProps>`
   svg, svg * {
     width: 90%;
-    height: 2.2rem;
+    height: 2.1rem;
     cursor: pointer;
 
     &:hover, &:hover * {
       transition: 200ms;
       stroke-width: 1;
-      stroke: ${({theme}) => theme.colors.primary};
+      stroke: ${({ theme }) => theme.colors.primary};
     }
 
     path, path * {
@@ -37,18 +37,18 @@ export const Notification = styled.div<IconsProps>`
 export const Home = styled.div`
   svg, svg * {
     width: 90%;
-    height: 2.2rem;
+    height: 2.3rem;
     cursor: pointer;
 
     &:hover, &:hover * {
       transition: 200ms;
       stroke-width: 1;
-      stroke: ${({theme}) => theme.colors.primary};
+      stroke: ${({ theme }) => theme.colors.primary};
     }
 
     path, path * {
       fill: white;
-      stroke: ${({theme}) => theme.colors.gray_dark};
+      stroke: ${({ theme }) => theme.colors.gray_dark};
       stroke-width: 1.3;
     }
   }
@@ -57,14 +57,14 @@ export const Home = styled.div`
 export const User = styled.div<IconsProps>`
   svg, svg * {
     width: 90%;
-    height: 2.2rem;
+    height: 2.3rem;
     stroke-width: 1.3;
     cursor: pointer;
 
     &:hover, &:hover * {
       transition: 200ms;
       stroke-width: 1;
-      stroke: ${({theme}) => theme.colors.primary};
+      stroke: ${({ theme }) => theme.colors.primary};
     }
 
     * {

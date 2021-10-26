@@ -1,11 +1,10 @@
-import { GlobalStyle } from './styles/global';
-import './assets/tailwind.css';
 import { Routes } from './routes';
 import { AuthProvider } from './hooks/AuthContext';
-import customThemeConst from "./styles/theme";
-
+import { GlobalStyle } from './styles/global';
+import { ThemeProvider as CustomTheme } from 'styled-components';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { ThemeProvider as CustomTheme } from "styled-components";
+import './assets/tailwind.css';
+import customThemeConst from './styles/theme';
 
 const theme = createTheme({
     palette: {

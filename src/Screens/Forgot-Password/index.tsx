@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import PadlockImgUrl from '../../assets/login/cadeado.svg';
 
 import { Modals } from '../../components/Modals';
 import { Button } from '../../components/Button'
 
 import theme from '../../styles/theme'
+
 import {
     CloseButtonTW,
     Container,
@@ -15,7 +17,7 @@ import {
     InputEmail,
     LabelEmail
 } from './styles';
-import {useState} from "react";
+
 
 const modalStyle = {
     overlay: {

@@ -1,7 +1,16 @@
-import {HomeImg, LogoImg, NotificationImg, UserImg} from '../../components/Svgs'
+import React, { useState } from 'react';
+import { Link, generatePath } from 'react-router-dom';
 
-import {Container, Content, NeighborhoodName, Search} from './styles'
-import React, {useState} from "react";
+import { ROUTES } from '../../routes';
+import { useAuth } from '../../hooks/AuthContext';
+
+import {
+    HomeImg,
+    LogoImg,
+    NotificationImg,
+    UserImg
+} from '../../components/Svgs'
+
 import {
     Avatar,
     Badge,
@@ -13,22 +22,29 @@ import {
     Menu,
     MenuItem,
     Typography
-} from "@mui/material";
+} from '@mui/material';
 
-import theme from "../../styles/theme";
-import {Link, generatePath} from "react-router-dom";
-import {ROUTES} from "../../routes";
+import theme from '../../styles/theme';
+
+import {
+    Container,
+    Content,
+    NeighborhoodName,
+    Search
+} from './styles'
 
 
 interface HeaderProps {
     neighborhoodName: string;
 }
 
-export function Header({neighborhoodName}: HeaderProps) {
+export function Header({ neighborhoodName }: HeaderProps) {
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+    const { logout } = useAuth();
 
     const handleClick = (event: any) => {
 
@@ -61,15 +77,15 @@ export function Header({neighborhoodName}: HeaderProps) {
     return (
 
         <Container>
-            <LogoImg/>
+            <LogoImg />
             <NeighborhoodName>
                 {neighborhoodName}
             </NeighborhoodName>
 
-            <Search className={"row-start-1 col-end-4"}/>
+            <Search className={"row-start-1 col-end-4"} />
             <Content>
                 <Link to={generatePath(ROUTES.HOME)}>
-                    <HomeImg/>
+                    <HomeImg />
                 </Link>
                 <Button
                     id="notification"
@@ -78,8 +94,10 @@ export function Header({neighborhoodName}: HeaderProps) {
                     aria-expanded={isNotificationMenuOpen ? 'true' : undefined}
                     onClick={handleClick}>
                     <Badge badgeContent={4} color="primary">
-                        <NotificationImg fill={isNotificationMenuOpen ? theme.colors.primary : theme.colors.gray_dark}
-                                         stroke={isNotificationMenuOpen ? theme.colors.primary : theme.colors.gray_medium}/>
+                        <NotificationImg
+                            fill={isNotificationMenuOpen ? theme.colors.primary : theme.colors.gray_dark}
+                            stroke={isNotificationMenuOpen ? theme.colors.primary : theme.colors.gray_medium}
+                        />
                     </Badge>
                 </Button>
                 <Menu
@@ -89,18 +107,19 @@ export function Header({neighborhoodName}: HeaderProps) {
                     onClose={handleClose}
                     MenuListProps={{
                         'aria-labelledby': 'notifications',
-                    }}>
-                    <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
+                    }}
+                >
+                    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
                         <ListItem alignItems="flex-start">
                             <ListItemAvatar>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg"/>
+                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
                             </ListItemAvatar>
                             <ListItemText
                                 primary="Brunch this weekend?"
                                 secondary={
                                     <React.Fragment>
                                         <Typography
-                                            sx={{display: 'inline'}}
+                                            sx={{ display: 'inline' }}
                                             component="span"
                                             variant="body2"
                                             color="text.primary">
@@ -120,7 +139,7 @@ export function Header({neighborhoodName}: HeaderProps) {
                     aria-expanded={isUserMenuOpen ? 'true' : undefined}
                     onClick={handleClick}>
                     <UserImg fill={isUserMenuOpen ? theme.colors.primary : theme.colors.gray_dark}
-                             stroke={isUserMenuOpen ? theme.colors.primary : theme.colors.gray_medium}/>
+                        stroke={isUserMenuOpen ? theme.colors.primary : theme.colors.gray_medium} />
                 </Button>
                 <Menu
                     id="user-specifics-menu"
@@ -131,12 +150,12 @@ export function Header({neighborhoodName}: HeaderProps) {
                         'aria-labelledby': 'user-specifics',
                     }}>
                     <MenuItem onClick={handleClose}>
-                        <Link to={generatePath(ROUTES.PROFILE, {id: 1})}>Perfil</Link>
+                        <Link to={generatePath(ROUTES.PROFILE, { id: 1 })}>Perfil</Link>
                     </MenuItem>
                     <MenuItem divider={true} onClick={handleClose}>
                         <Link to={generatePath(ROUTES.CONFIGURATIONS)}>Configurações</Link>
                     </MenuItem>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    <MenuItem onClick={logout} title={"sair"}>Logout</MenuItem>
                 </Menu>
             </Content>
 

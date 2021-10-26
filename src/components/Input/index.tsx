@@ -5,7 +5,7 @@ import {
 
 interface InputProps {
     labelTitle: string;
-    required: boolean,
+    required?: boolean,
     type: string;
 }
 

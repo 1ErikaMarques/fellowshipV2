@@ -3,7 +3,6 @@ import { Avatar } from '@mui/material';
 
 import {
   Container,
-
   Button
 } from './styles';
 
