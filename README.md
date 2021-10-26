@@ -14,7 +14,7 @@ This application allows:
 * Receive notifications
 * Change the password
 * Change the email
-* change the postcode (just Brazilian postcode)
+* Change the postcode (just Brazilian postcode)
 * Logout
 
 # Technologies
