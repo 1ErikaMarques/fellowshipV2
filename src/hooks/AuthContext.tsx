@@ -50,40 +50,29 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [data, setData] = useState<AuthState>({} as AuthState)
 
+  /**
+   * função para fazer login
+   * @param email email do usuario
+   * @param password senha do usuario
+   */
   async function signIn({ email, password }: SignInCredentials) {
     // const storedUser = localStorage.getItem('user');
-    const response = await api.post<AuthState>('/auth/login', {
+    await api.post<AuthState>('/auth/login', {
       email,
       password
-    });
-
-    const { token, user } = response.data;
-
-    console.log(response)
-
-    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-    setData({ token, user });
-    setIsAuthenticated(true);
-  }
-  //Verificando se existe usuario cadastrado
-  /*if (storedUser) {
-    const userLogged = JSON.parse(storedUser) as User;
-
-    if (email === userLogged.email && password === userLogged.password) {
-      setIsAuthenticated(true)
-      sessionStorage.setItem('loggedUser', JSON.stringify(userLogged))
-    } else {
-      toast.error("usuário ou senha incorretos", {
+    }).then(resp => {
+      const { token, user } = resp.data;
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      setData({ token, user });
+      setIsAuthenticated(true);
+    }).catch(e => {
+      toast.error(e.response.data.error, {
         theme: "colored"
       })
-    }
-  } else {
-    toast.warning("usuário não cadastrado", {
-      theme: "colored"
-    })
-  }*/
+      console.log(e.response)
+    });
 
+  }
 
   /**
    * função para cadastrar usuario

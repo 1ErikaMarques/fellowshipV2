@@ -17,7 +17,7 @@ export const Container = tw(ContainerStyle)`
 
 export const Menu = styled.div`  
   background-color: ${({ theme }) => theme.colors.light_blue};
-  width: 15rem;
+  width: 18rem;
   padding: 1rem 0rem  0rem;
     p {
       display: flex;

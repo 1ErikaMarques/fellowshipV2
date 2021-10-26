@@ -21,9 +21,13 @@ import {
     ListItemText,
     Menu,
     MenuItem,
-    Typography
+    Typography,
+    Divider
 } from '@mui/material';
 
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import theme from '../../styles/theme';
 
 import {
@@ -149,13 +153,24 @@ export function Header({ neighborhoodName }: HeaderProps) {
                     MenuListProps={{
                         'aria-labelledby': 'user-specifics',
                     }}>
+                    <MenuItem onClick={handleClose} >
+
+                        <Link to={generatePath(ROUTES.PROFILE, { id: 1 })}>
+                            <PersonOutlineOutlinedIcon style={{ marginRight: '10', color: '#53525D' }} />
+                            Perfil
+                        </Link>
+                    </MenuItem>
                     <MenuItem onClick={handleClose}>
-                        <Link to={generatePath(ROUTES.PROFILE, { id: 1 })}>Perfil</Link>
+                        <Link to={generatePath(ROUTES.CONFIGURATIONS)}>
+                            <SettingsOutlinedIcon style={{ marginRight: '10', color: '#53525D' }} />
+                            Configurações
+                        </Link>
                     </MenuItem>
-                    <MenuItem divider={true} onClick={handleClose}>
-                        <Link to={generatePath(ROUTES.CONFIGURATIONS)}>Configurações</Link>
+                    <Divider style={{ backgroundColor: '#E9E9E9', marginTop: '0.6rem' }} />
+                    <MenuItem onClick={logout} title={"sair"} >
+                        <LogoutOutlinedIcon style={{ marginRight: '10', color: '#53525D' }} />
+                        Logout
                     </MenuItem>
-                    <MenuItem onClick={logout} title={"sair"}>Logout</MenuItem>
                 </Menu>
             </Content>
 

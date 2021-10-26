@@ -12,15 +12,25 @@ const theme = createTheme({
             light: '#757ce8',
             main: '#4285F4',
             dark: '#002884',
-            contrastText: '#fff',
+            contrastText: '#FFFFFF',
         },
         secondary: {
             light: '#ff7961',
             main: '#FFBE21',
             dark: '#ba000d',
-            contrastText: '#000',
+            contrastText: '#000000',
+        },
+        action: {
+            hover: '#F0F6FB',
+            selected: '#F0F6FB',
+            disabled: '#EEEEEE',
         },
     },
+    transitions: {
+        easing: {
+            easeInOut: '200'
+        }
+    }
 });
 
 export function App() {
