@@ -5,10 +5,12 @@ import { Avatar, Divider } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 import { CameraImg, VideoImg } from '../../../components/Svgs'
+import { Button } from '../../../components/Button';
 
+import { useTheme } from 'styled-components';
 import {
   Container,
-  Button,
+  ButtonPub,
   Content,
   Header,
   CloseButtonTW,
@@ -19,7 +21,7 @@ import {
 
 const style = {
   position: 'absolute' as 'absolute',
-  top: '33%',
+  top: '36%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 500,
@@ -36,10 +38,12 @@ export function NewPost() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const theme = useTheme();
+
   return (
     <Container>
       <Avatar sx={{ width: '3rem', height: '3rem', marginLeft: '2rem' }} />
-      <Button onClick={handleOpen}>Começar publicação</Button>
+      <ButtonPub onClick={handleOpen}>Começar publicação</ButtonPub>
       <Modal
         open={open}
         onClose={handleClose}
@@ -51,30 +55,50 @@ export function NewPost() {
             <Header>
               <CloseButtonTW onClick={handleClose} >X</CloseButtonTW>
               <h3>Criar publicação</h3>
-              <Divider style={{ backgroundColor: "#F4F5F7", marginBottom: "2rem" }} />
+              <Divider
+                style={{
+                  backgroundColor: theme.colors.gray_light,
+                  marginBottom: "2rem"
+                }}
+              />
             </Header>
             <UserInfo>
-              <Avatar />
+              <Avatar sx={{ width: '2.5rem', height: '2.5rem' }} />
               <h4>Mayk Fofilis</h4>
             </UserInfo>
             <TextareaAutosize
-              maxRows={6}
+              maxRows={16}
               aria-label="maximum height"
               placeholder=""
               defaultValue=""
               style={{
-                width: 400,
+                width: 460,
                 outline: 'none',
                 marginTop: '1rem',
                 color: '#53525D',
                 fontSize: '1.1rem',
               }}
             />
-            <Divider style={{ backgroundColor: "#F4F5F7", marginBottom: "2rem", marginTop: "2rem" }} />
+            <Divider style={{
+              backgroundColor: "#F4F5F7",
+              marginBottom: "2rem",
+              marginTop: "6rem"
+            }}
+            />
             <Icons>
               <CameraImg />
               <VideoImg />
             </Icons>
+            <Button
+              title="Publicar"
+              onClick={() => { }}
+              style={{
+                width: "14rem",
+                backgroundColor: theme.colors.primary,
+                fontSize: "1rem",
+                color: theme.colors.ice
+              }}
+            />
           </Content>
         </Box>
       </Modal>

@@ -6,6 +6,7 @@ interface ButtonProps {
   fontWeight?: string;
   fontSize?: string;
   marginBottom?: string;
+  backgroundColor?: string;
 }
 
 export const ButtonStyle = styled.button<ButtonProps>`
@@ -13,8 +14,8 @@ export const ButtonStyle = styled.button<ButtonProps>`
   height: 2.7rem;
   margin-top: 2rem;
   margin-bottom: ${props => props.marginBottom ? props.marginBottom : '1rem'};
-  background-color: ${({ theme }) => theme.colors.ice};
-  color: ${({ theme }) => theme.colors.primary};
+  background-color: ${props => props.backgroundColor ? props.backgroundColor : ({ theme }) => theme.colors.ice};
+  color: ${props => props.color ? props.color : ({ theme }) => theme.colors.primary};
   font-weight: 600;
   font-size: ${props => props.fontSize ? props.fontSize : '0.8rem'};
   border-radius: 4px;

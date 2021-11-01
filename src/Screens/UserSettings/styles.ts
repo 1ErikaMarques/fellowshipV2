@@ -25,7 +25,7 @@ export const Menu = styled.div`
       align-items: center;
       margin-top: 1.2rem;
       padding: 1rem ;
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: 500;
       color: ${({ theme }) => theme.colors.gray_dark};            
       cursor: pointer;
@@ -33,7 +33,7 @@ export const Menu = styled.div`
       &:hover{
         background-color: ${({ theme }) => theme.colors.ice};
         color: ${({ theme }) => theme.colors.primary};
-        font-weight: 600;
+        font-weight: 500;
         transition: 200ms ease;
       }    
   }
@@ -48,7 +48,7 @@ export const User = styled.div`
   padding: 1rem;
 
   h2{
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 600;
     color: ${({ theme }) => theme.colors.gray_dark};
   }

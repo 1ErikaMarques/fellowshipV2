@@ -23,7 +23,7 @@ export function UserSettings() {
     <Container>
       <Menu>
         <User>
-          <Avatar />
+          <Avatar sx={{ width: '3.5rem', height: '3.5rem' }} />
           <h2>mayk fofilis</h2>
         </User>
         <p>Conta</p>

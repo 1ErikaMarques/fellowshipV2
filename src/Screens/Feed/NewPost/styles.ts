@@ -18,7 +18,7 @@ export const Container = tw(ContainerStyle)`
     container mx-auto
 `;
 
-export const Button = styled.button`
+export const ButtonPub = styled.button`
   height: 2.8rem;
   width: 515px;
   padding: 0 1.3rem;
@@ -79,12 +79,11 @@ export const UserInfo = styled.div`
     h4{
       margin-left: 1rem;
       font-size: 0.9rem;
-      font-weight: 500;
+      font-weight: 600;
       color: ${({ theme }) => theme.colors.gray_dark};
     }    
 `;
 
 export const Icons = styled.div`
   display: flex;
-
 `;
