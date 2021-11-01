@@ -11,26 +11,26 @@ import { MenuNav } from '../Screens/Feed/MenuNav';
 import { NewPost } from '../Screens/Feed/NewPost';
 import { UserSettings } from '../Screens/UserSettings';
 import { ROUTES } from './index';
+import {SignIn} from "../Screens/SignIn";
 
 
 export function AppRoutes() {
+
     return (
-        <>
             <Router>
                 <Header neighborhoodName="Jabaquara" />
                 <Switch>
-                    <Route path="/profile/:userId">
+                    <Route path={ROUTES.PROFILE}>
                         <Profile />
                     </Route>
                     <Route path={ROUTES.CONFIGURATIONS}>
                         <UserSettings />
                     </Route>
-                    <Route path="/">
+                    <Route path={ROUTES.HOME}>
                         <MenuNav />
                         <NewPost />
                     </Route>
                 </Switch>
             </Router>
-        </>
     )
 }
