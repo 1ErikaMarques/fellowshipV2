@@ -21,7 +21,6 @@ import {
 } from './styles'
 import { useTheme } from 'styled-components';
 import { api } from '../../services/api';
-import { useAuth } from '../../hooks/AuthContext';
 
 enum profileButton {
     EDITAR = 'Editar',

@@ -22,10 +22,11 @@ interface SignInCredentials {
     password: string;
 }
 
-interface SignUp extends User, SignInCredentials { }
+interface SignUp extends User, SignInCredentials {
+}
 
 interface AuthContextData {
-    user: User;
+    userInfo: AuthState;
     signIn: (credentials: SignInCredentials) => Promise<void>;
     signUp: (signUp: SignUp) => Promise<void>;
     logout: () => Promise<void>;
@@ -36,11 +37,11 @@ interface AuthProviderProps {
     children: ReactNode;
 }
 
-export const AuthContext = createContext<AuthContextData> ({} as AuthContextData)
+export const AuthContext = createContext<AuthContextData> ({} as AuthContextData);
 
 export function AuthProvider({children}: AuthProviderProps) {
     const [isAuthenticated, setIsAuthenticated] = useState (false);
-  const [data, setData] = useState<AuthState>({} as AuthState);
+    const [data, setData] = useState<AuthState> ({} as AuthState);
 
     /**
      * função para fazer login
@@ -53,17 +54,17 @@ export function AuthProvider({children}: AuthProviderProps) {
             password
         }).then (resp => {
             const {token, user} = resp.data;
-            api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             setData ({token, user});
             sessionStorage.setItem ('loggedUser', JSON.stringify ({
                 token: token,
                 user: user
-            }))
+            }));
             setIsAuthenticated (true);
         }).catch (e => {
             toast.error (e.response.data.error, {
-                theme: "colored"
-            })
+                theme: 'colored'
+            });
         });
     }
 
@@ -89,16 +90,16 @@ export function AuthProvider({children}: AuthProviderProps) {
         sessionStorage.setItem ('loggedUser', JSON.stringify ({
             token: newUser.data.token,
             user: newUser.data.user
-        }))
+        }));
         setIsAuthenticated (true);
     }
 
     async function logout() {
         await api.post<AuthState> ('/auth/logout').then (() => {
             sessionStorage.clear ();
-            window.history.replaceState ({}, document.title, "/")
+            window.history.replaceState ({}, document.title, '/');
             setIsAuthenticated (false);
-        })
+        });
     }
 
     useEffect (() => {
@@ -116,10 +117,10 @@ export function AuthProvider({children}: AuthProviderProps) {
     }, []);
 
     return (
-        <AuthContext.Provider value={{user: data.user, signIn, isAuthenticated, signUp, logout}}>
+        <AuthContext.Provider value={{userInfo: data, signIn, isAuthenticated, signUp, logout}}>
             {children}
         </AuthContext.Provider>
-    )
+    );
 }
 
 export function useAuth() {
