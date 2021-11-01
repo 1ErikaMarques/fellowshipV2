@@ -168,8 +168,10 @@ export function Header({ neighborhoodName }: HeaderProps) {
                     </MenuItem>
                     <Divider style={{ backgroundColor: '#E9E9E9', marginTop: '0.6rem' }} />
                     <MenuItem onClick={logout} title={"sair"} >
-                        <LogoutOutlinedIcon style={{ marginRight: '10', color: '#53525D' }} />
-                        Logout
+                        <Link to={generatePath(ROUTES.LOGIN)}>
+                            <LogoutOutlinedIcon style={{ marginRight: '10', color: '#53525D' }} />
+                            Logout
+                        </Link>
                     </MenuItem>
                 </Menu>
             </Content>

@@ -8,6 +8,8 @@ import { ReactComponent as RelationshipIcon } from '../../assets/profile/relatio
 import { ReactComponent as HobbiesIcon } from '../../assets/profile/hobbies.svg';
 import { ReactComponent as BirthdayIcon } from '../../assets/profile/birthday.svg';
 import { ReactComponent as PhoneIcon } from '../../assets/profile/phone.svg';
+import { ReactComponent as CameraIcon } from '../../assets/UserPost/camera.svg';
+import { ReactComponent as VideoIcon } from '../../assets/UserPost/video.svg';
 
 import {
   Notification,
@@ -20,7 +22,9 @@ import {
   City,
   Birthday,
   Hobbies,
-  Phone
+  Phone,
+  Camera,
+  Video
 } from './styles';
 
 
@@ -99,6 +103,20 @@ export const PhoneImg = (props: IconsProps) => {
     <Phone fill={props.fill} stroke={props.stroke}>
       <PhoneIcon />
     </Phone>
+  )
+}
+export const CameraImg = (props: IconsProps) => {
+  return (
+    <Camera fill={props.fill} stroke={props.stroke}>
+      <CameraIcon />
+    </Camera>
+  )
+}
+export const VideoImg = (props: IconsProps) => {
+  return (
+    <Video fill={props.fill} stroke={props.stroke}>
+      <VideoIcon />
+    </Video>
   )
 }
 

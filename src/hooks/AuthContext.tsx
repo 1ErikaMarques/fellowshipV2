@@ -6,6 +6,7 @@ import {
   useState
 } from 'react';
 import { api } from '../services/api';
+
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -27,9 +28,7 @@ interface SignInCredentials {
   password: string;
 }
 
-interface SignUp extends User, SignInCredentials {
-
-}
+interface SignUp extends User, SignInCredentials { }
 
 interface AuthContextData {
   user: User;
@@ -37,7 +36,6 @@ interface AuthContextData {
   signUp: (signUp: SignUp) => Promise<void>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
-
 }
 
 interface AuthProviderProps {
@@ -48,7 +46,7 @@ export const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [data, setData] = useState<AuthState>({} as AuthState)
+  const [data, setData] = useState<AuthState>({} as AuthState);
 
   /**
    * função para fazer login
@@ -71,7 +69,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       })
       console.log(e.response)
     });
-
   }
 
   /**
@@ -97,10 +94,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   async function logout() {
-    const response = await api.post<AuthState>('/auth/login', {});
+    await api.post<AuthState>('/auth/logout');
     sessionStorage.clear();
-
-    console.log(response)
     setIsAuthenticated(false);
   }
 

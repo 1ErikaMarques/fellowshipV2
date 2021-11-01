@@ -162,6 +162,5 @@ export function Signup() {
         </Content>
       </Modals>
     </Container>
-
   );
 }

@@ -32,7 +32,6 @@ export const Notification = styled.div<IconsProps>`
       stroke-width: 1.4;
     }
   }
-
 `;
 export const Home = styled.div`
   svg, svg * {
@@ -52,7 +51,6 @@ export const Home = styled.div`
       stroke-width: 1.3;
     }
   }
-
 `;
 export const User = styled.div<IconsProps>`
   svg, svg * {
@@ -71,7 +69,6 @@ export const User = styled.div<IconsProps>`
       stroke: ${props => props.stroke};
     }
   }
-
 `;
 
 export const Work = styled.div<IconsProps>`
@@ -85,7 +82,6 @@ export const Work = styled.div<IconsProps>`
       stroke: ${props => props.stroke};
     }
   }
-
 `;
 
 export const City = styled.div<IconsProps>`
@@ -99,7 +95,6 @@ export const City = styled.div<IconsProps>`
       stroke: ${props => props.stroke};
     }
   }
-
 `;
 
 export const Relationship = styled.div<IconsProps>`
@@ -113,7 +108,6 @@ export const Relationship = styled.div<IconsProps>`
       stroke: ${props => props.stroke};
     }
   }
-
 `;
 
 export const Hobbies = styled.div<IconsProps>`
@@ -126,7 +120,6 @@ export const Hobbies = styled.div<IconsProps>`
       stroke: ${props => props.stroke};
     }
   }
-
 `;
 
 export const Birthday = styled.div<IconsProps>`
@@ -140,7 +133,6 @@ export const Birthday = styled.div<IconsProps>`
       stroke: ${props => props.stroke};
     }
   }
-
 `;
 
 export const Phone = styled.div<IconsProps>`
@@ -154,5 +146,52 @@ export const Phone = styled.div<IconsProps>`
       stroke: ${props => props.stroke};
     }
   }
+`;
 
+export const Camera = styled.div<IconsProps>`
+  svg, svg * {
+    width: 100%;
+    height: 2.9rem;
+    stroke-width: 1.6;
+    border-radius: 0.8rem;
+    padding: 0.3rem 0.3rem;
+    margin-right: 0.5rem;
+    stroke: ${({ theme }) => theme.colors.gray_medium};
+    cursor: pointer;
+
+    &:hover, &:hover * {
+      transition: 200ms;
+      stroke-width: 1;
+      stroke: ${({ theme }) => theme.colors.primary};
+      background-color: ${({ theme }) => theme.colors.light_blue};
+    }
+
+    * {
+      stroke: ${props => props.stroke};
+    }
+  }
+`;
+export const Video = styled.div<IconsProps>`
+  svg, svg * {
+    width: 100%;
+    height: 2.8rem;
+    padding: 0.3rem 0.3rem;
+    margin-left: 0.5rem;
+    stroke-width: 1.4;
+    border-radius: 0.8rem;
+    stroke: ${({ theme }) => theme.colors.gray_medium};
+    cursor: pointer;
+
+
+    &:hover, &:hover * {
+      transition: 200ms;
+      stroke-width: 1;
+      stroke: ${({ theme }) => theme.colors.primary};
+      background-color: ${({ theme }) => theme.colors.light_blue};
+    }
+
+    * {
+      stroke: ${props => props.stroke};
+    }
+  }
 `;
