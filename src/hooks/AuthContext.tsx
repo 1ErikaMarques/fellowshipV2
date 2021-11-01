@@ -12,7 +12,7 @@ interface User {
     birthday_date: string;
 }
 
-interface AuthState {
+export interface AuthState {
     token: string;
     user: User;
 }
@@ -54,7 +54,6 @@ export function AuthProvider({children}: AuthProviderProps) {
             password
         }).then (resp => {
             const {token, user} = resp.data;
-            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             setData ({token, user});
             sessionStorage.setItem ('loggedUser', JSON.stringify ({
                 token: token,
