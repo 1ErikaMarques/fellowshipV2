@@ -10,6 +10,7 @@ import {
     HobbiesImg,
     PhoneImg
 } from '../../components/Svgs';
+import {AuthState} from '../../hooks/AuthContext';
 
 import {
     Button,
@@ -29,7 +30,7 @@ enum profileButton {
 
 interface userInfo {
     name: string;
-    photoUrl: string;
+    profile_pic: string;
 }
 
 interface userDetails {
@@ -93,9 +94,9 @@ export function Profile() {
             setAllowEditing (false);
 
             // Fazendo submit do formulario programaticamente , para evitar que o submit seja feito ao alterar o nome.
-            formRef.current?.dispatchEvent(
-                new Event("submit", { bubbles: true, cancelable: true })
-            )
+            formRef.current?.dispatchEvent (
+                new Event ('submit', {bubbles: true, cancelable: true})
+            );
 
         } else {
             setButtonText (profileButton.SALVAR);
@@ -105,7 +106,7 @@ export function Profile() {
     return (
         <Container>
             <HeaderProfile>
-                <img src={userInfo.photoUrl} alt="foto perfil"/>
+                <img src={userInfo.profile_pic} alt="foto perfil"/>
                 <h3>{userInfo.name}</h3>
                 <Button
                     form={'profile'}

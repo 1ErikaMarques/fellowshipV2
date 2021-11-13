@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    BrowserRouter as Router,
+    BrowserRouter,
     Switch,
     Route,
 } from 'react-router-dom';
@@ -17,22 +17,19 @@ import {ROUTES} from './index';
 export function AppRoutes() {
 
     const {userInfo} = useAuth ();
-
     return (
-        <Router>
-            <Header neighborhoodName={userInfo.user.postal_code}/>
+        <BrowserRouter>
+            <Header neighborhoodName={userInfo.user.neighborhood}/>
             <Switch>
-                <Route path={ROUTES.PROFILE}>
-                    <Profile/>
-                </Route>
-                <Route path={ROUTES.CONFIGURATIONS}>
-                    <UserSettings/>
-                </Route>
-                <Route path={ROUTES.HOME}>
-                    <MenuNav/>
-                    <NewPost/>
-                </Route>
+                <Route path={ROUTES.PROFILE} children={<Profile/>}/>
+                <Route path={ROUTES.CONFIGURATIONS} children={<UserSettings/>}/>
+                <Route path={ROUTES.HOME} children={
+                    <>
+                        <MenuNav/>
+                        <NewPost/>
+                    </>
+                }/>
             </Switch>
-        </Router>
+        </BrowserRouter>
     );
 }

@@ -13,7 +13,7 @@ export function Routes() {
 }
 
 export const ROUTES = {
-    PROFILE: "/profile/:id",
+    PROFILE: "/profile/:userId",
     HOME: "/",
     CONFIGURATIONS: '/configurations',
     LOGIN: '/login'

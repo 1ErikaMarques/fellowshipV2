@@ -155,7 +155,7 @@ export function Header({ neighborhoodName }: HeaderProps) {
                     }}>
                     <MenuItem onClick={handleClose} >
 
-                        <Link to={generatePath(ROUTES.PROFILE, { id: userInfo.user._id })}>
+                        <Link to={generatePath(ROUTES.PROFILE, { userId: userInfo.user._id })}>
                             <PersonOutlineOutlinedIcon style={{ marginRight: '10', color: '#53525D' }} />
                             Perfil
                         </Link>
