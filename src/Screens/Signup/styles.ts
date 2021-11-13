@@ -48,39 +48,53 @@ export const Title = styled.h2`
   color:  ${({ theme }) => theme.colors.gray_dark};  
 `;
 
-export const InputName = styled(InputForm)`
-`
+export const InputName = styled(InputForm)``;
 
 export const InputBirthDate = styled(InputForm)`
   ::placeholder{
     color: red;
   }
-`
+`;
 
-export const InputEmail = styled(InputForm)`
-`
+export const InputEmail = styled(InputForm)``;
 
-export const InputPassword = styled(InputForm)`
-`
+export const InputPassword = styled(InputForm)``;
 
-export const InputAddress = styled(InputForm)`
-`
+export const InputAddress = styled(InputForm)``;
+
+export const InputNeighborhood = styled.input`
+font-size: 0.9rem;
+font-weight: 500;
+max-width: 100%;
+height: 2.2rem;
+width: 100%;
+margin-top: 2rem;
+margin-bottom: 1rem;
+padding: 1rem;
+border-radius: 6px;
+background-color: ${({ theme }) => theme.colors.gray_light};
+border: 1px solid ${({ theme }) => theme.colors.border};
+cursor: not-allowed;
+::placeholder{
+    color: ${({ theme }) => theme.colors.gray_medium};
+  }
+`;
 
 export const Label = styled.label`
   display: flex;
   width: auto;
   justify-self: center;
-  margin-left: 0.6rem;
-  margin-top: -3.6rem;
-  padding: 0 0.3rem;
   position: absolute;
-  font-size: 0.8rem;
+  margin-left: 0.8rem;
+  margin-top: -3.7rem;
+  padding: 0 0.2rem;
+  font-size: 0.9rem;
   letter-spacing: 0.03em;
   font-weight: 400;
   color:  ${({ theme }) => theme.colors.gray_medium};
   background-color: ${({ theme }) => theme.colors.ice};
   transition: 400ms ease;
-`
+`;
 
 export const LabelName = styled(Label)`
   ${InputName}:focus ~ & {
@@ -88,7 +102,7 @@ export const LabelName = styled(Label)`
     margin-top: -4.4rem;    
     margin-left: 0.8rem;
   }
-`
+`;
 
 export const LabelBirthDate = styled(Label)`
   ${InputBirthDate}:focus ~ & {
@@ -96,7 +110,7 @@ export const LabelBirthDate = styled(Label)`
     margin-top: -4.4rem;    
     margin-left: 0.8rem;
   }
-`
+`;
 
 export const LabelEmail = styled(Label)`
   ${InputEmail}:focus ~ & {
@@ -104,7 +118,7 @@ export const LabelEmail = styled(Label)`
     margin-top: -4.4rem;    
     margin-left: 0.8rem;
   }
-`
+`;
 
 export const LabelPassword = styled(Label)`
   ${InputPassword}:focus ~ & {
@@ -112,7 +126,7 @@ export const LabelPassword = styled(Label)`
     margin-top: -4.4rem;    
     margin-left: 0.8rem;
   }
-`
+`;
 
 export const LabelAddress = styled(Label)`
   ${InputAddress}:focus ~ & {
@@ -120,4 +134,4 @@ export const LabelAddress = styled(Label)`
     margin-top: -4.4rem;    
     margin-left: 0.8rem;
   }
-`
+`;

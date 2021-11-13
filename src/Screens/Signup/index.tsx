@@ -1,7 +1,11 @@
 import { FormEvent, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { Eye } from 'react-feather';
 import { EyeOff } from 'react-feather';
+import { useAuth } from '../../hooks/AuthContext';
 
 import { Modals } from '../../components/Modals';
 import { Button } from '../../components/Button'
@@ -23,9 +27,11 @@ import {
   InputPassword,
   LabelPassword,
   InputAddress,
-  LabelAddress
+  LabelAddress,
+  InputNeighborhood
 } from './styles';
-import { useAuth } from '../../hooks/AuthContext';
+import axios from 'axios';
+
 
 
 const modalStyle = {
@@ -33,16 +39,21 @@ const modalStyle = {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   content: {
-    marginTop: '8%',
+    marginTop: '5%',
     marginLeft: '35%',
     bottom: 'auto',
-    width: '22rem',
+    width: '25rem',
     height: 'auto',
     backgroundColor: theme.colors.ice,
     borderRadius: '0.25rem',
     border: 'none',
     position: 'fixed',
   }
+}
+
+interface ViaCep {
+  bairro: string;
+  uf: string;
 }
 
 export function Signup() {
@@ -63,6 +74,7 @@ export function Signup() {
   const [postal_code, setPostalCode] = useState('');
   const [birthday_date, setBirthdayDate] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [neighborhood, setNeighborhood] = useState('');
 
   const { signUp } = useAuth();
 
@@ -78,9 +90,46 @@ export function Signup() {
       email,
       password,
       postal_code,
-      birthday_date
+      birthday_date,
+      neighborhood
     }
     signUp(data);
+  }
+
+  const handleSearchNeighborhood = async () => {
+    //retira caracteres especiais
+    const postalCodeTratado = postal_code.replace(/\D/g, '');
+
+    //regex para validar se tem somente numeros
+    const validaPostalCode = /^[0-9]{8}$/;
+
+    //valida se o regex for true
+    if (validaPostalCode.test(postalCodeTratado)) {
+      await axios.get<ViaCep>(`https://viacep.com.br/ws/${postalCodeTratado}/json`)
+        .then(resp => {
+          if (!("erro" in resp)) {
+            setNeighborhood(`${resp.data.bairro} - ${resp.data.uf}`);
+          } else {
+            toast.warning("Cep não encontrado", {
+              theme: 'colored'
+            });
+            setNeighborhood('');
+          }
+
+        })
+        //erro na api
+        .catch(error => {
+          toast.error("erro ao carregar cep", {
+            theme: 'colored'
+          });
+          console.error(`erro ao carregar cep ${postalCodeTratado} error: ${error}`)
+        })
+
+    } else {
+      toast.error("Cep Invàlido", {
+        theme: 'colored'
+      });
+    }
   }
 
   return (
@@ -102,7 +151,7 @@ export function Signup() {
               name="name"
               required
             />
-            <LabelName>Nome</LabelName>
+            <LabelName>Nome Completo</LabelName>
 
             <InputBirthDate
               type="date"
@@ -148,14 +197,26 @@ export function Signup() {
               type="string"
               value={postal_code}
               onChange={e => setPostalCode(e.target.value)}
+              onBlur={handleSearchNeighborhood}
               name="postal_code"
               placeholder="ex: 04444-044"
-              maxLength={8}
+              maxLength={10}
               required
             />
             <LabelAddress>CEP</LabelAddress>
+            <InputNeighborhood
+              type="string"
+              placeholder="Bairro"
+              value={neighborhood}
+              readOnly
+              required
+            />
             <Button
-              style={{ width: "10rem", boxShadowLength: "9.8em", marginBottom: "2rem" }}
+              style={{
+                width: "12rem",
+                boxShadowLength: "9.8em",
+                marginBottom: "2rem"
+              }}
               title="Criar Conta"
             />
           </form>

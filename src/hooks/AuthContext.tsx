@@ -1,7 +1,7 @@
-import {createContext, ReactNode, useContext, useEffect, useState} from 'react';
-import {api} from '../services/api';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { api } from '../services/api';
 
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface User {
@@ -10,6 +10,7 @@ interface User {
     photo?: string;
     postal_code: string;
     birthday_date: string;
+    neighborhood: string;
 }
 
 export interface AuthState {
@@ -37,31 +38,31 @@ interface AuthProviderProps {
     children: ReactNode;
 }
 
-export const AuthContext = createContext<AuthContextData> ({} as AuthContextData);
+export const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
-export function AuthProvider({children}: AuthProviderProps) {
-    const [isAuthenticated, setIsAuthenticated] = useState (false);
-    const [data, setData] = useState<AuthState> ({} as AuthState);
+export function AuthProvider({ children }: AuthProviderProps) {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [data, setData] = useState<AuthState>({} as AuthState);
 
     /**
      * função para fazer login
      * @param email email do usuario
      * @param password senha do usuario
      */
-    async function signIn({email, password}: SignInCredentials) {
-        await api.post<AuthState> ('/auth/login', {
+    async function signIn({ email, password }: SignInCredentials) {
+        await api.post<AuthState>('/auth/login', {
             email,
             password
-        }).then (resp => {
-            const {token, user} = resp.data;
-            setData ({token, user});
-            sessionStorage.setItem ('loggedUser', JSON.stringify ({
+        }).then(resp => {
+            const { token, user } = resp.data;
+            setData({ token, user });
+            sessionStorage.setItem('loggedUser', JSON.stringify({
                 token: token,
                 user: user
             }));
-            setIsAuthenticated (true);
-        }).catch (e => {
-            toast.error (e.response.data.error, {
+            setIsAuthenticated(true);
+        }).catch(e => {
+            toast.error(e.response.data.error, {
                 theme: 'colored'
             });
         });
@@ -75,54 +76,55 @@ export function AuthProvider({children}: AuthProviderProps) {
      * @param postal_code codigo postal do usuario
      * @param birthday_date data de aniversario
      */
-    async function signUp({email, password, name, postal_code, birthday_date}: SignUp) {
+    async function signUp({ email, password, name, postal_code, birthday_date, neighborhood }: SignUp) {
 
-        const newUser = await api.post<AuthState> ('/auth/signup', {
+        const newUser = await api.post<AuthState>('/auth/signup', {
             name,
             email,
             password,
             postal_code,
-            birthday_date
+            birthday_date,
+            neighborhood
         });
 
-        setData ({token: newUser.data.token, user: newUser.data.user});
-        sessionStorage.setItem ('loggedUser', JSON.stringify ({
+        setData({ token: newUser.data.token, user: newUser.data.user });
+        sessionStorage.setItem('loggedUser', JSON.stringify({
             token: newUser.data.token,
             user: newUser.data.user
         }));
-        setIsAuthenticated (true);
+        setIsAuthenticated(true);
     }
 
     async function logout() {
-        await api.post<AuthState> ('/auth/logout').then (() => {
-            sessionStorage.clear ();
-            window.history.replaceState ({}, document.title, '/');
-            setIsAuthenticated (false);
+        await api.post<AuthState>('/auth/logout').then(() => {
+            sessionStorage.clear();
+            window.history.replaceState({}, document.title, '/');
+            setIsAuthenticated(false);
         });
     }
 
-    useEffect (() => {
+    useEffect(() => {
         function loadUserStorageDate() {
-            const storedUser = sessionStorage.getItem ('loggedUser');
+            const storedUser = sessionStorage.getItem('loggedUser');
 
             if (storedUser) {
-                const loggedUser = JSON.parse (storedUser) as AuthState;
-                setData ({token: loggedUser.token, user: loggedUser.user});
-                setIsAuthenticated (true);
+                const loggedUser = JSON.parse(storedUser) as AuthState;
+                setData({ token: loggedUser.token, user: loggedUser.user });
+                setIsAuthenticated(true);
             }
         }
 
-        loadUserStorageDate ();
+        loadUserStorageDate();
     }, []);
 
     return (
-        <AuthContext.Provider value={{userInfo: data, signIn, isAuthenticated, signUp, logout}}>
+        <AuthContext.Provider value={{ userInfo: data, signIn, isAuthenticated, signUp, logout }}>
             {children}
         </AuthContext.Provider>
     );
 }
 
 export function useAuth() {
-    return useContext (AuthContext);
+    return useContext(AuthContext);
 }
 
