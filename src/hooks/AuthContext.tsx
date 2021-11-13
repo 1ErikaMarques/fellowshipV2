@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface User {
-    id?: string;
+    _id?: string;
     name: string;
     photo?: string;
     postal_code: string;

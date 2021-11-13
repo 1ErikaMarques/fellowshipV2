@@ -48,7 +48,7 @@ export function Header({ neighborhoodName }: HeaderProps) {
     const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
-    const { logout } = useAuth();
+    const { logout , userInfo } = useAuth();
 
     const handleClick = (event: any) => {
 
@@ -155,7 +155,7 @@ export function Header({ neighborhoodName }: HeaderProps) {
                     }}>
                     <MenuItem onClick={handleClose} >
 
-                        <Link to={generatePath(ROUTES.PROFILE, { id: 1 })}>
+                        <Link to={generatePath(ROUTES.PROFILE, { id: userInfo.user._id })}>
                             <PersonOutlineOutlinedIcon style={{ marginRight: '10', color: '#53525D' }} />
                             Perfil
                         </Link>

@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import React, {createRef, useState} from 'react';
+import {useForm} from 'react-hook-form';
+import {useParams} from 'react-router-dom';
 
 import {
     CityImg,
@@ -44,15 +44,18 @@ interface userDetails {
 
 export function Profile() {
 
-    const [userDetails, setUserDetails] = useState<userDetails>({} as userDetails)
-    const [userInfo, setUserInfo] = useState<userInfo>({} as userInfo)
-    const [buttonText, setButtonText] = useState(profileButton.EDITAR)
-    const [allowEditing, setAllowEditing] = useState(false)
-    const { userId } = useParams<{ userId: string }>();
+    const [userDetails, setUserDetails] = useState<userDetails> ({} as userDetails);
+    const [userInfo, setUserInfo] = useState<userInfo> ({} as userInfo);
+    const [buttonText, setButtonText] = useState (profileButton.EDITAR);
+    const [allowEditing, setAllowEditing] = useState (false);
+    const {userId} = useParams<{ userId: string }> ();
 
-    const { register, handleSubmit } = useForm<userDetails>();
+    // Criando referencia no formulario para disparar submit programaticamente.
+    const formRef: React.RefObject<HTMLFormElement> = createRef ();
 
-    const theme = useTheme();
+    const {register, handleSubmit} = useForm<userDetails> ();
+
+    const theme = useTheme ();
 
     /**
      * Salva as informacoes preenchidas no profile.
@@ -60,9 +63,7 @@ export function Profile() {
      */
     async function handleSaveUserDetails(profileEvent: userDetails) {
 
-
-
-        const response = await api.put('/user/update_profile', {
+        await api.put ('/user/update_profile', {
             work: profileEvent.work,
             birthday: profileEvent.birthday,
             city: profileEvent.city,
@@ -71,16 +72,14 @@ export function Profile() {
             relationship: profileEvent.relationship
         });
 
-        console.log(response)
-
-        setUserDetails({
+        setUserDetails ({
             work: profileEvent.work,
             birthday: profileEvent.birthday,
             city: profileEvent.city,
             hobbies: profileEvent.hobbies,
             phone: profileEvent.phone,
             relationship: profileEvent.relationship
-        })
+        });
     }
 
     /**
@@ -90,32 +89,36 @@ export function Profile() {
     const handleChangeButtonName = () => {
 
         if (allowEditing) {
-            setButtonText(profileButton.EDITAR)
-            setAllowEditing(false)
+            setButtonText (profileButton.EDITAR);
+            setAllowEditing (false);
+
+            // Fazendo submit do formulario programaticamente , para evitar que o submit seja feito ao alterar o nome.
+            formRef.current?.dispatchEvent(
+                new Event("submit", { bubbles: true, cancelable: true })
+            )
 
         } else {
-            setButtonText(profileButton.SALVAR)
-            setAllowEditing(true)
+            setButtonText (profileButton.SALVAR);
+            setAllowEditing (true);
         }
-    }
+    };
     return (
         <Container>
             <HeaderProfile>
-                <img src={userInfo.photoUrl} alt="foto perfil" />
+                <img src={userInfo.photoUrl} alt="foto perfil"/>
                 <h3>{userInfo.name}</h3>
                 <Button
                     form={'profile'}
                     onClick={handleChangeButtonName}
-                    type={"submit"}
+                    type="button"
                     backgroundColor={allowEditing ? theme.colors.primary : theme.colors.gray_light}
-                    color={allowEditing ? theme.colors.shape : theme.colors.gray_medium}
-                >
+                    color={allowEditing ? theme.colors.shape : theme.colors.gray_medium}>
                     {buttonText}
                 </Button>
             </HeaderProfile>
 
 
-            <form id={"profile"} onSubmit={handleSubmit(handleSaveUserDetails)}>
+            <form id={'profile'} onSubmit={handleSubmit (handleSaveUserDetails)} ref={formRef}>
                 <Content>
                     <WorkImg
                         fill={userDetails.work ? theme.colors.primary : theme.colors.gray_medium}
@@ -123,7 +126,7 @@ export function Profile() {
 
                     />
                     <Input
-                        {...register("work")}
+                        {...register ('work')}
                         defaultValue={userDetails.work}
                         disabled={!allowEditing}
                     />
@@ -133,7 +136,7 @@ export function Profile() {
                         stroke={userDetails.city ? theme.colors.green : theme.colors.gray_medium}
                     />
                     <Input
-                        {...register("city")}
+                        {...register ('city')}
                         defaultValue={userDetails.city}
                         disabled={!allowEditing}
                     />
@@ -143,7 +146,7 @@ export function Profile() {
                         stroke={userDetails.relationship ? theme.colors.pink : theme.colors.gray_medium}
                     />
                     <Input
-                        {...register("relationship")}
+                        {...register ('relationship')}
                         defaultValue={userDetails.relationship}
                         disabled={!allowEditing}
                     />
@@ -153,7 +156,7 @@ export function Profile() {
                         stroke={userDetails.birthday ? theme.colors.yellow : theme.colors.gray_medium}
                     />
                     <Input
-                        {...register("birthday")}
+                        {...register ('birthday')}
                         type={'date'}
                         defaultValue={userDetails.birthday}
                         disabled={!allowEditing}
@@ -163,7 +166,7 @@ export function Profile() {
                         stroke={userDetails.hobbies ? theme.colors.primary : theme.colors.gray_medium}
                     />
                     <Input
-                        {...register("hobbies")}
+                        {...register ('hobbies')}
                         defaultValue={userDetails.hobbies}
                         disabled={!allowEditing}
                     />
@@ -173,13 +176,13 @@ export function Profile() {
                         stroke={userDetails.phone ? theme.colors.red : theme.colors.gray_medium}
                     />
                     <Input
-                        {...register("phone")}
+                        {...register ('phone')}
                         defaultValue={userDetails.phone}
                         disabled={!allowEditing}
                     />
 
                     <TextArea
-                        {...register('about')}
+                        {...register ('about')}
                         placeholder="Nós conte um pouco mais sobre você.."
                         defaultValue={userDetails.about}
                         disabled={!allowEditing}
