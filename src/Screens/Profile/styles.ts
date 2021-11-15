@@ -70,21 +70,23 @@ export const Content = styled.div`
   gap: 1rem;
   margin-top: 4rem;    
   align-items: center;
+  background-color: ${({ theme }) => theme.colors.shape};
 `;
 
-export const Input = styled.input`
-  background-color: #f9f9f9;
+export const ProfileInput = styled.input`  
   grid-column-start: 2;
   padding: 0.7rem;
   border-radius: 0.25rem;
+  background-color: ${({ theme }) => theme.colors.shape};
+  outline-style: none;
   cursor: text;
 `;
 
 export const TextArea = styled.textarea`
-background-color: #f9f9f9;
 grid-column-start: 2;
+height: 10rem;
 padding: 0.7rem;
 border-radius: 0.25rem;
+background-color: ${({ theme }) => theme.colors.shape};
 cursor: text;
-  height: 10rem;
 `;

@@ -40,7 +40,7 @@ export const Content = styled.div`
   justify-content: center;  
     h3{
       font-size: 0.9rem;
-      padding: 0 0 1rem 0 ;
+      padding: 0;
       font-weight: 500;
       text-align: left;
       letter-spacing: 0.03rem;

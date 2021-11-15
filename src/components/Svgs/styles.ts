@@ -152,7 +152,7 @@ export const Camera = styled.div<IconsProps>`
   svg, svg * {
     width: 100%;
     height: 2.9rem;
-    stroke-width: 1.6;
+    stroke-width: 1.5;
     border-radius: 0.8rem;
     padding: 0.3rem 0.3rem;
     margin-right: 0.5rem;
@@ -174,8 +174,9 @@ export const Camera = styled.div<IconsProps>`
 export const Video = styled.div<IconsProps>`
   svg, svg * {
     width: 100%;
-    height: 2.8rem;
+    height: 2.7rem;
     padding: 0.3rem 0.3rem;
+    margin-top: 0.2rem;
     margin-left: 0.5rem;
     stroke-width: 1.4;
     border-radius: 0.8rem;

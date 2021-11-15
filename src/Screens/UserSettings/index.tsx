@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import Lottie from 'lottie-react';
 import settingsAnimated from '../../assets/UserSettings/settings_animated.json';
-
+import { useAuth } from '../../hooks/AuthContext';
 import { Avatar } from '@mui/material';
 
 import {
@@ -13,21 +12,28 @@ import {
   ContainerIlustration,
   Card,
 } from './styles';
-import { InputEmail, InputPassword, LabelEmail } from '../SignIn/styles';
 
+import {
+  InputEmail,
+  InputPassword,
+  LabelEmail
+} from '../SignIn/styles';
 
 
 export function UserSettings() {
+
+  const { userInfo } = useAuth();
 
   return (
     <Container>
       <Menu>
         <User>
-          <Avatar sx={{ width: '3.5rem', height: '3.5rem' }} />
-          <h2>mayk fofilis</h2>
+          <Avatar sx={{ width: '3.2rem', height: '3.2rem' }} />
+          <h2>{userInfo.user.name}</h2>
         </User>
         <p>Conta</p>
         <p>Segurança</p>
+
       </Menu >
       <ContainerIlustration>
         <Lottie animationData={settingsAnimated} />

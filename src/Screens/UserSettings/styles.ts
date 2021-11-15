@@ -50,7 +50,8 @@ export const User = styled.div`
   h2{
     font-size: 1rem;
     font-weight: 600;
-    color: ${({ theme }) => theme.colors.gray_dark};
+    margin-left: 1rem;
+    color: ${({ theme }) => theme.colors.gray_dark};    
   }
 `;
 

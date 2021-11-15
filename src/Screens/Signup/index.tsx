@@ -33,7 +33,6 @@ import {
 import axios from 'axios';
 
 
-
 const modalStyle = {
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -115,8 +114,8 @@ export function Signup() {
             });
             setNeighborhood('');
           }
-
         })
+
         //erro na api
         .catch(error => {
           toast.error("erro ao carregar cep", {
