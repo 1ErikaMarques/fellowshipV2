@@ -1,5 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import tw from 'tailwind-styled-components';
+
+interface OptionProps {
+  active: boolean;
+}
 
 const ContainerStyle = styled.div`
   display: flex;
@@ -15,14 +19,15 @@ export const Container = tw(ContainerStyle)`
     container mx-auto    
 `;
 
-export const Menu = styled.div`  
+export const Menu = styled.div`
   background-color: ${({ theme }) => theme.colors.light_blue};
-  width: 18rem;
-  padding: 1rem 0rem  0rem;
+  width: 20rem;
+  margin-top: 2rem;
+  align-items: center;  
     p {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: center;     
       margin-top: 1.2rem;
       padding: 1rem ;
       font-size: 1.1rem;
@@ -35,9 +40,33 @@ export const Menu = styled.div`
         color: ${({ theme }) => theme.colors.primary};
         font-weight: 500;
         transition: 200ms ease;
-      }    
+      }
   }
 `;
+
+export const Option = styled.button<OptionProps>`
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 1.2rem;
+    padding: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: ${({ theme }) => theme.colors.gray_medium};            
+    cursor: pointer;
+      
+    &:hover{
+      background-color: ${({ theme }) => theme.colors.ice};
+      color: ${({ theme }) => theme.colors.primary};
+      font-weight: 500;
+      transition: 200ms ease;
+    }
+    ${({ active }) => active && css`
+    color: ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.ice};
+  `}
+`
 
 export const User = styled.div`
   display: flex;
@@ -95,3 +124,32 @@ export const Card = styled.div`
     color: ${({ theme }) => theme.colors.gray_dark}
   }
 `;
+
+export const Input = styled.input`
+  width: 100%;
+  height: 2.4rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;   
+  padding:  1rem;
+  background-color: ${({ theme }) => theme.colors.ice};  
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  transition: 400ms ease;
+  
+
+  &:focus {
+    background-color: ${({ theme }) => theme.colors.ice};
+    outline: none;
+    border: 1px solid ${({ theme }) => theme.colors.primary};
+    box-shadow: 0 0 0 4px rgb(66 133 244 / 10%);
+    transition: 400ms ease;
+  }
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.ice};
+    outline: none;
+    box-shadow: 0 0 0 4px rgb(66 133 244 / 10%);
+    border-color: ${({ theme }) => theme.colors.primary};
+  }
+`

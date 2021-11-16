@@ -91,6 +91,7 @@ export const InputForm = styled.input`
   margin-bottom: 1rem;
   padding: 1rem;
   border-radius: 6px;
+  color: ${({ theme }) => theme.colors.gray_medium};
   background-color: ${({ theme }) => theme.colors.ice};
   border: 1px solid ${({ theme }) => theme.colors.border};
   transition: 400ms ease;  

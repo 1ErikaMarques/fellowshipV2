@@ -28,7 +28,7 @@ import {
   LabelPassword,
   InputAddress,
   LabelAddress,
-  InputNeighborhood
+  InputDisabled
 } from './styles';
 import axios from 'axios';
 
@@ -203,7 +203,7 @@ export function Signup() {
               required
             />
             <LabelAddress>CEP</LabelAddress>
-            <InputNeighborhood
+            <InputDisabled
               type="string"
               placeholder="Bairro"
               value={neighborhood}

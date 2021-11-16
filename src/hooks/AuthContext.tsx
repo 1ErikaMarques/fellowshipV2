@@ -4,7 +4,7 @@ import { api } from '../services/api';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-interface User {
+interface User extends SignInCredentials {
     id?: string;
     name: string;
     profile_pic?: string;

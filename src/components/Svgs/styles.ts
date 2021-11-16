@@ -7,10 +7,9 @@ export interface IconsProps {
 
 export const Logo = styled.div`
   svg {
-    max-width: 16rem;
-    height: 3.5rem;
-    margin-top: 0.7rem;
-    margin-left: 2rem;
+    width: 100%;
+    height: 3.5rem;    
+    cursor: pointer;
   }
 `;
 
@@ -33,6 +32,7 @@ export const Notification = styled.div<IconsProps>`
     }
   }
 `;
+
 export const Home = styled.div`
   svg, svg * {
     width: 90%;
@@ -43,15 +43,16 @@ export const Home = styled.div`
       transition: 200ms;
       stroke-width: 1;
       stroke: ${({ theme }) => theme.colors.primary};
-    }
+    };
 
     path, path * {
       fill: white;
       stroke: ${({ theme }) => theme.colors.gray_dark};
       stroke-width: 1.3;
-    }
+    };
   }
 `;
+
 export const User = styled.div<IconsProps>`
   svg, svg * {
     width: 90%;
@@ -171,6 +172,7 @@ export const Camera = styled.div<IconsProps>`
     }
   }
 `;
+
 export const Video = styled.div<IconsProps>`
   svg, svg * {
     width: 100%;
@@ -189,6 +191,51 @@ export const Video = styled.div<IconsProps>`
       stroke-width: 1;
       stroke: ${({ theme }) => theme.colors.primary};
       background-color: ${({ theme }) => theme.colors.light_blue};
+    }
+
+    * {
+      stroke: ${props => props.stroke};
+    }
+  }
+`;
+export const Security = styled.div<IconsProps>`
+  svg, svg * {
+    width: 100%;
+    height: 2.7rem;
+    padding: 0.3rem;        
+    stroke-width: 1.4;
+    border-radius: 0.8rem;
+    stroke: ${({ theme }) => theme.colors.gray_medium};
+    cursor: pointer;
+
+
+    &:hover, &:hover * {
+      transition: 200ms;
+      stroke-width: 2;
+      stroke: ${({ theme }) => theme.colors.primary};    
+    }
+
+    * {
+      stroke: ${props => props.stroke};
+    }
+  }
+`;
+
+export const UserAccount = styled.div<IconsProps>`
+  svg, svg * {
+    width: 100%;
+    height: 2.7rem;
+    padding: 0.3rem;   
+    stroke-width: 1.4;
+    border-radius: 0.8rem;
+    stroke: ${({ theme }) => theme.colors.gray_medium};
+    cursor: pointer;
+
+
+    &:hover, &:hover * {
+      transition: 200ms;
+      stroke-width: 2;
+      stroke: ${({ theme }) => theme.colors.primary};
     }
 
     * {

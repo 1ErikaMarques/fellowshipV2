@@ -62,7 +62,7 @@ export const InputPassword = styled(InputForm)``;
 
 export const InputAddress = styled(InputForm)``;
 
-export const InputNeighborhood = styled.input`
+export const InputDisabled = styled.input`
 font-size: 0.9rem;
 font-weight: 500;
 max-width: 100%;

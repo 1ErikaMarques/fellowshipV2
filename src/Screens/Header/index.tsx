@@ -48,7 +48,7 @@ export function Header({ neighborhoodName }: HeaderProps) {
     const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
-    const { logout , userInfo } = useAuth();
+    const { logout, userInfo } = useAuth();
 
     const handleClick = (event: any) => {
 
@@ -81,7 +81,9 @@ export function Header({ neighborhoodName }: HeaderProps) {
     return (
 
         <Container>
-            <LogoImg />
+            <Link to={generatePath(ROUTES.HOME)}>
+                <LogoImg />
+            </Link>
             <NeighborhoodName>
                 {neighborhoodName}
             </NeighborhoodName>

@@ -10,6 +10,8 @@ import { ReactComponent as BirthdayIcon } from '../../assets/profile/birthday.sv
 import { ReactComponent as PhoneIcon } from '../../assets/profile/phone.svg';
 import { ReactComponent as CameraIcon } from '../../assets/UserPost/camera.svg';
 import { ReactComponent as VideoIcon } from '../../assets/UserPost/video.svg';
+import { ReactComponent as SecurityIcon } from '../../assets/UserSettings/security.svg';
+import { ReactComponent as UserAccountIcon } from '../../assets/UserSettings/user_account.svg';
 
 import {
   Notification,
@@ -24,7 +26,9 @@ import {
   Hobbies,
   Phone,
   Camera,
-  Video
+  Video,
+  Security,
+  UserAccount
 } from './styles';
 
 
@@ -91,6 +95,7 @@ export const BirthdayImg = (props: IconsProps) => {
     </Birthday>
   )
 }
+
 export const HobbiesImg = (props: IconsProps) => {
   return (
     <Hobbies fill={props.fill} stroke={props.stroke}>
@@ -98,6 +103,7 @@ export const HobbiesImg = (props: IconsProps) => {
     </Hobbies>
   )
 }
+
 export const PhoneImg = (props: IconsProps) => {
   return (
     <Phone fill={props.fill} stroke={props.stroke}>
@@ -105,6 +111,7 @@ export const PhoneImg = (props: IconsProps) => {
     </Phone>
   )
 }
+
 export const CameraImg = (props: IconsProps) => {
   return (
     <Camera fill={props.fill} stroke={props.stroke}>
@@ -112,11 +119,28 @@ export const CameraImg = (props: IconsProps) => {
     </Camera>
   )
 }
+
 export const VideoImg = (props: IconsProps) => {
   return (
     <Video fill={props.fill} stroke={props.stroke}>
       <VideoIcon />
     </Video>
+  )
+}
+
+export const SecurityImg = (props: IconsProps) => {
+  return (
+    <Security fill={props.fill} stroke={props.stroke}>
+      <SecurityIcon />
+    </Security>
+  )
+}
+
+export const UserAccountImg = (props: IconsProps) => {
+  return (
+    <UserAccount fill={props.fill} stroke={props.stroke}>
+      <UserAccountIcon />
+    </UserAccount>
   )
 }
 
