@@ -10,7 +10,7 @@ interface User extends SignInCredentials {
     profile_pic?: string;
     postal_code: string;
     birthday_date: string;
-    neighborhood: string;
+    neighbourhood: string;
 }
 
 export interface AuthState {
@@ -75,9 +75,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
      * @param name nome do usuario
      * @param postal_code codigo postal do usuario
      * @param birthday_date data de aniversario
-     * @param neighborhood
+     * @param neighbourhood
      */
-    async function signUp({ email, password, name, postal_code, birthday_date, neighborhood }: SignUp) {
+    async function signUp({ email, password, name, postal_code, birthday_date, neighbourhood }: SignUp) {
 
         const newUser = await api.post<AuthState>('/auth/signup', {
             name,
@@ -85,7 +85,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             password,
             postal_code,
             birthday_date,
-            neighborhood
+            neighbourhood
         });
 
         setData({ token: newUser.data.token, user: newUser.data.user });

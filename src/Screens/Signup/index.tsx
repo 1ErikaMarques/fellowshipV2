@@ -73,7 +73,7 @@ export function Signup() {
   const [postal_code, setPostalCode] = useState('');
   const [birthday_date, setBirthdayDate] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [neighborhood, setNeighborhood] = useState('');
+  const [neighbourhood, setneighbourhood] = useState('');
 
   const { signUp } = useAuth();
 
@@ -90,12 +90,12 @@ export function Signup() {
       password,
       postal_code,
       birthday_date,
-      neighborhood
+      neighbourhood
     }
     signUp(data);
   }
 
-  const handleSearchNeighborhood = async () => {
+  const handleSearchneighbourhood = async () => {
     //retira caracteres especiais
     const postalCodeTratado = postal_code.replace(/\D/g, '');
 
@@ -107,12 +107,12 @@ export function Signup() {
       await axios.get<ViaCep>(`https://viacep.com.br/ws/${postalCodeTratado}/json`)
         .then(resp => {
           if (!("erro" in resp)) {
-            setNeighborhood(`${resp.data.bairro} - ${resp.data.uf}`);
+            setneighbourhood(`${resp.data.bairro} - ${resp.data.uf}`);
           } else {
             toast.warning("Cep não encontrado", {
               theme: 'colored'
             });
-            setNeighborhood('');
+            setneighbourhood('');
           }
         })
 
@@ -196,7 +196,7 @@ export function Signup() {
               type="string"
               value={postal_code}
               onChange={e => setPostalCode(e.target.value)}
-              onBlur={handleSearchNeighborhood}
+              onBlur={handleSearchneighbourhood}
               name="postal_code"
               placeholder="ex: 04444-044"
               maxLength={10}
@@ -206,7 +206,7 @@ export function Signup() {
             <InputDisabled
               type="string"
               placeholder="Bairro"
-              value={neighborhood}
+              value={neighbourhood}
               readOnly
               required
             />

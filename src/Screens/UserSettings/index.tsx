@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import Lottie from 'lottie-react';
 import settingsAnimated from '../../assets/UserSettings/settings_animated.json';
 import { useAuth } from '../../hooks/AuthContext';
@@ -95,7 +95,7 @@ export function UserSettings() {
               />
 
               <InputDisabled
-                defaultValue={userInfo.user.neighborhood}
+                defaultValue={userInfo.user.neighbourhood}
                 style={{
                   width: "22rem",
                   marginTop: "1rem",

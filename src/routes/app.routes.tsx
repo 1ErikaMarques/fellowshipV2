@@ -19,7 +19,7 @@ export function AppRoutes() {
     const {userInfo} = useAuth ();
     return (
         <BrowserRouter>
-            <Header neighborhoodName={userInfo.user.neighborhood}/>
+            <Header neighbourhoodName={userInfo.user.neighbourhood}/>
             <Switch>
                 <Route path={ROUTES.PROFILE} children={<Profile/>}/>
                 <Route path={ROUTES.CONFIGURATIONS} children={<UserSettings/>}/>

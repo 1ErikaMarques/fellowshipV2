@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { Link, generatePath } from 'react-router-dom';
+import React, {useState} from 'react';
+import {Link, generatePath} from 'react-router-dom';
 
-import { ROUTES } from '../../routes';
-import { useAuth } from '../../hooks/AuthContext';
+import {ROUTES} from '../../routes';
+import {useAuth} from '../../hooks/AuthContext';
 
 import {
     HomeImg,
     LogoImg,
     NotificationImg,
     UserImg
-} from '../../components/Svgs'
+} from '../../components/Svgs';
 
 import {
     Avatar,
@@ -22,8 +22,11 @@ import {
     Menu,
     MenuItem,
     Typography,
-    Divider
+    Divider,
+    Autocomplete, TextField, IconButton, InputAdornment
 } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+
 
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -34,19 +37,19 @@ import {
     Container,
     Content,
     NeighborhoodName,
-    Search
-} from './styles'
+} from './styles';
 
 
 interface HeaderProps {
-    neighborhoodName: string;
+    neighbourhoodName: string;
 }
 
-export function Header({ neighborhoodName }: HeaderProps) {
+export function Header({neighbourhoodName}: HeaderProps) {
 
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
-    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState (null);
+    const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState (false);
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState (false);
+    const [neighbourhoods, setNeighbourhoods] = useState ([]);
 
     const { logout, userInfo } = useAuth();
 
@@ -54,13 +57,13 @@ export function Header({ neighborhoodName }: HeaderProps) {
 
         switch (event.currentTarget.id) {
             case 'notification':
-                setIsNotificationMenuOpen(true);
+                setIsNotificationMenuOpen (true);
                 break;
             case 'user-specifics':
-                setIsUserMenuOpen(true);
+                setIsUserMenuOpen (true);
                 break;
         }
-        setAnchorEl(event.currentTarget);
+        setAnchorEl (event.currentTarget);
     };
 
     const handleClose = () => {
@@ -68,30 +71,58 @@ export function Header({ neighborhoodName }: HeaderProps) {
             const anchorId = anchorEl as HTMLElement;
             switch (anchorId.id) {
                 case 'notification':
-                    setIsNotificationMenuOpen(false);
+                    setIsNotificationMenuOpen (false);
                     break;
                 case 'user-specifics':
-                    setIsUserMenuOpen(false);
+                    setIsUserMenuOpen (false);
                     break;
             }
         }
-        setAnchorEl(null);
+        setAnchorEl (null);
     };
 
     return (
 
         <Container>
             <Link to={generatePath(ROUTES.HOME)}>
-                <LogoImg />
+            <LogoImg/>
             </Link>
             <NeighborhoodName>
-                {neighborhoodName}
+                {neighbourhoodName}
             </NeighborhoodName>
+            <Autocomplete
+                disablePortal
+                id="combo-box-neighbourhood"
+                options={neighbourhoods}
+                disableClearable
+                freeSolo
+                sx={{maxWidth: '18rem', height: '2rem', border: 'border: 1px solid #E9E9E9', borderRadius: '0.25rem'}}
+                renderInput={(params) =>
+                    <TextField
+                        {...params}
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        autoFocus
+                        // onChange={handlePhoneNumberChange}
+                        placeholder="Search..."
+                        type="search"
+                        InputProps={{
+                            ...params.InputProps,
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchIcon />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                }
+            />
 
-            <Search className={"row-start-1 col-end-4"} />
             <Content>
-                <Link to={generatePath(ROUTES.HOME)}>
-                    <HomeImg />
+                <Link to={generatePath (ROUTES.HOME)}>
+                    <HomeImg/>
                 </Link>
                 <Button
                     id="notification"
@@ -115,23 +146,23 @@ export function Header({ neighborhoodName }: HeaderProps) {
                         'aria-labelledby': 'notifications',
                     }}
                 >
-                    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                    <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
                         <ListItem alignItems="flex-start">
                             <ListItemAvatar>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg"/>
                             </ListItemAvatar>
                             <ListItemText
                                 primary="Brunch this weekend?"
                                 secondary={
                                     <React.Fragment>
                                         <Typography
-                                            sx={{ display: 'inline' }}
+                                            sx={{display: 'inline'}}
                                             component="span"
                                             variant="body2"
                                             color="text.primary">
                                             Ali Connors
                                         </Typography>
-                                        {" — I'll be in your neighborhood doing errands this…"}
+                                        {' — I\'ll be in your neighborhood doing errands this…'}
                                     </React.Fragment>
                                 }
                             />
@@ -145,7 +176,7 @@ export function Header({ neighborhoodName }: HeaderProps) {
                     aria-expanded={isUserMenuOpen ? 'true' : undefined}
                     onClick={handleClick}>
                     <UserImg fill={isUserMenuOpen ? theme.colors.primary : theme.colors.gray_dark}
-                        stroke={isUserMenuOpen ? theme.colors.primary : theme.colors.gray_medium} />
+                             stroke={isUserMenuOpen ? theme.colors.primary : theme.colors.gray_medium}/>
                 </Button>
                 <Menu
                     id="user-specifics-menu"
@@ -155,23 +186,23 @@ export function Header({ neighborhoodName }: HeaderProps) {
                     MenuListProps={{
                         'aria-labelledby': 'user-specifics',
                     }}>
-                    <MenuItem onClick={handleClose} >
+                    <MenuItem onClick={handleClose}>
 
-                        <Link to={generatePath(ROUTES.PROFILE, { userId: userInfo.user.id })}>
-                            <PersonOutlineOutlinedIcon style={{ marginRight: '10', color: '#53525D' }} />
+                        <Link to={generatePath (ROUTES.PROFILE, {userId: userInfo.user.id})}>
+                            <PersonOutlineOutlinedIcon style={{marginRight: '10', color: '#53525D'}}/>
                             Perfil
                         </Link>
                     </MenuItem>
                     <MenuItem onClick={handleClose}>
-                        <Link to={generatePath(ROUTES.CONFIGURATIONS)}>
-                            <SettingsOutlinedIcon style={{ marginRight: '10', color: '#53525D' }} />
+                        <Link to={generatePath (ROUTES.CONFIGURATIONS)}>
+                            <SettingsOutlinedIcon style={{marginRight: '10', color: '#53525D'}}/>
                             Configurações
                         </Link>
                     </MenuItem>
-                    <Divider style={{ backgroundColor: '#E9E9E9', marginTop: '0.6rem' }} />
-                    <MenuItem onClick={logout} title={"sair"} >
-                        <Link to={generatePath(ROUTES.LOGIN)}>
-                            <LogoutOutlinedIcon style={{ marginRight: '10', color: '#53525D' }} />
+                    <Divider style={{backgroundColor: '#E9E9E9', marginTop: '0.6rem'}}/>
+                    <MenuItem onClick={logout} title={'sair'}>
+                        <Link to={generatePath (ROUTES.LOGIN)}>
+                            <LogoutOutlinedIcon style={{marginRight: '10', color: '#53525D'}}/>
                             Logout
                         </Link>
                     </MenuItem>
