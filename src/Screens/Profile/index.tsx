@@ -68,13 +68,15 @@ export function Profile() {
      */
     async function handleSaveUserDetails(profileEvent: userDetails) {
 
+        console.log(profileEvent)
         await api.put('/user/update_profile', {
-            work: profileEvent.work,
-            birthday: profileEvent.birthday,
+            job: profileEvent.work,
+            birthday_date: profileEvent.birthday,
             city: profileEvent.city,
             hobbies: profileEvent.hobbies,
-            phone: profileEvent.phone,
-            relationship: profileEvent.relationship
+            contact: profileEvent.phone,
+            relationship: profileEvent.relationship,
+            about:profileEvent.about
         });
     }
 
@@ -91,7 +93,8 @@ export function Profile() {
                 city: response.data.user.city,
                 hobbies: response.data.user.hobbies,
                 phone: response.data.user.phone,
-                relationship: response.data.user.relationship
+                relationship: response.data.user.relationship,
+                about: response.data.user.about
             });
 
             setUserInfo({
