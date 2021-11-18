@@ -101,7 +101,7 @@ export function Profile() {
             })
         })
 
-    }, [])
+    }, [userId])
 
 
     /** Muda foto de perfil
