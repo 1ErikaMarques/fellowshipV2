@@ -76,15 +76,6 @@ export function Profile() {
             phone: profileEvent.phone,
             relationship: profileEvent.relationship
         });
-
-        setUserDetails({
-            work: profileEvent.work,
-            birthday: profileEvent.birthday,
-            city: profileEvent.city,
-            hobbies: profileEvent.hobbies,
-            phone: profileEvent.phone,
-            relationship: profileEvent.relationship
-        });
     }
 
     //carrega quando abri a pag

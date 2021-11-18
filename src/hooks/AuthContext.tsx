@@ -62,7 +62,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             }));
             setIsAuthenticated(true);
         }).catch(e => {
-            toast.error(e.response.data.error, {
+            toast.error(e.response?.data.error, {
                 theme: 'colored'
             });
         });
@@ -75,6 +75,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
      * @param name nome do usuario
      * @param postal_code codigo postal do usuario
      * @param birthday_date data de aniversario
+     * @param neighborhood
      */
     async function signUp({ email, password, name, postal_code, birthday_date, neighborhood }: SignUp) {
 
