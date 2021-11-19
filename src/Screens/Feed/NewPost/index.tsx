@@ -11,7 +11,7 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
-import InfoIcon from '@mui/icons-material/Info';
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 
 import { useTheme } from 'styled-components';
 import {
@@ -53,15 +53,25 @@ export function NewPost() {
   const theme = useTheme();
 
   const handleAddPhotoPost = () => {
-    const obj = {
+    let arrayPost = new Array()
+    arrayPost[0] = {
       id: "1",
       mediaUrl: "https://avatars.githubusercontent.com/u/4424108?v=4"
     }
-    setMediaPost(old => [...old, obj])
-
+    arrayPost[1] = {
+      id: "2",
+      mediaUrl: "https://avatars.githubusercontent.com/u/63205222?v=4"
+    }
+    setMediaPost(() => [...arrayPost])
   }
 
   const handleAddVideoPost = () => { }
+
+  const handleRemoveMedia = (id: string) => {
+    setMediaPost(old => old.filter(
+      media => media.id !== id
+    ));
+  }
 
   return (
     <Container>
@@ -87,7 +97,12 @@ export function NewPost() {
               />
             </Header>
             <UserInfo>
-              <Avatar sx={{ width: '2.6rem', height: '2.6rem' }} />
+              <Avatar
+                sx={{
+                  width: '2.6rem',
+                  height: '2.6rem'
+                }}
+              />
               <h4>Mayk Fofilis</h4>
             </UserInfo>
             <TextareaAutosize
@@ -102,10 +117,10 @@ export function NewPost() {
                 outline: 'none',
                 marginTop: '1rem',
                 color: '#53525D',
-                fontSize: '1.1rem',
+                fontSize: '1rem',
               }}
             />
-            <ImageList sx={{ width: 500, height: 250, marginTop: "1rem", }}>
+            <ImageList sx={{ width: 485, height: 200, marginTop: "0.5rem", }}>
               {mediaPost.map((item) => (
                 <ImageListItem key={item.id}>
                   <img
@@ -122,7 +137,7 @@ export function NewPost() {
                       <IconButton
                         sx={{ color: 'rgba(27, 27, 27, 0.94)' }}
                       >
-                        <InfoIcon />
+                        <CancelRoundedIcon color="action" onClick={() => handleRemoveMedia(item.id)} />
                       </IconButton>
                     }
                   />

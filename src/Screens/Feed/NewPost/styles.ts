@@ -53,16 +53,16 @@ export const Header = tw.div`
 ` ;
 
 export const CloseButton = styled.span`
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: bold;  
-  padding: 0.3rem 0.5rem;
+  padding: 0.4rem 0.6rem;
   color: #b5b5b5;
   cursor: pointer;  
 
   &:hover {    
-    color: #666666;
+    color: ${({ theme }) => theme.colors.gray_dark};
     border-radius: 2rem;
-    background-color: #eeeeee;
+    background-color: ${({ theme }) => theme.colors.gray_light};
     cursor: pointer;
     transition: color 200ms ease;
   }

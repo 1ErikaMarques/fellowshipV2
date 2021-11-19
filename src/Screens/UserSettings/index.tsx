@@ -34,23 +34,42 @@ interface UpdateFormSecurityData {
   passwordConfirm: string
 };
 
+interface UpdateFormPersonalData {
+  fullName: string
+  postalCode: string
+}
+
 const schema = yup.object({
   email: yup.string().email().notRequired(),
   password: yup.string().notRequired(),
-  passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'As senhas são diferentes, por favor insira senhas iguais.')
+  passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'As senhas são diferentes, por favor insira senhas iguais.'),
+  fullName: yup.string().notRequired(),
+  postalCode: yup.string().notRequired()
 });
 
 export function UserSettings() {
 
   const { userInfo } = useAuth();
 
-  const { register, handleSubmit, formState: { errors } } = useForm<UpdateFormSecurityData>({
-    resolver: yupResolver(schema)
-  });
+  const {
+    register: registerSecurity,
+    handleSubmit: handleSecurityData,
+    formState: { errors } } = useForm<UpdateFormSecurityData>({
+      resolver: yupResolver(schema)
+    });
 
-  const onSubmit = (data: UpdateFormSecurityData) => console.log(data);
+  const {
+    register: registerPersonalData,
+    handleSubmit: handlePersonalData,
+    formState: { errors: errorsPersonalData } } = useForm<UpdateFormPersonalData>({
+      resolver: yupResolver(schema)
+    });
+
+  const onSubmitPersonalData = (PersonalData: UpdateFormPersonalData) => console.log(PersonalData);
+  const onSubmitSecuritydata = (Securitydata: UpdateFormSecurityData) => console.log(Securitydata);
 
   const [userName, setUserName] = useState(userInfo.user.name);
+  const [userEmail, setUserEmail] = useState(userInfo.user.email);
   const [postalCode, setPostalCode] = useState(userInfo.user.postal_code);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -107,54 +126,67 @@ export function UserSettings() {
       <Content>
         {
           option === 'dataEdit' ?
+            <form onSubmit={handlePersonalData(onSubmitPersonalData)}>
+              <Card>
+                <h1>Dados Pessoais</h1>
+                <Campos>
+                  <label>Nome</label>
+                  <Input
+                    value={userName}
+                    {...registerPersonalData("fullName")}
+                    onChange={e => { setUserName(e.target.value) }}
+                    style={{
+                      maxWidth: "22rem",
+                      marginTop: "0",
+                      marginBottom: "1rem"
+                    }}
+                  />
 
-            <Card>
-              <h1>Dados Pessoais</h1>
-              <label>Nome</label>
-              <Input
-                value={userName}
-                onChange={e => { setUserName(e.target.value) }}
-                style={{
-                  maxWidth: "22rem",
-                  marginTop: "0",
-                  marginBottom: "1rem"
-                }}
-              />
+                  <label>CEP</label>
+                  <Input
+                    value={postalCode}
+                    {...registerPersonalData("postalCode")}
+                    onChange={e => { setPostalCode(e.target.value) }}
+                    style={{
+                      maxWidth: "22rem",
+                      marginTop: "0",
+                      marginBottom: "1rem"
+                    }}
+                  />
 
-              <label>CEP</label>
-              <Input
-                value={postalCode}
-                onChange={e => { setPostalCode(e.target.value) }}
-                style={{
-                  maxWidth: "22rem",
-                  marginTop: "0",
-                  marginBottom: "1rem"
-                }}
-              />
+                  <InputDisabled
+                    defaultValue={userInfo.user.neighbourhood}
+                    style={{
+                      maxWidth: "22rem",
+                      marginTop: "1rem",
+                      marginBottom: "1rem",
+                      outline: "none",
+                    }}
+                    readOnly
+                  />
+                </Campos>
+                <Button
+                  title="Salvar"
+                  style={{
+                    width: "12rem",
+                    marginBottom: "2rem"
+                  }}
+                />
 
-              <InputDisabled
-                defaultValue={userInfo.user.neighbourhood}
-                style={{
-                  maxWidth: "22rem",
-                  marginTop: "1rem",
-                  marginBottom: "1rem",
-                  outline: "none",
-                }}
-                readOnly
-              />
-
-            </Card>
+              </Card>
+            </form>
             :
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSecurityData(onSubmitSecuritydata)}>
               <Card>
                 <h1>Conta</h1>
 
                 <Campos>
                   <label>Email</label>
                   <Input
-                    value={userInfo.user.email}
+                    value={userEmail}
                     type="email"
-                    {...register("email")}
+                    {...registerSecurity("email")}
+                    onChange={e => { setUserEmail(e.target.value) }}
                     style={{
                       maxWidth: "22rem",
                       marginTop: "0",
@@ -165,7 +197,7 @@ export function UserSettings() {
                   <label>Nova senha</label>
                   <Input
                     value={password}
-                    {...register("password")}
+                    {...registerSecurity("password")}
                     type={showPassword ? "text" : "password"}
                     onChange={e => { setPassword(e.target.value) }}
                     style={{
@@ -210,7 +242,7 @@ export function UserSettings() {
                   <label>Confirmar senha </label>
                   <Input
                     value={confirmPassword}
-                    {...register("passwordConfirm")}
+                    {...registerSecurity("passwordConfirm")}
                     type={showConfirmPassword ? "text" : "password"}
                     onChange={e => { setConfirmPassword(e.target.value) }}
                     style={{

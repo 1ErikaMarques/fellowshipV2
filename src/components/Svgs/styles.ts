@@ -21,12 +21,11 @@ export const Notification = styled.div<IconsProps>`
 
     &:hover, &:hover * {
       transition: 200ms;
-      stroke-width: 1;
+      stroke-width: 1.5;
       stroke: ${({ theme }) => theme.colors.primary};
     }
 
-    path, path * {
-      fill: white;
+    path, path * {      
       stroke: ${props => props.stroke};
       stroke-width: 1.4;
     }
@@ -36,17 +35,16 @@ export const Notification = styled.div<IconsProps>`
 export const Home = styled.div`
   svg, svg * {
     width: 90%;
-    height: 2.3rem;
+    height: 2.4rem;
     cursor: pointer;
 
     &:hover, &:hover * {
       transition: 200ms;
-      stroke-width: 1;
+      stroke-width: 1.5;
       stroke: ${({ theme }) => theme.colors.primary};
     };
 
-    path, path * {
-      fill: white;
+    path, path * {      
       stroke: ${({ theme }) => theme.colors.gray_dark};
       stroke-width: 1.3;
     };
@@ -62,7 +60,7 @@ export const User = styled.div<IconsProps>`
 
     &:hover, &:hover * {
       transition: 200ms;
-      stroke-width: 1;
+     stroke-width: 1.4;
       stroke: ${({ theme }) => theme.colors.primary};
     }
 
