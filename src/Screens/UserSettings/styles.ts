@@ -29,17 +29,17 @@ export const Menu = styled.div`
       flex-direction: column;
       align-items: center;     
       margin-top: 1.2rem;
-      padding: 1rem ;
       font-size: 1.1rem;
       font-weight: 500;
-      color: ${({ theme }) => theme.colors.gray_dark};            
+      color: ${({ theme }) => theme.colors.gray_dark};
+      transition: 200ms;
       cursor: pointer;
       
       &:hover{
         background-color: ${({ theme }) => theme.colors.ice};
         color: ${({ theme }) => theme.colors.primary};
         font-weight: 500;
-        transition: 200ms ease;
+        transition: 200ms;
       }
   }
 `;
@@ -53,8 +53,9 @@ export const Option = styled.button<OptionProps>`
     padding: 0.8rem;
     font-size: 1.1rem;
     font-weight: 500;
-    color: ${({ theme }) => theme.colors.gray_medium};            
-    cursor: pointer;
+    color: ${({ theme }) => theme.colors.gray_medium};
+     transition: 200ms;
+    cursor: pointer;    
       
     &:hover{
       background-color: ${({ theme }) => theme.colors.ice};
@@ -94,8 +95,8 @@ export const ContainerIlustration = styled.div`
 export const Content = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
-  padding: 2rem 0;
   margin-top: 10rem;  
   background-color: ${({ theme }) => theme.colors.ice};
 `;
@@ -104,9 +105,10 @@ export const Content = styled.div`
 export const Card = styled.div`
   display: flex;
   flex-direction: column;
-  width: 38rem;
-  padding: 2rem;
-  margin-top: 2.5rem;  
+  justify-content: center; 
+  align-items: center;
+  margin-top: 2.5rem;
+  padding: 1.2rem;
   background-color: ${({ theme }) => theme.colors.shape};
   border-top: 1px solid  ${({ theme }) => theme.colors.border};
   border-radius: 0.25rem;
@@ -121,18 +123,23 @@ export const Card = styled.div`
     margin-bottom: 0.5rem;
     font-size: 1rem;
     font-weight: 400;
-    color: ${({ theme }) => theme.colors.gray_dark}
+    color: ${({ theme }) => theme.colors.gray_dark};
+  }
+  p{
+    font-size: 0.8rem;
+    margin-top: 1rem;
+    font-weight: 400;
+    color: ${({ theme }) => theme.colors.red};
   }
 `;
 
 export const Input = styled.input`
-  width: 100%;
   height: 2.4rem;
   font-size: 1rem;
   border-radius: 6px;
   margin-top: 2.5rem;
   margin-bottom: 1rem;   
-  padding:  1rem;
+  padding: 1rem;
   background-color: ${({ theme }) => theme.colors.ice};  
   border: 1px solid ${({ theme }) => theme.colors.border};
   transition: 400ms ease;
@@ -152,4 +159,11 @@ export const Input = styled.input`
     box-shadow: 0 0 0 4px rgb(66 133 244 / 10%);
     border-color: ${({ theme }) => theme.colors.primary};
   }
-`
+`;
+
+export const Campos = styled.div`
+  display: flex;  
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+`;

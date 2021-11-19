@@ -210,8 +210,7 @@ export const Security = styled.div<IconsProps>`
 
 
     &:hover, &:hover * {
-      transition: 200ms;
-      stroke-width: 2;
+      transition: 200ms;     
       stroke: ${({ theme }) => theme.colors.primary};    
     }
 
@@ -233,8 +232,7 @@ export const UserAccount = styled.div<IconsProps>`
 
 
     &:hover, &:hover * {
-      transition: 200ms;
-      stroke-width: 2;
+      transition: 200ms;     
       stroke: ${({ theme }) => theme.colors.primary};
     }
 

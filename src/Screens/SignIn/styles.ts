@@ -71,7 +71,7 @@ export const Form = styled.form`
   }
 
   h5 {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     letter-spacing: 0.03em;
     color: ${({ theme }) => theme.colors.primary};
@@ -94,14 +94,14 @@ export const InputForm = styled.input`
   color: ${({ theme }) => theme.colors.gray_medium};
   background-color: ${({ theme }) => theme.colors.ice};
   border: 1px solid ${({ theme }) => theme.colors.border};
-  transition: 400ms ease;  
+  transition: 200ms ease;  
 
   &:focus {
     background-color: ${({ theme }) => theme.colors.ice};    
     border: 1px solid ${({ theme }) => theme.colors.primary};
     box-shadow: 0 0 0 4px rgb(66 133 244 / 10%);
     outline: none;
-    transition: 400ms ease;
+    transition: 200ms ease;
   }
 
   &:hover {
@@ -136,7 +136,7 @@ export const Label = styled.label`
 
 export const LabelEmail = styled(Label)`
   ${InputEmail}:focus ~ & {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     margin-top: -4.4rem;    
     margin-left: 0.8rem;
   }
@@ -144,7 +144,7 @@ export const LabelEmail = styled(Label)`
 
 export const LabelPassword = styled(Label)`
   ${InputPassword}:focus ~ & {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     margin-top: -4.4rem;    
     margin-left: 0.8rem;
   }

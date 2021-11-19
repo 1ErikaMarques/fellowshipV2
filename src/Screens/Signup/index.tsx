@@ -183,13 +183,24 @@ export function Signup() {
               <Eye
                 size={18}
                 onClick={handleShowPassword}
-                style={{ position: 'absolute', marginTop: -43, right: '55', cursor: 'pointer' }}
+                style={{
+                  position: 'absolute',
+                  marginTop: -43,
+                  right: '55',
+                  color: theme.colors.gray_dark,
+                  cursor: 'pointer'
+                }}
               />
               :
               <EyeOff
                 size={18}
                 onClick={handleShowPassword}
-                style={{ position: 'absolute', marginTop: -43, right: '55', cursor: 'pointer' }}
+                style={{
+                  position: 'absolute',
+                  marginTop: -43, right: '55',
+                  color: theme.colors.gray_dark,
+                  cursor: 'pointer'
+                }}
               />
             }
             <InputAddress
@@ -213,7 +224,6 @@ export function Signup() {
             <Button
               style={{
                 width: "12rem",
-                boxShadowLength: "9.8em",
                 marginBottom: "2rem"
               }}
               title="Criar Conta"

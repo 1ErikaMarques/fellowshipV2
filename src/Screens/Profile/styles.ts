@@ -9,8 +9,10 @@ interface ButtonProps {
 const ContainerStyle = styled.div`
   max-width: 750px;  
   margin-top: 120px;
-  padding: 3rem;  
+  padding: 3rem;
+  background-color: ${({ theme }) => theme.colors.shape};
   border: 1px solid ${({ theme }) => theme.colors.gray_light};
+  border-radius: 0.25rem;
 `;
 
 export const Container = tw(ContainerStyle)`
@@ -75,18 +77,35 @@ export const Content = styled.div`
 
 export const ProfileInput = styled.input`  
   grid-column-start: 2;
-  padding: 0.7rem;
+  height: 2rem;
+  padding: 0 0.5rem;
+  max-width: 70%;
   border-radius: 0.25rem;
   background-color: ${({ theme }) => theme.colors.shape};
   outline-style: none;
   cursor: text;
+
+  &:focus {
+  border: 1px solid ${({ theme }) => theme.colors.primary};
+  box-shadow: 0 0 0 4px rgb(66 133 244 / 10%);
+  transition: 200ms ease-out;
+  }
 `;
 
 export const TextArea = styled.textarea`
-grid-column-start: 2;
-height: 10rem;
-padding: 0.7rem;
-border-radius: 0.25rem;
-background-color: ${({ theme }) => theme.colors.shape};
-cursor: text;
+  grid-column-start: 2;
+  height: 10rem;
+  padding: 0.7rem;
+  border-radius: 0.25rem;
+  background-color: ${({ theme }) => theme.colors.shape};
+  border: 1px solid transparent;
+  cursor: text;
+  outline-style: none;
+  transition: 200ms ease-out;
+
+  &:focus {
+  border: 1px solid ${({ theme }) => theme.colors.primary};
+  box-shadow: 0 0 0 4px rgb(66 133 244 / 10%);
+  transition: 200ms ease-out;
+  }
 `;

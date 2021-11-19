@@ -1,11 +1,15 @@
-import React, {useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useAuth } from '../../hooks/AuthContext';
+
+import { AlignCenter, Eye } from 'react-feather';
+import { EyeOff } from 'react-feather';
+import { Avatar } from '@mui/material';
 import Lottie from 'lottie-react';
 import settingsAnimated from '../../assets/UserSettings/settings_animated.json';
-import { useAuth } from '../../hooks/AuthContext';
-import { Avatar } from '@mui/material';
 
 import { SecurityImg, UserAccountImg } from '../../components/Svgs';
-
 
 import {
   Container,
@@ -15,29 +19,58 @@ import {
   ContainerIlustration,
   Card,
   Option,
-  Input
+  Input,
+  Campos,
 } from './styles';
-
 import { InputDisabled } from '../Signup/styles';
+import { useTheme } from 'styled-components';
+import { useForm } from 'react-hook-form';
+import { Button } from '../../components/Button';
 
+
+interface UpdateFormSecurityData {
+  email: string
+  password: string
+  passwordConfirm: string
+};
+
+const schema = yup.object({
+  email: yup.string().email().notRequired(),
+  password: yup.string().notRequired(),
+  passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'As senhas são diferentes, por favor insira senhas iguais.')
+});
 
 export function UserSettings() {
 
   const { userInfo } = useAuth();
 
+  const { register, handleSubmit, formState: { errors } } = useForm<UpdateFormSecurityData>({
+    resolver: yupResolver(schema)
+  });
+
+  const onSubmit = (data: UpdateFormSecurityData) => console.log(data);
+
   const [userName, setUserName] = useState(userInfo.user.name);
   const [postalCode, setPostalCode] = useState(userInfo.user.postal_code);
   const [password, setPassword] = useState('');
-
-
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [option, setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
 
+  const theme = useTheme();
 
   function handleOptionChange(optionSelected: 'dataEdit' | 'passwordEdit') {
     setOption(optionSelected)
-  }
+  };
 
+  const handleShowPassword = () => {
+    setShowPassword(showPassword ? false : true);
+  };
 
+  const handleShowConfirmPassword = () => {
+    setShowConfirmPassword(showConfirmPassword ? false : true);
+  };
 
   return (
     <Container>
@@ -51,7 +84,10 @@ export function UserSettings() {
           onClick={() => handleOptionChange('dataEdit')}
         >
           Conta
-          <UserAccountImg />
+
+          <UserAccountImg
+            stroke={option === 'dataEdit' ? theme.colors.primary : theme.colors.gray_dark}
+          />
         </Option>
 
         <Option
@@ -59,7 +95,9 @@ export function UserSettings() {
           onClick={() => handleOptionChange('passwordEdit')}
         >
           Segurança
-          <SecurityImg />
+          <SecurityImg
+            stroke={option === 'passwordEdit' ? theme.colors.primary : theme.colors.gray_dark}
+          />
         </Option>
 
       </Menu >
@@ -77,7 +115,7 @@ export function UserSettings() {
                 value={userName}
                 onChange={e => { setUserName(e.target.value) }}
                 style={{
-                  width: "22rem",
+                  maxWidth: "22rem",
                   marginTop: "0",
                   marginBottom: "1rem"
                 }}
@@ -88,7 +126,7 @@ export function UserSettings() {
                 value={postalCode}
                 onChange={e => { setPostalCode(e.target.value) }}
                 style={{
-                  width: "22rem",
+                  maxWidth: "22rem",
                   marginTop: "0",
                   marginBottom: "1rem"
                 }}
@@ -97,46 +135,131 @@ export function UserSettings() {
               <InputDisabled
                 defaultValue={userInfo.user.neighbourhood}
                 style={{
-                  width: "22rem",
+                  maxWidth: "22rem",
                   marginTop: "1rem",
                   marginBottom: "1rem",
+                  outline: "none",
                 }}
                 readOnly
               />
 
             </Card>
             :
-            <Card>
-              <h1>Conta</h1>
-              <label>Email</label>
-              <Input
-                value={userInfo.user.email}
-                style={{
-                  width: "22rem",
-                  marginTop: "0",
-                  marginBottom: "1rem"
-                }}
-              />
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Card>
+                <h1>Conta</h1>
 
-              <label>Nova Senha</label>
-              <Input
-                value={password}
-                onChange={e => { setPassword(e.target.value) }}
-                style={{
-                  width: "22rem",
-                  marginTop: "0",
-                  marginBottom: "1rem"
-                }}
-              />
-              <label>Confirmar nova Senha</label>
-              <Input
-                style={{
-                  width: "22rem",
-                  marginTop: "0",
-                  marginBottom: "0"
-                }}
-              />
-            </Card>
+                <Campos>
+                  <label>Email</label>
+                  <Input
+                    value={userInfo.user.email}
+                    type="email"
+                    {...register("email")}
+                    style={{
+                      maxWidth: "22rem",
+                      marginTop: "0",
+                      marginBottom: "1rem"
+                    }}
+                  />
+
+                  <label>Nova senha</label>
+                  <Input
+                    value={password}
+                    {...register("password")}
+                    type={showPassword ? "text" : "password"}
+                    onChange={e => { setPassword(e.target.value) }}
+                    style={{
+                      position: 'relative',
+                      maxWidth: "22rem",
+                      marginTop: "0",
+                      marginBottom: "1rem"
+                    }}
+                  />
+
+                  {!showPassword ?
+                    <Eye
+                      size={18}
+                      onClick={handleShowPassword}
+                      style={{
+                        position: 'absolute',
+                        alignSelf: 'flex-end',
+                        marginTop: '8.1rem',
+                        marginRight: '2rem',
+                        color: theme.colors.gray_dark,
+                        cursor: 'pointer',
+                      }}
+                    />
+                    :
+                    <EyeOff
+                      size={18}
+                      onClick={handleShowPassword}
+                      style={{
+                        position: 'absolute',
+                        alignSelf: 'flex-end',
+                        justifySelf: 'flex-end',
+                        marginTop: '8.1rem',
+                        marginRight: '2rem',
+                        color: theme.colors.gray_dark,
+                        cursor: 'pointer'
+                      }}
+                    />
+                  }
+                </Campos>
+
+                <Campos>
+                  <label>Confirmar senha </label>
+                  <Input
+                    value={confirmPassword}
+                    {...register("passwordConfirm")}
+                    type={showConfirmPassword ? "text" : "password"}
+                    onChange={e => { setConfirmPassword(e.target.value) }}
+                    style={{
+                      maxWidth: "22rem",
+                      marginTop: "0",
+                      marginBottom: "0",
+                      position: 'relative',
+                    }}
+                  />
+                  {!showConfirmPassword ?
+                    <Eye
+                      size={18}
+                      onClick={handleShowConfirmPassword}
+                      style={{
+                        position: 'absolute',
+                        alignSelf: 'flex-end',
+                        justifySelf: 'flex-end',
+                        marginTop: '2.9rem',
+                        marginRight: '2rem',
+                        color: theme.colors.gray_dark,
+                        cursor: 'pointer'
+                      }}
+                    />
+                    :
+                    <EyeOff
+                      size={18}
+                      onClick={handleShowConfirmPassword}
+                      style={{
+                        position: 'absolute',
+                        alignSelf: 'flex-end',
+                        justifySelf: 'flex-end',
+                        marginTop: '2.9rem',
+                        marginRight: '2rem',
+                        color: theme.colors.gray_dark,
+                        cursor: 'pointer'
+                      }}
+                    />
+                  }
+                </Campos>
+                <p>{errors.passwordConfirm?.message}</p>
+                <Button
+                  title="Salvar"
+                  style={{
+                    width: "12rem",
+                    marginBottom: "2rem"
+                  }}
+                />
+              </Card>
+            </form>
         }
       </Content >
     </Container >

@@ -80,16 +80,35 @@ export function SignIn() {
                         <Eye
                             size={18}
                             onClick={handleShowPassword}
-                            style={{ position: 'absolute', marginTop: -43, right: '55', cursor: 'pointer' }}
+                            style={{
+                                position: 'absolute',
+                                marginTop: -43,
+                                right: '55',
+                                color: theme.colors.gray_dark,
+                                cursor: 'pointer'
+                            }}
                         />
                         :
                         <EyeOff
                             size={18}
                             onClick={handleShowPassword}
-                            style={{ position: 'absolute', marginTop: -43, right: '55', cursor: 'pointer' }}
+                            style={{
+                                position: 'absolute',
+                                marginTop: -43,
+                                right: '55',
+                                color: theme.colors.gray_dark,
+                                cursor: 'pointer'
+                            }}
                         />
                     }
-                    <Button title="Entrar" form="sign-in" style={{ width: '12rem', marginBottom: '2rem' }} />
+                    <Button
+                        title="Entrar"
+                        form="sign-in"
+                        style={{
+                            width: '12rem',
+                            marginBottom: '2rem'
+                        }}
+                    />
                     <hr />
                     <h6>Ainda não tem conta? </h6>
                     <Signup />

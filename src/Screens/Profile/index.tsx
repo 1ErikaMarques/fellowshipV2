@@ -76,7 +76,7 @@ export function Profile() {
             hobbies: profileEvent.hobbies,
             contact: profileEvent.phone,
             relationship: profileEvent.relationship,
-            about:profileEvent.about
+            about: profileEvent.about
         });
     }
 
@@ -104,7 +104,7 @@ export function Profile() {
             })
         })
 
-    }, [userId])
+    }, [userId, userDetails])
 
 
     /** Muda foto de perfil
@@ -232,7 +232,7 @@ export function Profile() {
 
                     <TextArea
                         {...register('about')}
-                        placeholder="Nós conte um pouco mais sobre você.."
+                        placeholder="Seus vizinhos querem te conhecer, conte aqui algo sobre você."
                         defaultValue={userDetails.about}
                         disabled={!allowEditing}
                     />

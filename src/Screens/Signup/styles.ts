@@ -12,7 +12,7 @@ export const Content = styled.div`
   width: 100%;  
   text-align: center;
   justify-content: center;
-  padding: 0.5rem;  
+  padding: 1rem;  
 `;
 
 export const Header = tw.div`
@@ -63,10 +63,10 @@ export const InputPassword = styled(InputForm)``;
 export const InputAddress = styled(InputForm)``;
 
 export const InputDisabled = styled.input`
-font-size: 0.9rem;
+font-size: 0.8rem;
 font-weight: 500;
 max-width: 100%;
-height: 2.2rem;
+height: 2.4rem;
 width: 100%;
 margin-top: 2rem;
 margin-bottom: 1rem;
@@ -86,9 +86,9 @@ export const Label = styled.label`
   justify-self: center;
   position: absolute;
   margin-left: 0.8rem;
-  margin-top: -3.7rem;
+  margin-top: -3.6rem;
   padding: 0 0.2rem;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   letter-spacing: 0.03em;
   font-weight: 400;
   color:  ${({ theme }) => theme.colors.gray_medium};
@@ -98,7 +98,7 @@ export const Label = styled.label`
 
 export const LabelName = styled(Label)`
   ${InputName}:focus ~ & {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     margin-top: -4.4rem;    
     margin-left: 0.8rem;
   }
@@ -106,7 +106,7 @@ export const LabelName = styled(Label)`
 
 export const LabelBirthDate = styled(Label)`
   ${InputBirthDate}:focus ~ & {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     margin-top: -4.4rem;    
     margin-left: 0.8rem;
   }
@@ -114,7 +114,7 @@ export const LabelBirthDate = styled(Label)`
 
 export const LabelEmail = styled(Label)`
   ${InputEmail}:focus ~ & {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     margin-top: -4.4rem;    
     margin-left: 0.8rem;
   }
@@ -122,7 +122,7 @@ export const LabelEmail = styled(Label)`
 
 export const LabelPassword = styled(Label)`
   ${InputPassword}:focus ~ & {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     margin-top: -4.4rem;    
     margin-left: 0.8rem;
   }
@@ -130,7 +130,7 @@ export const LabelPassword = styled(Label)`
 
 export const LabelAddress = styled(Label)`
   ${InputAddress}:focus ~ & {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     margin-top: -4.4rem;    
     margin-left: 0.8rem;
   }
