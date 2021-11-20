@@ -72,7 +72,7 @@ export function ModalDonations({ isOpen, handleClose, handleAddPhotoPost, handle
               style={{
                 backgroundColor: theme.colors.gray_light,
                 marginBottom: '2rem',
-                marginTop: '1rem'
+                marginTop: '1.2rem'
               }}
             />
           </Header>
@@ -80,13 +80,13 @@ export function ModalDonations({ isOpen, handleClose, handleAddPhotoPost, handle
             <ButtonChoiceDonation
               active={isDonation}
               onClick={() => handleDonationChoice("isDonation")}>
-              Doando Algo
+              Doar Algo
             </ButtonChoiceDonation>
             <Separador />
             <ButtonChoiceDonation
               active={isNeedDonation}
               onClick={() => handleDonationChoice("isNeedDonation")}>
-              Precisando de ajuda
+              Preciso de doações
             </ButtonChoiceDonation>
           </ContentChoiceDonation>
           <UserInfo>
@@ -101,19 +101,19 @@ export function ModalDonations({ isOpen, handleClose, handleAddPhotoPost, handle
           <TextareaAutosize
             maxRows={12}
             aria-label="maximum height"
-            placeholder="Compartilhe algo com a gente"
+            placeholder="Precisando de doações ou doando algo?"
             defaultValue=""
             style={{
-              width: 460,
+              width: 550,
               paddingBottom: 50,
               paddingRight: 10,
               outline: 'none',
-              marginTop: '1rem',
+              marginTop: '2rem',
               color: '#53525D',
-              fontSize: '1rem',
+              fontSize: '1.2rem',
             }}
           />
-          <ImageList sx={{ width: 445, height: 'auto', marginTop: '0' }}>
+          <ImageList sx={{ width: 450, height: 'auto', marginTop: '0' }}>
             {mediaPost.map((item) => (
               <ImageListItem key={item.id}>
                 <img
@@ -142,7 +142,7 @@ export function ModalDonations({ isOpen, handleClose, handleAddPhotoPost, handle
           <Divider style={{
             backgroundColor: '#F4F5F7',
             marginBottom: '2rem',
-            marginTop: '2rem'
+            marginTop: '4rem'
           }}
           />
           <Icons>
@@ -172,7 +172,8 @@ export function ModalDonations({ isOpen, handleClose, handleAddPhotoPost, handle
             onClick={() => {
             }}
             style={{
-              width: '14rem',
+              height: '3.5rem',
+              width: '16rem',
               backgroundColor: theme.colors.primary,
               fontSize: '1rem',
               color: theme.colors.ice

@@ -8,7 +8,7 @@ export const ContainerStyle = styled.div`
   justify-content: space-between;
   max-width: 625px;
   height: 7rem;
-  margin-top: 1rem;
+  margin-top: 0rem;
   border-radius: 0.25rem;
   background-color: ${({ theme }) => theme.colors.shape};
   box-shadow: 0 10px 70px rgb(0 0 0 / 5%);

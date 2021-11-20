@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 import tw from 'tailwind-styled-components';
 
+interface ButtonChoiceHomeProps {
+  active: boolean;
+}
+
 export const Content = styled.div`
   width: 100%;  
   text-align: center;
-  justify-content: center;  
+ 
     h3{
       font-size: 0.9rem;
       padding: 0;
@@ -39,6 +43,32 @@ export const CloseButtonTW = tw(CloseButton)`
     justify-self-end
     row-start-1
 `;
+export const ContentChoiceHome = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
+`;
+
+export const ButtonChoiceHome = styled.button<ButtonChoiceHomeProps>`
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: ${({ theme, active }) => active ? theme.colors.primary : theme.colors.gray_dark};
+
+  &:hover{
+    color:${({ theme }) => theme.colors.primary};
+    transition: 200ms; 
+  }
+
+`;
+
+export const Separador = styled.div`
+  height: 14px;
+  width: 2px;
+  align-items: center;
+  margin-top: 6px;
+  background-color: ${({ theme }) => theme.colors.gray_medium};
+`;
 
 export const UserInfo = styled.div`
   display: flex;
@@ -51,6 +81,12 @@ export const UserInfo = styled.div`
     }    
 `;
 
-export const Icons = styled.div`
+export const ContentChoice = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 1rem;
+`;
+export const Icons = styled.div`
+  display: flex;  
 `;

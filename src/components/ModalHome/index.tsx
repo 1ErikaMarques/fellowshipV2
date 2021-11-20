@@ -2,29 +2,38 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { Avatar, Divider } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-
-import { CameraImg, VideoImg } from '../../components/Svgs';
-import { Button } from '../../components/Button';
-
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import * as React from 'react';
+import { Theme, useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
+
+import { CameraImg, VideoImg } from '../../components/Svgs';
+import { Button } from '../../components/Button';
 
 import { MediaPost } from '../../Screens/Feed/NewPost';
 
-import { useTheme } from 'styled-components';
+import { useTheme as useThemeStyledComponents } from 'styled-components';
 import {
   Content,
   Header,
   CloseButtonTW,
+  ContentChoiceHome,
+  ButtonChoiceHome,
+  Separador,
   UserInfo,
-  Icons
+  ContentChoice,
+  Icons,
 } from './styles';
 import { style } from '../ModalDefault';
-
-
+import { useState } from 'react';
 
 
 interface ModalHomeProps {
@@ -37,9 +46,73 @@ interface ModalHomeProps {
 }
 
 
+const ITEM_HEIGHT = 23;
+const ITEM_PADDING_TOP = 0;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 180,
+    },
+  },
+};
+
+const names = [
+  'Casa',
+  'Apartamento',
+  'Flat',
+  'Quarto',
+  'Terreno',
+  'Sitio',
+];
+
+function getStyles(name: string, personName: readonly string[], theme: Theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
+
 export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVideoPost, handleRemoveMedia, mediaPost }: ModalHomeProps) {
 
+  const themeStyled = useThemeStyledComponents();
   const theme = useTheme();
+
+  const [isSell, setIsSell] = useState(false);
+  const [isRent, setIsRent] = useState(false);
+  const [isSearch, setIsSearch] = useState(false);
+
+  const [personName, setPersonName] = React.useState<string[]>([]);
+
+  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+    const {
+      target: { value },
+    } = event;
+    setPersonName(
+      // On autofill we get a the stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
+  function handleChoiceHome(choice: string) {
+    if (choice === "isSell") {
+      setIsSell(true)
+      setIsRent(false)
+      setIsSearch(false)
+
+    } else if (choice === "isRent") {
+      setIsRent(true)
+      setIsSearch(false)
+      setIsSell(false)
+    } else {
+      setIsSearch(true)
+      setIsSell(false)
+      setIsRent(false)
+    }
+  };
 
   return (
     <Modal
@@ -54,12 +127,34 @@ export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVi
             <h3>Criar publicação</h3>
             <Divider
               style={{
-                backgroundColor: theme.colors.gray_light,
+                backgroundColor: themeStyled.colors.gray_light,
                 marginBottom: '2rem',
-                marginTop: '1rem'
+                marginTop: '1.2rem'
               }}
             />
           </Header>
+
+          <ContentChoiceHome>
+            <ButtonChoiceHome
+              active={isSell}
+              onClick={() => handleChoiceHome("isSell")}>
+              Vender
+            </ButtonChoiceHome>
+            <Separador />
+            <ButtonChoiceHome
+              active={isRent}
+              onClick={() => handleChoiceHome("isRent")}>
+              Alugar
+            </ButtonChoiceHome>
+            <Separador />
+            <ButtonChoiceHome
+              active={isSearch}
+              onClick={() => handleChoiceHome("isSearch")}>
+              Procurar
+            </ButtonChoiceHome>
+
+          </ContentChoiceHome>
+
           <UserInfo>
             <Avatar
               sx={{
@@ -72,19 +167,19 @@ export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVi
           <TextareaAutosize
             maxRows={12}
             aria-label="maximum height"
-            placeholder=""
+            placeholder="Alugando, vendendo ou procurando propriedade?"
             defaultValue=""
             style={{
-              width: 460,
+              width: 550,
               paddingBottom: 50,
               paddingRight: 10,
               outline: 'none',
-              marginTop: '1rem',
+              marginTop: '2rem',
               color: '#53525D',
-              fontSize: '1rem',
+              fontSize: '1.2rem',
             }}
           />
-          <ImageList sx={{ width: 445, height: 200, marginTop: '0' }}>
+          <ImageList sx={{ width: 450, height: 'auto', marginTop: '0' }}>
             {mediaPost.map((item) => (
               <ImageListItem key={item.id}>
                 <img
@@ -113,9 +208,10 @@ export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVi
           <Divider style={{
             backgroundColor: '#F4F5F7',
             marginBottom: '2rem',
-            marginTop: '2rem'
+            marginTop: '4rem'
           }}
           />
+
           <Icons>
             <label htmlFor="contained-button-file">
               <input
@@ -138,17 +234,62 @@ export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVi
               <VideoImg />
             </label>
           </Icons>
+
+          <ContentChoice>
+            <div >
+              <FormControl sx={{ m: 0, width: 180, mt: 0, margin: 'none' }} size='small'  >
+                <Select
+                  multiple
+                  displayEmpty
+                  value={personName}
+                  onChange={handleChange}
+                  input={<OutlinedInput />}
+                  renderValue={(selected) => {
+                    if (selected.length === 0) {
+                      return <em>Tipo do Imovel</em>;
+                    }
+
+                    return selected.join(', ');
+                  }}
+                  MenuProps={MenuProps}
+                  inputProps={{ 'aria-label': 'Without label' }}
+                >
+                  <MenuItem disabled value="">
+
+                  </MenuItem>
+                  {names.map((name) => (
+                    <MenuItem
+                      key={name}
+                      value={name}
+                      style={getStyles(name, personName, theme)}
+                    >
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+
+            <TextField
+              id="adornment-amount"
+              placeholder=" Insira o valor"
+              multiline
+              sx={{ m: 0, width: 180, mt: 0 }} size='small'
+            />
+          </ContentChoice>
           <Button
             title="Publicar"
             onClick={() => {
             }}
             style={{
-              width: '14rem',
-              backgroundColor: theme.colors.primary,
+              height: '3.5rem',
+              width: '16rem',
+              backgroundColor: themeStyled.colors.primary,
               fontSize: '1rem',
-              color: theme.colors.ice
+              color: themeStyled.colors.ice
             }}
           />
+
         </Content>
       </Box>
     </Modal>

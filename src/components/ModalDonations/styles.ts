@@ -66,7 +66,7 @@ export const ContentChoiceDonation = styled.div`
 
 export const ButtonChoiceDonation = styled.button<ButtonChoiceDonationProps>`
   padding: 0.4rem 0.8rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 500;
   color: ${({ theme, active }) => active ? theme.colors.primary : theme.colors.gray_dark};
 

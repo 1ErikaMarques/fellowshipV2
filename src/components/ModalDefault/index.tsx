@@ -37,7 +37,7 @@ export const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 500,
+  width: 620,
   bgcolor: 'background.paper',
   border: 'none',
   boxShadow: 15,
@@ -65,7 +65,7 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
               style={{
                 backgroundColor: theme.colors.gray_light,
                 marginBottom: '2rem',
-                marginTop: '1rem'
+                marginTop: '1.2rem'
               }}
             />
           </Header>
@@ -81,19 +81,19 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
           <TextareaAutosize
             maxRows={12}
             aria-label="maximum height"
-            placeholder=""
+            placeholder="Compartilhe algo com a gente"
             defaultValue=""
             style={{
-              width: 460,
+              width: 550,
               paddingBottom: 50,
               paddingRight: 10,
               outline: 'none',
-              marginTop: '1rem',
+              marginTop: '2rem',
               color: '#53525D',
-              fontSize: '1rem',
+              fontSize: '1.2rem',
             }}
           />
-          <ImageList sx={{ width: 445, height: 200, marginTop: '0' }}>
+          <ImageList sx={{ width: 450, height: 'auto', marginTop: '0' }}>
             {mediaPost.map((item) => (
               <ImageListItem key={item.id}>
                 <img
@@ -122,7 +122,7 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
           <Divider style={{
             backgroundColor: '#F4F5F7',
             marginBottom: '2rem',
-            marginTop: '2rem'
+            marginTop: '4rem'
           }}
           />
           <Icons>
@@ -152,10 +152,12 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
             onClick={() => {
             }}
             style={{
-              width: '14rem',
+              height: '3.5rem',
+              width: '16rem',
               backgroundColor: theme.colors.primary,
-              fontSize: '1rem',
-              color: theme.colors.ice
+              fontSize: '1.2rem',
+              color: theme.colors.ice,
+
             }}
           />
         </Content>

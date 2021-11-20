@@ -61,7 +61,7 @@ export function NewPost({ modalType, postType }: NewPostProps) {
 
     return (
         <Container>
-            <Avatar sx={{ width: '3rem', height: '3rem', marginLeft: '2rem' }} />
+            <Avatar sx={{ width: '3rem', height: '3rem', marginLeft: '1.5rem', marginRight: '1rem' }} />
 
             {(modalType === NewPostModalType.DEFAULT &&
                 <>
