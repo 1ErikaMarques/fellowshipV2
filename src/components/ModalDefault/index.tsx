@@ -37,7 +37,7 @@ export const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 620,
+  width: 500,
   bgcolor: 'background.paper',
   border: 'none',
   boxShadow: 15,
@@ -84,7 +84,7 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
             placeholder="Compartilhe algo com a gente"
             defaultValue=""
             style={{
-              width: 550,
+              width: 450,
               paddingBottom: 50,
               paddingRight: 10,
               outline: 'none',
@@ -152,10 +152,10 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
             onClick={() => {
             }}
             style={{
-              height: '3.5rem',
+              height: '3rem',
               width: '16rem',
               backgroundColor: theme.colors.primary,
-              fontSize: '1.2rem',
+              fontSize: '1rem',
               color: theme.colors.ice,
 
             }}

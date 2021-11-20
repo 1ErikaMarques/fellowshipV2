@@ -170,7 +170,7 @@ export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVi
             placeholder="Alugando, vendendo ou procurando propriedade?"
             defaultValue=""
             style={{
-              width: 550,
+              width: 450,
               paddingBottom: 50,
               paddingRight: 10,
               outline: 'none',
@@ -282,7 +282,7 @@ export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVi
             onClick={() => {
             }}
             style={{
-              height: '3.5rem',
+              height: '3rem',
               width: '16rem',
               backgroundColor: themeStyled.colors.primary,
               fontSize: '1rem',

@@ -104,7 +104,7 @@ export function ModalDonations({ isOpen, handleClose, handleAddPhotoPost, handle
             placeholder="Precisando de doações ou doando algo?"
             defaultValue=""
             style={{
-              width: 550,
+              width: 450,
               paddingBottom: 50,
               paddingRight: 10,
               outline: 'none',
@@ -172,7 +172,7 @@ export function ModalDonations({ isOpen, handleClose, handleAddPhotoPost, handle
             onClick={() => {
             }}
             style={{
-              height: '3.5rem',
+              height: '3rem',
               width: '16rem',
               backgroundColor: theme.colors.primary,
               fontSize: '1rem',
