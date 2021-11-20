@@ -42,7 +42,7 @@ interface UpdateFormPersonalData {
 const schema = yup.object({
   email: yup.string().email().notRequired(),
   password: yup.string().notRequired(),
-  passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'As senhas são diferentes, por favor insira senhas iguais.'),
+  passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'As senhas são incompativeis, por favor insira senhas iguais.'),
   fullName: yup.string().notRequired(),
   postalCode: yup.string().notRequired()
 });
@@ -66,7 +66,7 @@ export function UserSettings() {
     });
 
   const onSubmitPersonalData = (PersonalData: UpdateFormPersonalData) => console.log(PersonalData);
-  const onSubmitSecuritydata = (Securitydata: UpdateFormSecurityData) => console.log(Securitydata);
+  const onSubmitSecurityData = (SecurityData: UpdateFormSecurityData) => console.log(SecurityData);
 
   const [userName, setUserName] = useState(userInfo.user.name);
   const [userEmail, setUserEmail] = useState(userInfo.user.email);
@@ -176,7 +176,7 @@ export function UserSettings() {
               </Card>
             </form>
             :
-            <form onSubmit={handleSecurityData(onSubmitSecuritydata)}>
+            <form onSubmit={handleSecurityData(onSubmitSecurityData)}>
               <Card>
                 <h1>Conta</h1>
 
