@@ -24,10 +24,7 @@ export function AppRoutes() {
                 <Route path={ROUTES.PROFILE} children={<Profile/>}/>
                 <Route path={ROUTES.CONFIGURATIONS} children={<UserSettings/>}/>
                 <Route path={ROUTES.HOME} children={
-                    <>
                         <MenuNav/>
-                        <NewPost/>
-                    </>
                 }/>
             </Switch>
         </BrowserRouter>
