@@ -8,10 +8,10 @@ export const Container = styled.main`
   width: 100%;
   height: auto;
   margin-top: 3rem;
+  font-family: Poppins, Helvetica, sans-serif;
   background-color: ${({ theme }) => theme.colors.shape};
   border-radius: 0.25rem;
   box-shadow: 0 10px 70px rgb(0 0 0 / 5%); 
-
 `;
 
 export const Content = styled.div`

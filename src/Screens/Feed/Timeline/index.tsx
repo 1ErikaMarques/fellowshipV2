@@ -70,6 +70,12 @@ export function Timeline() {
   const themeStyledComponents = useThemeStyledComponents();
   const theme = useTheme();
 
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  }
+
   //menu
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -263,13 +269,8 @@ export function Timeline() {
 
         </Box>
         <Separador />
-        <InteractionsPost />
-        <CommentsPost />
-        <ContentInteractions>
-
-
-        </ContentInteractions>
-
+        <InteractionsPost handleExpandClick={handleExpandClick} expanded={expanded} />
+        <CommentsPost expanded={expanded} />
       </Content>
     </Container >
   );
