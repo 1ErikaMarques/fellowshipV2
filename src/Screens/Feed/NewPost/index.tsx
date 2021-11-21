@@ -33,6 +33,7 @@ export function NewPost({ modalType, postType }: NewPostProps) {
     const handleOpenModalDonations = () => setIsOpenModalDonations(true);
     const handleCloseModalDonations = () => setIsOpenModalDonations(false);
 
+    const [isMediaSelected, setIsMediaSelected] = useState(false);
     const [mediaPost, setMediaPost] = useState<MediaPost[]>([]);
 
     const handleAddPhotoPost = () => {
@@ -44,10 +45,35 @@ export function NewPost({ modalType, postType }: NewPostProps) {
             {
                 id: '2',
                 mediaUrl: 'https://avatars.githubusercontent.com/u/63205222?v=4'
-            }
+            },
+            {
+                id: '3',
+                mediaUrl: 'https://avatars.githubusercontent.com/u/4424108?v=4'
+            },
+            {
+                id: '4',
+                mediaUrl: 'https://avatars.githubusercontent.com/u/63205222?v=4'
+            },
+            {
+                id: '5',
+                mediaUrl: 'https://avatars.githubusercontent.com/u/4424108?v=4'
+            },
+            {
+                id: '6',
+                mediaUrl: 'https://avatars.githubusercontent.com/u/63205222?v=4'
+            },
+            {
+                id: '7',
+                mediaUrl: 'https://avatars.githubusercontent.com/u/4424108?v=4'
+            },
+            {
+                id: '8',
+                mediaUrl: 'https://avatars.githubusercontent.com/u/63205222?v=4'
+            },
         ];
 
         setMediaPost(() => [...arrayPost]);
+        setIsMediaSelected(true)
     };
 
     const handleAddVideoPost = () => {
@@ -57,11 +83,20 @@ export function NewPost({ modalType, postType }: NewPostProps) {
         setMediaPost(old => old.filter(
             media => media.id !== id
         ));
+        if (mediaPost.length < 1) {
+            setIsMediaSelected(false)
+        }
     };
 
     return (
         <Container>
-            <Avatar sx={{ width: '3rem', height: '3rem', marginLeft: '1.5rem', marginRight: '1rem' }} />
+            <Avatar sx={{
+                width: '3rem',
+                height: '3rem',
+                marginLeft: '1.5rem',
+                marginRight: '1rem'
+            }}
+            />
 
             {(modalType === NewPostModalType.DEFAULT &&
                 <>
@@ -74,6 +109,7 @@ export function NewPost({ modalType, postType }: NewPostProps) {
                         handleAddVideoPost={handleAddVideoPost}
                         handleRemoveMedia={handleRemoveMedia}
                         mediaPost={mediaPost}
+                        isMediaSelected={isMediaSelected}
                     />
                 </>
 

@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import { NewPost } from '../NewPost';
 import { Container } from './styles';
 import { useTheme } from 'styled-components';
+import { Timeline } from '../Timeline';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -68,7 +69,7 @@ export function MenuNav() {
 
     return (
         <Container>
-            <Box sx={{ maxWidth: 625, bgcolor: theme.colors.shape, boxShadow: '0 10px 70px rgb(0 0 0 / 5%)', height: 52 }}>
+            <Box sx={{ maxWidth: 625, bgcolor: theme.colors.shape, boxShadow: '0 10px 70px rgb(0 0 0 / 5%)', height: 48 }}>
                 <Tabs
                     value={value}
                     onChange={handleChange}
@@ -89,6 +90,7 @@ export function MenuNav() {
 
                 <TabPanel value={value} index={0}>
                     <NewPost postType={PostType.NOTICIAS} modalType={NewPostModalType.DEFAULT} />
+                    <Timeline />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <NewPost postType={PostType.ESTABELECIMENTOS} modalType={NewPostModalType.DEFAULT} />

@@ -22,6 +22,7 @@ import {
 } from './styles';
 
 import { MediaPost } from '../../Screens/Feed/NewPost';
+import { useState } from 'react';
 
 interface ModalDefaultProps {
   isOpen: boolean;
@@ -29,6 +30,7 @@ interface ModalDefaultProps {
   handleAddPhotoPost: () => void;
   handleAddVideoPost: () => void;
   handleRemoveMedia: (itemId: string) => void;
+  isMediaSelected: boolean;
   mediaPost: MediaPost[];
 }
 
@@ -46,9 +48,11 @@ export const style = {
   borderRadius: '0.25rem',
 };
 
-export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAddVideoPost, handleRemoveMedia, mediaPost }: ModalDefaultProps) {
+export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAddVideoPost, handleRemoveMedia, mediaPost, isMediaSelected }: ModalDefaultProps) {
 
   const theme = useTheme();
+
+
 
   return (
     <Modal
@@ -93,32 +97,33 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
               fontSize: '1.2rem',
             }}
           />
-          <ImageList sx={{ width: 450, height: 'auto', marginTop: '0' }}>
-            {mediaPost.map((item) => (
-              <ImageListItem key={item.id}>
-                <img
-                  src={`${item.mediaUrl}?w=248&fit=crop&auto=format`}
-                  srcSet={`${item.mediaUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                  loading="lazy"
-                />
-                <ImageListItemBar
-                  position="top"
-                  sx={{
-                    background: 'transparent'
-                  }}
-                  actionIcon={
-                    <IconButton
-                      sx={{ color: 'rgba(27, 27, 27, 0.94)' }}
-                    >
-                      <CancelRoundedIcon color="action"
-                        onClick={() => handleRemoveMedia(item.id)} />
-                    </IconButton>
-                  }
-                />
-              </ImageListItem>
-            ))}
-          </ImageList>
-
+          {isMediaSelected &&
+            <ImageList sx={{ width: 450, height: 280, marginTop: '0', }}>
+              {mediaPost.map((item) => (
+                <ImageListItem key={item.id}>
+                  <img
+                    src={`${item.mediaUrl}?w=248&fit=crop&auto=format`}
+                    srcSet={`${item.mediaUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                    loading="lazy"
+                  />
+                  <ImageListItemBar
+                    position="top"
+                    sx={{
+                      background: 'transparent'
+                    }}
+                    actionIcon={
+                      <IconButton
+                        sx={{ color: 'rgba(27, 27, 27, 0.94)' }}
+                      >
+                        <CancelRoundedIcon color="action"
+                          onClick={() => handleRemoveMedia(item.id)} />
+                      </IconButton>
+                    }
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          }
           <Divider style={{
             backgroundColor: '#F4F5F7',
             marginBottom: '2rem',
