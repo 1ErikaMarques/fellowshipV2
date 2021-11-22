@@ -34,11 +34,10 @@ const HeaderStyle = styled.header`
 
   h3 {
     grid-column-start: 2;  
-    width: 10rem;
-    padding: 1rem;
-    font-size: 1rem;    
-    font-weight: 400;     
-  }    
+    grid-column-end: 10;
+    font-size: 0.9rem;    
+    font-weight: 500;     
+  }
 `;
 
 export const Button = styled.button<ButtonProps>`
@@ -55,7 +54,7 @@ export const Button = styled.button<ButtonProps>`
     background: ${props => props.backgroundColor};
     cursor: pointer;
     transition: 200ms ease;
-      :hover {        
+      &:hover {        
         filter: brightness(0.9);
         transition: 200ms ease;
       }  

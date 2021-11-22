@@ -11,7 +11,7 @@ export const Container = styled.main`
   font-family: Poppins, Helvetica, sans-serif;
   background-color: ${({ theme }) => theme.colors.shape};
   border-radius: 0.25rem;
-  box-shadow: 0 10px 70px rgb(0 0 0 / 5%); 
+  box-shadow: 0 10px 70px rgb(0 0 0 / 10%); 
   padding-bottom: 2rem;
 `;
 

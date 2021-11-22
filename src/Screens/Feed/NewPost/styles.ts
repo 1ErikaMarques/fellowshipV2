@@ -29,7 +29,9 @@ export const ButtonPub = styled.button`
   text-align: left;
   font-weight: 500;
   letter-spacing: 0.03rem;
-  :hover {
+  transition: 200ms ease;
+  
+  &:hover {
       filter: brightness(0.9);
       transition: 200ms ease;
       }
