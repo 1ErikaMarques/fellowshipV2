@@ -82,7 +82,9 @@ export function InteractionsPost({ handleExpandClick, expanded }: InteractionsPo
         defaultValue={2}
         IconContainerComponent={IconContainer}
         highlightSelectedOnly
-        size="large"
+        size="small"
+        style={{ marginLeft: '1rem' }}
+
       />
       <ContentExpandMore>
         <p onClick={handleExpandClick}>Comentários</p>

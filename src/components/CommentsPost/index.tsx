@@ -1,47 +1,145 @@
+import * as React from 'react';
+import { useAuth } from '../../hooks/AuthContext';
+//menu deletar post
+import Menu from '@mui/material/Menu';
+
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import OutlinedFlagSharpIcon from '@mui/icons-material/OutlinedFlagSharp';
+import IconButton from '@mui/material/IconButton';
+
+//expandir comentarios
 import CardContent from '@mui/material/CardContent';
 import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
+
 
 import {
   Container,
+  UserInfoContent,
+  Comment,
+  MenuItemStyles,
 } from './styles';
+
+import { useTheme as useThemeStyledComponents } from 'styled-components';
+import { useTheme } from '@mui/material/styles';
+
+
+//menu
+const ITEM_HEIGHT = 48;
 
 interface CommentsPostProps {
   expanded: boolean
 }
 
-export function CommentsPost({ expanded }: CommentsPostProps) {
 
+
+export function CommentsPost({ expanded }: CommentsPostProps) {
+  const { userInfo } = useAuth();
+  const themeStyledComponents = useThemeStyledComponents();
+  const theme = useTheme();
+
+
+  //menu
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <Container>
       <Collapse in={expanded} timeout="auto" unmountOnExit >
-        <CardContent sx={{ width: '100%' }}>
-          <Avatar /><Typography paragraph>Method: </Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
-            aside for 10 minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
-            medium-high heat.Add chicken, shrimp and chorizo, and cook, stirring
-            occasionally until lightly browned, 6 to 8 minutes.Transfer shrimp to a
-            large plate and set aside, leaving chicken and chorizo in the pan.Add
-            pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,
-            stirring often until thickened and fragrant, about 10 minutes.Add
-            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute.Top with artichokes and
-            peppers, and cook without stirring, until most of the liquid is absorbed,
-            15 to 18 minutes.Reduce heat to medium-low, add reserved shrimp and
-            mussels, tucking them down into the rice, and cook again without
-            stirring, until mussels have opened and rice is just tender, 5 to 7
-            minutes more.(Discard any mussels that don’t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then serve.
-          </Typography>
+        <CardContent sx={{ width: '100%', display: 'flex' }}>
+          <Avatar
+            src={userInfo.user.profile_pic}
+            style={{ marginLeft: '0.5rem', cursor: 'pointer' }} />
+          <UserInfoContent>
+            <Comment>
+              <h3>{userInfo.user.name}</h3>
+              <p>
+                Olá a todos mais uma vez, venho pedir a vossa ajuda vou para a Bélgica no início do mês que vem e estou a procura de emprego nas limpezas ou como babá, não falo muito francês nem inglês se alguém souber de algum trabalho.
+              </p>
+            </Comment>
+
+          </UserInfoContent>
+          <div style={{ marginTop: '0.4rem' }}>
+            <IconButton
+              aria-label="more"
+              id="long-button"
+              aria-controls="long-menu"
+              aria-expanded={open ? 'true' : undefined}
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              id="long-menu"
+              MenuListProps={{
+                'aria-labelledby': 'long-button',
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              PaperProps={{
+                style: {
+                  maxHeight: ITEM_HEIGHT * 4.5,
+                  width: '12ch',
+                },
+              }}
+            >
+              <MenuItemStyles
+                onClick={handleClose}
+                disableRipple
+                style={{
+                  padding: "0.6rem"
+                }}
+              >
+                <DeleteOutlineOutlinedIcon
+                  style={{
+                    marginRight: "0.8rem",
+                    color: themeStyledComponents.colors.gray_dark,
+                  }}
+                />
+                <p
+                  style={{
+                    fontSize: "0.8rem",
+                    fontWeight: 500,
+                    color: themeStyledComponents.colors.gray_dark,
+
+                  }}>
+                  Apagar
+                </p>
+              </MenuItemStyles>
+              <MenuItemStyles
+                onClick={handleClose}
+                disableRipple
+                style={{
+                  padding: "0.6rem",
+                  marginBottom: "0rem"
+                }}
+              >
+                <OutlinedFlagSharpIcon
+                  style={{
+                    marginRight: "0.8rem",
+                    color: themeStyledComponents.colors.gray_dark,
+                  }}
+                />
+                <p
+                  style={{
+                    fontSize: "0.8rem",
+                    fontWeight: 500,
+                    color: themeStyledComponents.colors.gray_dark,
+                  }}>
+                  Denunciar
+                </p>
+              </MenuItemStyles>
+            </Menu>
+          </div>
+
         </CardContent>
       </Collapse>
     </Container>

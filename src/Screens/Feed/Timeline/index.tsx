@@ -23,6 +23,7 @@ import IconButton from '@mui/material/IconButton';
 
 import { InteractionsPost } from '../../../components/InteractionsPost';
 import { CommentsPost } from '../../../components/CommentsPost';
+import { CommentEntry } from '../../../components/CommentEntry';
 
 import {
   Container,
@@ -70,6 +71,7 @@ export function Timeline() {
   const themeStyledComponents = useThemeStyledComponents();
   const theme = useTheme();
 
+  //expandi comentarios
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -270,6 +272,10 @@ export function Timeline() {
         </Box>
         <Separador />
         <InteractionsPost handleExpandClick={handleExpandClick} expanded={expanded} />
+
+        <CommentEntry />
+
+        <CommentsPost expanded={expanded} />
         <CommentsPost expanded={expanded} />
       </Content>
     </Container >

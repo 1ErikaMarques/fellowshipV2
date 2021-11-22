@@ -12,12 +12,13 @@ export const Container = styled.main`
   background-color: ${({ theme }) => theme.colors.shape};
   border-radius: 0.25rem;
   box-shadow: 0 10px 70px rgb(0 0 0 / 5%); 
+  padding-bottom: 2rem;
 `;
 
 export const Content = styled.div`
   width: 100%;
   height: auto;
-  padding-bottom: 2rem; 
+
 `;
 
 export const Header = styled.div`
@@ -45,7 +46,7 @@ export const ContentHeaderPost = styled.div`
   }
 
 `;
-export const MenuItemStyles = styled(MenuItem)`  
+export const MenuItemStyles = styled(MenuItem)`
     &:hover {
       background-color: ${({ theme }) => theme.colors.gray_light}!important;
       transition: 200ms;
@@ -59,7 +60,7 @@ export const ContentInteractions = styled.div`
 `;
 
 export const Separador = styled.div`
-  width: 100%auto;
+  width: 100%;
   height: 2px;  
   margin-bottom: 1rem;
   background-color: ${({ theme }) => theme.colors.gray_light}

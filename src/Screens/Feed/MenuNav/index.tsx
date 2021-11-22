@@ -91,6 +91,7 @@ export function MenuNav() {
                 <TabPanel value={value} index={0}>
                     <NewPost postType={PostType.NOTICIAS} modalType={NewPostModalType.DEFAULT} />
                     <Timeline />
+                    <Timeline />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <NewPost postType={PostType.ESTABELECIMENTOS} modalType={NewPostModalType.DEFAULT} />
