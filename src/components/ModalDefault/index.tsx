@@ -94,7 +94,7 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
               outline: 'none',
               marginTop: '2rem',
               color: '#53525D',
-              fontSize: '1.2rem',
+              fontSize: '1.1rem',
             }}
           />
           {isMediaSelected &&

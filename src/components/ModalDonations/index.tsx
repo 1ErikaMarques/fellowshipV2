@@ -110,7 +110,7 @@ export function ModalDonations({ isOpen, handleClose, handleAddPhotoPost, handle
               outline: 'none',
               marginTop: '2rem',
               color: '#53525D',
-              fontSize: '1.2rem',
+              fontSize: '1.1rem',
             }}
           />
           <ImageList sx={{ width: 450, height: 'auto', marginTop: '0' }}>

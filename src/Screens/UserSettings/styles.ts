@@ -54,7 +54,7 @@ export const Option = styled.button<OptionProps>`
     font-size: 1.1rem;
     font-weight: 500;
     color: ${({ theme }) => theme.colors.gray_medium};
-     transition: 200ms;
+    transition: 200ms;
     cursor: pointer;    
       
     &:hover{
@@ -78,8 +78,8 @@ export const User = styled.div`
   padding: 1rem;
 
   h2{
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 500;
     margin-left: 1rem;
     color: ${({ theme }) => theme.colors.gray_dark};    
   }

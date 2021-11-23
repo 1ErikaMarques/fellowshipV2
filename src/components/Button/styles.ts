@@ -28,7 +28,7 @@ export const ButtonStyle = styled.button<ButtonProps>`
   &:hover {
     transition: 0.25s;
     box-shadow: inset ${props => props.boxShadowLength ? props.boxShadowLength : '16em'} 0 0 0 ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.ice};
+    color: ${({ theme }) => theme.colors.ice};    
   }
 
   &:focus {
