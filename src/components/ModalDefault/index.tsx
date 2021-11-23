@@ -2,6 +2,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { Avatar, Divider } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import * as React from 'react';
 
 import { CameraImg, VideoImg } from '../../components/Svgs';
 import { Button } from '../../components/Button';
@@ -27,7 +28,7 @@ import { useState } from 'react';
 interface ModalDefaultProps {
   isOpen: boolean;
   handleClose: () => void;
-  handleAddPhotoPost: () => void;
+  handleAddPhotoPost: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
   handleAddVideoPost: () => void;
   handleRemoveMedia: (itemId: string) => void;
   isMediaSelected: boolean;
@@ -100,11 +101,11 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
           {isMediaSelected &&
             <ImageList sx={{ width: 450, height: 280, marginTop: '0', }}>
               {mediaPost.map((item) => (
-                <ImageListItem key={item.id}>
+                <ImageListItem key={item.temporaryUrl}>
                   <img
-                    src={`${item.mediaUrl}?w=248&fit=crop&auto=format`}
-                    srcSet={`${item.mediaUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                    loading="lazy"
+                      src={item.temporaryUrl}
+                      srcSet={`${item.temporaryUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                      loading="lazy"
                   />
                   <ImageListItemBar
                     position="top"
@@ -116,7 +117,7 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
                         sx={{ color: 'rgba(27, 27, 27, 0.94)' }}
                       >
                         <CancelRoundedIcon color="action"
-                          onClick={() => handleRemoveMedia(item.id)} />
+                          onClick={() => handleRemoveMedia(item.temporaryUrl)} />
                       </IconButton>
                     }
                   />
@@ -137,7 +138,7 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
                 id="contained-button-file"
                 multiple type="file"
                 style={{ display: 'none' }}
-                onChange={handleAddPhotoPost}
+                onChange={( event ) => handleAddPhotoPost(event)}
               />
               <CameraImg />
             </label>

@@ -1,36 +1,34 @@
-import { FormEvent, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
-import { toast } from 'react-toastify';
+import axios from 'axios';
+import {useState} from 'react';
+
+import {Eye, EyeOff} from 'react-feather';
+import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {Button} from '../../components/Button';
 
-import { Eye } from 'react-feather';
-import { EyeOff } from 'react-feather';
-import { useAuth } from '../../hooks/AuthContext';
-
-import { Modals } from '../../components/Modals';
-import { Button } from '../../components/Button'
+import {Modals} from '../../components/Modals';
+import {useAuth} from '../../hooks/AuthContext';
 
 import theme from '../../styles/theme';
 
 import {
+  CloseButtonTW,
   Container,
   Content,
-  CloseButtonTW,
   Header,
-  Title,
-  InputName,
-  LabelName,
-  InputBirthDate,
-  LabelBirthDate,
-  InputEmail,
-  LabelEmail,
-  InputPassword,
-  LabelPassword,
   InputAddress,
+  InputBirthDate,
+  InputDisabled,
+  InputEmail,
+  InputName,
+  InputPassword,
   LabelAddress,
-  InputDisabled
+  LabelBirthDate,
+  LabelEmail,
+  LabelName,
+  LabelPassword,
+  Title
 } from './styles';
-import axios from 'axios';
 
 
 const modalStyle = {
@@ -81,18 +79,17 @@ export function Signup() {
     setShowPassword(showPassword ? false : true);
   };
 
-  function handleAccountCreated(event: FormEvent) {
-    event.preventDefault();
+  async function handleAccountCreated() {
 
     const data = {
       name,
       email,
       password,
-      postal_code,
-      birthday_date,
+      postalCode:postal_code,
+      birthdayDate:birthday_date,
       neighbourhood
     }
-    signUp(data);
+    await signUp (data);
   }
 
   const handleSearchneighbourhood = async () => {
@@ -142,7 +139,7 @@ export function Signup() {
           </Header>
           <Title>Crie sua conta</Title>
 
-          <form onSubmit={handleAccountCreated}>
+          <form>
             <InputName
               type="name"
               value={name}
@@ -227,6 +224,7 @@ export function Signup() {
                 marginBottom: "2rem"
               }}
               title="Criar Conta"
+              onClick={handleAccountCreated}
             />
           </form>
         </Content>

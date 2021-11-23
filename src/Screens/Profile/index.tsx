@@ -1,56 +1,38 @@
-import React, { createRef, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import {Avatar} from '@mui/material';
+import React, {createRef, useEffect, useState} from 'react';
+import {useForm} from 'react-hook-form';
+import {useParams} from 'react-router-dom';
+import {useTheme} from 'styled-components';
 
-import {
-    CityImg,
-    RelationshipImg,
-    WorkImg,
-    BirthdayImg,
-    HobbiesImg,
-    PhoneImg
-} from '../../components/Svgs';
-import { AuthState } from '../../hooks/AuthContext';
+import {BirthdayImg, CityImg, HobbiesImg, PhoneImg, RelationshipImg, WorkImg} from '../../components/Svgs';
+import {api} from '../../services/api';
 
-import {
-    Button,
-    Container,
-    Content,
-    ProfileInput,
-    TextArea,
-    HeaderProfile
-} from './styles'
-import { useTheme } from 'styled-components';
-import { api } from '../../services/api';
-import { Avatar } from '@mui/material';
+import {Button, Container, Content, HeaderProfile, ProfileInput, TextArea} from './styles';
 
 enum profileButton {
     EDITAR = 'Editar',
     SALVAR = 'Salvar'
 }
 
-interface userInfo {
+interface UserInfo {
     name?: string;
     profile_pic?: string;
 }
 
-interface userDetails extends userInfo {
-    work?: string;
+interface UserDetails extends UserInfo {
+    job?: string;
     city?: string;
     relationship?: string;
-    birthday?: string;
+    birthdayDate?: string;
     hobbies?: string;
-    phone?: string;
+    contact?: string;
     about?: string;
-}
-interface user {
-    user: userDetails
 }
 
 export function Profile() {
 
-    const [userDetails, setUserDetails] = useState<userDetails>({} as userDetails);
-    const [userInfo, setUserInfo] = useState<userInfo>({} as userInfo);
+    const [userDetails, setUserDetails] = useState<UserDetails>({} as UserDetails);
+    const [userInfo, setUserInfo] = useState<UserInfo>({} as UserInfo);
     const [buttonText, setButtonText] = useState(profileButton.EDITAR);
     const [allowEditing, setAllowEditing] = useState(false);
     const { userId } = useParams<{ userId: string }>();
@@ -58,7 +40,7 @@ export function Profile() {
     // Criando referencia no formulario para disparar submit programaticamente.
     const formRef: React.RefObject<HTMLFormElement> = createRef();
 
-    const { register, handleSubmit } = useForm<userDetails>();
+    const { register, handleSubmit , setFocus } = useForm<UserDetails>();
 
     const theme = useTheme();
 
@@ -66,45 +48,44 @@ export function Profile() {
      * Salva as informacoes preenchidas no profile.
      * @param profileEvent dados dos usuario
      */
-    async function handleSaveUserDetails(profileEvent: userDetails) {
+    async function handleSaveUserDetails(profileEvent: UserDetails) {
 
-        console.log(profileEvent)
-        await api.put('/user/update_profile', {
-            job: profileEvent.work,
-            birthday_date: profileEvent.birthday,
+        await api.put('/user/update-profile"', {
+            job: profileEvent.job,
+            birthdayDate: profileEvent.birthdayDate,
             city: profileEvent.city,
             hobbies: profileEvent.hobbies,
-            contact: profileEvent.phone,
+            contact: profileEvent.contact,
             relationship: profileEvent.relationship,
             about: profileEvent.about
         });
     }
 
-    //carrega quando abri a pag
+    //Carregando detalhes do profile do user ao abrir a pagina
     useEffect(() => {
-        api.get<user>(`/user/${userId}`, {
+        api.get<UserDetails>(`/user/${userId}`, {
             params: {
                 user_id: userId
             }
         }).then(response => {
             setUserDetails({
-                work: response.data.user.work,
-                birthday: response.data.user.birthday,
-                city: response.data.user.city,
-                hobbies: response.data.user.hobbies,
-                phone: response.data.user.phone,
-                relationship: response.data.user.relationship,
-                about: response.data.user.about
+                job: response.data.job,
+                birthdayDate: response.data.birthdayDate,
+                city: response.data.city,
+                hobbies: response.data.hobbies,
+                contact: response.data.contact,
+                relationship: response.data.relationship,
+                about: response.data.about
             });
 
             setUserInfo({
-                name: response.data.user.name,
-                profile_pic: response.data.user.profile_pic
+                name: response.data.name,
+                profile_pic: response.data.profile_pic
 
             })
         })
 
-    }, [userId, userDetails])
+    }, [userId])
 
 
     /** Muda foto de perfil
@@ -136,6 +117,7 @@ export function Profile() {
         } else {
             setButtonText(profileButton.SALVAR);
             setAllowEditing(true);
+            setFocus("job")
         }
     };
 
@@ -170,14 +152,14 @@ export function Profile() {
             <form id={'profile'} onSubmit={handleSubmit(handleSaveUserDetails)} ref={formRef}>
                 <Content>
                     <WorkImg
-                        fill={userDetails.work ? theme.colors.shape : theme.colors.gray_medium}
-                        stroke={userDetails.work ? theme.colors.primary : theme.colors.gray_medium}
+                        fill={userDetails.job ? theme.colors.shape : theme.colors.gray_medium}
+                        stroke={userDetails.job ? theme.colors.primary : theme.colors.gray_medium}
 
                     />
                     <ProfileInput
-                        {...register('work')}
-                        defaultValue={userDetails.work}
-                        disabled={!allowEditing}
+                        {...register('job')}
+                        defaultValue={userDetails.job}
+                        readOnly={!allowEditing}
                     />
 
                     <CityImg
@@ -201,13 +183,13 @@ export function Profile() {
                     />
 
                     <BirthdayImg
-                        fill={userDetails.birthday ? theme.colors.shape : theme.colors.gray_light}
-                        stroke={userDetails.birthday ? theme.colors.red : theme.colors.gray_medium}
+                        fill={userDetails.birthdayDate ? theme.colors.shape : theme.colors.gray_light}
+                        stroke={userDetails.birthdayDate ? theme.colors.red : theme.colors.gray_medium}
                     />
                     <ProfileInput
-                        {...register('birthday')}
+                        {...register('birthdayDate')}
                         type={'date'}
-                        defaultValue={userDetails.birthday}
+                        defaultValue={userDetails.birthdayDate}
                         disabled={!allowEditing}
                     />
 
@@ -221,12 +203,12 @@ export function Profile() {
                     />
 
                     <PhoneImg
-                        fill={userDetails.phone ? theme.colors.shape : theme.colors.gray_light}
-                        stroke={userDetails.phone ? theme.colors.yellow : theme.colors.gray_medium}
+                        fill={userDetails.contact ? theme.colors.shape : theme.colors.gray_light}
+                        stroke={userDetails.contact ? theme.colors.yellow : theme.colors.gray_medium}
                     />
                     <ProfileInput
-                        {...register('phone')}
-                        defaultValue={userDetails.phone}
+                        {...register('contact')}
+                        defaultValue={userDetails.contact}
                         disabled={!allowEditing}
                     />
 

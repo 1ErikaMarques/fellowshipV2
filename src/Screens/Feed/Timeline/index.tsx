@@ -110,7 +110,7 @@ export function Timeline() {
       <Content>
         <Header>
           <Avatar
-            src={userInfo.user.profile_pic}
+            src={userInfo.user.profilePic}
             sx={{
               width: '3rem',
               height: '3rem',

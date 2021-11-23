@@ -54,7 +54,7 @@ export function CommentsPost({ expanded }: CommentsPostProps) {
       <Collapse in={expanded} timeout="auto" unmountOnExit >
         <CardContent sx={{ width: '100%', display: 'flex' }}>
           <Avatar
-            src={userInfo.user.profile_pic}
+            src={userInfo.user.profilePic}
             style={{ marginLeft: '0.5rem', cursor: 'pointer' }} />
           <UserInfoContent>
             <Comment>

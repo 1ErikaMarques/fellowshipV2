@@ -8,16 +8,20 @@ import { ModalDonations } from '../../../components/ModalDonations';
 import { NewPostModalType, PostType } from '../MenuNav';
 import { Container, ButtonPub, } from './styles';
 
+import {ref, uploadBytes,getDownloadURL} from 'firebase/storage';
+import {storage} from "../../../services/firebase";
+
 
 interface NewPostProps {
     modalType: NewPostModalType;
     postType: PostType;
-};
+}
 
 export interface MediaPost {
-    id: string;
-    mediaUrl: string;
-};
+    mediaUrl?: string;
+    temporaryUrl : string;
+    mediaType:string;
+}
 
 export function NewPost({ modalType, postType }: NewPostProps) {
 
@@ -36,53 +40,46 @@ export function NewPost({ modalType, postType }: NewPostProps) {
     const [isMediaSelected, setIsMediaSelected] = useState(false);
     const [mediaPost, setMediaPost] = useState<MediaPost[]>([]);
 
-    const handleAddPhotoPost = () => {
-        let arrayPost: MediaPost[] = [
-            {
-                id: '1',
-                mediaUrl: 'https://avatars.githubusercontent.com/u/4424108?v=4'
-            },
-            {
-                id: '2',
-                mediaUrl: 'https://avatars.githubusercontent.com/u/63205222?v=4'
-            },
-            {
-                id: '3',
-                mediaUrl: 'https://avatars.githubusercontent.com/u/4424108?v=4'
-            },
-            {
-                id: '4',
-                mediaUrl: 'https://avatars.githubusercontent.com/u/63205222?v=4'
-            },
-            {
-                id: '5',
-                mediaUrl: 'https://avatars.githubusercontent.com/u/4424108?v=4'
-            },
-            {
-                id: '6',
-                mediaUrl: 'https://avatars.githubusercontent.com/u/63205222?v=4'
-            },
-            {
-                id: '7',
-                mediaUrl: 'https://avatars.githubusercontent.com/u/4424108?v=4'
-            },
-            {
-                id: '8',
-                mediaUrl: 'https://avatars.githubusercontent.com/u/63205222?v=4'
-            },
-        ];
+    const handleAddPhotoPost = async (file : React.ChangeEvent<HTMLInputElement>) => {
 
-        setMediaPost(() => [...arrayPost]);
-        setIsMediaSelected(true)
+        let newArray : MediaPost[] = [...mediaPost];
+
+
+        // --> [1,2,3,4]
+        const files = file.target.files;
+        if(files !== null){
+            for (let i = 0; i < files.length; i++) {
+               const newMedia : MediaPost = {
+                   temporaryUrl : (window.URL ? URL : webkitURL).createObjectURL (files[i]),
+                   mediaType:'image'
+               }
+                newArray.push(newMedia)
+            }
+            //const temporaryUrl = URL.createObjectURL(file);
+        }
+
+
+
+        //const file = await fetch (arrayPost[1].mediaUrl).then (r => r.blob ());
+
+        /*const storagePostsRef = ref(storage, 'posts');
+        uploadBytes (storagePostsRef, file).then (async () => {
+            const publicImageUrl = await getDownloadURL(storagePostsRef);
+            console.log (`Uploaded a blob or file! , ${publicImageUrl}`);
+        });*/
+
+        setMediaPost (() => [...newArray]);
+        setIsMediaSelected (true)
     };
 
     const handleAddVideoPost = () => {
     };
 
-    const handleRemoveMedia = (id: string) => {
+    const handleRemoveMedia = (temporaryUrl: string) => {
         setMediaPost(old => old.filter(
-            media => media.id !== id
+            media => media.temporaryUrl !== temporaryUrl
         ));
+        URL.revokeObjectURL(temporaryUrl)
         if (mediaPost.length < 1) {
             setIsMediaSelected(false)
         }
@@ -105,7 +102,7 @@ export function NewPost({ modalType, postType }: NewPostProps) {
                     <ModalDefault
                         isOpen={isOpenModalDefault}
                         handleClose={handleCloseModalDefault}
-                        handleAddPhotoPost={handleAddPhotoPost}
+                        handleAddPhotoPost={ (event: React.ChangeEvent<HTMLInputElement>) => handleAddPhotoPost(event)}
                         handleAddVideoPost={handleAddVideoPost}
                         handleRemoveMedia={handleRemoveMedia}
                         mediaPost={mediaPost}
@@ -121,7 +118,7 @@ export function NewPost({ modalType, postType }: NewPostProps) {
                     <ModalHome
                         isOpen={isOpenModalHome}
                         handleClose={handleCloseModalHome}
-                        handleAddPhotoPost={handleAddPhotoPost}
+                        handleAddPhotoPost={ (event: React.ChangeEvent<HTMLInputElement>) => handleAddPhotoPost(event)}
                         handleAddVideoPost={handleAddVideoPost}
                         handleRemoveMedia={handleRemoveMedia}
                         mediaPost={mediaPost}
@@ -136,7 +133,7 @@ export function NewPost({ modalType, postType }: NewPostProps) {
                         <ModalDonations
                             isOpen={isOpenModalDonations}
                             handleClose={handleCloseModalDonations}
-                            handleAddPhotoPost={handleAddPhotoPost}
+                            handleAddPhotoPost={ (event: React.ChangeEvent<HTMLInputElement>) => handleAddPhotoPost(event)}
                             handleAddVideoPost={handleAddVideoPost}
                             handleRemoveMedia={handleRemoveMedia}
                             mediaPost={mediaPost}

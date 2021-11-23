@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Link, generatePath } from 'react-router-dom';
+import {makeStyles, styled} from '@mui/styles';
+import React, {useEffect, useState} from 'react';
+import {Link, generatePath} from 'react-router-dom';
 
-import { ROUTES } from '../../routes';
-import { useAuth } from '../../hooks/AuthContext';
+import {ROUTES} from '../../routes';
+import {useAuth} from '../../hooks/AuthContext';
 
 import {
     HomeImg,
@@ -23,7 +24,7 @@ import {
     MenuItem,
     Typography,
     Divider,
-    Autocomplete, TextField, IconButton, InputAdornment
+    Autocomplete, TextField,InputAdornment
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -31,9 +32,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import {api} from '../../services/api';
 import theme from '../../styles/theme';
 
 import {
+    AutoComplete,
     Container,
     Content,
     NeighborhoodName,
@@ -44,26 +47,32 @@ interface HeaderProps {
     neighbourhoodName: string;
 }
 
-export function Header({ neighbourhoodName }: HeaderProps) {
+interface Neighbourhoods {
+    id: string;
+    label: string;
+}
 
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
-    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-    const [neighbourhoods, setNeighbourhoods] = useState([]);
+export function Header({neighbourhoodName}: HeaderProps) {
 
-    const { logout, userInfo } = useAuth();
+    const [anchorEl, setAnchorEl] = useState (null);
+    const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState (false);
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState (false);
+    const [neighbourhoods, setNeighbourhoods] = useState<ReadonlyArray<Neighbourhoods>> ([]);
+    const [selectedNeighbourhood, setSelectedNeighbourhood] = useState<string> ();
+
+    const {logout, userInfo} = useAuth ();
 
     const handleClick = (event: any) => {
 
         switch (event.currentTarget.id) {
             case 'notification':
-                setIsNotificationMenuOpen(true);
+                setIsNotificationMenuOpen (true);
                 break;
             case 'user-specifics':
-                setIsUserMenuOpen(true);
+                setIsUserMenuOpen (true);
                 break;
         }
-        setAnchorEl(event.currentTarget);
+        setAnchorEl (event.currentTarget);
     };
 
     const handleClose = () => {
@@ -71,48 +80,64 @@ export function Header({ neighbourhoodName }: HeaderProps) {
             const anchorId = anchorEl as HTMLElement;
             switch (anchorId.id) {
                 case 'notification':
-                    setIsNotificationMenuOpen(false);
+                    setIsNotificationMenuOpen (false);
                     break;
                 case 'user-specifics':
-                    setIsUserMenuOpen(false);
+                    setIsUserMenuOpen (false);
                     break;
             }
         }
-        setAnchorEl(null);
+        setAnchorEl (null);
+    };
+
+    useEffect (() => {
+        api.get<Neighbourhoods[]> ('/utils/neighbourhoods')
+            .then (res => {
+                setNeighbourhoods (res.data)
+            })
+            .catch (er => console.error (er));
+    }, []);
+
+    const handleNeighbourhoodChange = (newInputValue: string) => {
+
+        if (neighbourhoods.find (n => n.label === newInputValue)) {
+            alert ('ACHEII JABACOS');
+        }
     };
 
     return (
 
         <Container>
-            <Link to={generatePath(ROUTES.HOME)}>
-                <LogoImg />
+            <Link to={generatePath (ROUTES.HOME)}>
+                <LogoImg/>
             </Link>
             <NeighborhoodName>
                 {neighbourhoodName}
             </NeighborhoodName>
-            <Autocomplete
-                disablePortal
+            <AutoComplete
                 id="combo-box-neighbourhood"
                 options={neighbourhoods}
                 disableClearable
                 freeSolo
-                sx={{ maxWidth: '18rem', height: '2rem', border: 'border: 1px solid #E9E9E9', borderRadius: '0.25rem' }}
+                onInputChange={(event, newInputValue) => {
+                    handleNeighbourhoodChange (newInputValue);
+                }}
+                sx={{maxWidth: '18rem'}}
                 renderInput={(params) =>
                     <TextField
                         {...params}
                         variant="outlined"
-                        margin="normal"
-                        required
+                        margin="none"
                         fullWidth
                         autoFocus
-                        // onChange={handlePhoneNumberChange}
-                        placeholder="Search..."
+                        size="small"
+                        placeholder="Pesquise o bairro..."
                         type="search"
                         InputProps={{
                             ...params.InputProps,
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <SearchIcon />
+                                    <SearchIcon/>
                                 </InputAdornment>
                             ),
                         }}
@@ -121,11 +146,11 @@ export function Header({ neighbourhoodName }: HeaderProps) {
             />
 
             <Content>
-                <Link to={generatePath(ROUTES.HOME)}>
+                <Link to={generatePath (ROUTES.HOME)}>
                     <Button
-                        style={{ background: 'none', borderRadius: '0.5rem' }}
+                        style={{background: 'none', borderRadius: '0.5rem'}}
                     >
-                        <HomeImg />
+                        <HomeImg/>
                     </Button>
                 </Link>
                 <Button
@@ -133,7 +158,7 @@ export function Header({ neighbourhoodName }: HeaderProps) {
                     aria-controls="notifications-specifics-menu"
                     aria-haspopup="true"
                     aria-expanded={isNotificationMenuOpen ? 'true' : undefined}
-                    style={{ background: 'none', borderRadius: '0.5rem' }}
+                    style={{background: 'none', borderRadius: '0.5rem'}}
 
                     onClick={handleClick}>
                     <Badge badgeContent={4} color="primary">
@@ -152,17 +177,17 @@ export function Header({ neighbourhoodName }: HeaderProps) {
                         'aria-labelledby': 'notifications',
                     }}
                 >
-                    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                    <List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
                         <ListItem alignItems="flex-start">
                             <ListItemAvatar>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg"/>
                             </ListItemAvatar>
                             <ListItemText
                                 primary="Brunch this weekend?"
                                 secondary={
                                     <React.Fragment>
                                         <Typography
-                                            sx={{ display: 'inline' }}
+                                            sx={{display: 'inline'}}
                                             component="span"
                                             variant="body2"
                                             color="text.primary">
@@ -181,10 +206,10 @@ export function Header({ neighbourhoodName }: HeaderProps) {
                     aria-haspopup="true"
                     aria-expanded={isUserMenuOpen ? 'true' : undefined}
                     onClick={handleClick}
-                    style={{ background: 'none' }}
+                    style={{background: 'none'}}
                 >
                     <UserImg fill={isUserMenuOpen ? theme.colors.primary : theme.colors.gray_dark}
-                        stroke={isUserMenuOpen ? theme.colors.primary : theme.colors.gray_medium} />
+                             stroke={isUserMenuOpen ? theme.colors.primary : theme.colors.gray_medium}/>
                 </Button>
                 <Menu
                     id="user-specifics-menu"
@@ -196,21 +221,21 @@ export function Header({ neighbourhoodName }: HeaderProps) {
                     }}>
                     <MenuItem onClick={handleClose}>
 
-                        <Link to={generatePath(ROUTES.PROFILE, { userId: userInfo.user.id })}>
-                            <PersonOutlineOutlinedIcon style={{ marginRight: '10', color: '#53525D' }} />
+                        <Link to={generatePath (ROUTES.PROFILE, {userId: userInfo ? userInfo.user.userId : ''})}>
+                            <PersonOutlineOutlinedIcon style={{marginRight: '10', color: '#53525D'}}/>
                             Perfil
                         </Link>
                     </MenuItem>
                     <MenuItem onClick={handleClose}>
-                        <Link to={generatePath(ROUTES.CONFIGURATIONS)}>
-                            <SettingsOutlinedIcon style={{ marginRight: '10', color: '#53525D' }} />
+                        <Link to={generatePath (ROUTES.CONFIGURATIONS)}>
+                            <SettingsOutlinedIcon style={{marginRight: '10', color: '#53525D'}}/>
                             Configurações
                         </Link>
                     </MenuItem>
-                    <Divider style={{ backgroundColor: '#E9E9E9', marginTop: '0.6rem' }} />
+                    <Divider style={{backgroundColor: '#E9E9E9', marginTop: '0.6rem'}}/>
                     <MenuItem onClick={logout} title={'sair'}>
-                        <Link to={generatePath(ROUTES.LOGIN)}>
-                            <LogoutOutlinedIcon style={{ marginRight: '10', color: '#53525D' }} />
+                        <Link to={generatePath (ROUTES.LOGIN)}>
+                            <LogoutOutlinedIcon style={{marginRight: '10', color: '#53525D'}}/>
                             Logout
                         </Link>
                     </MenuItem>

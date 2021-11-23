@@ -70,7 +70,7 @@ export function UserSettings() {
 
   const [userName, setUserName] = useState(userInfo.user.name);
   const [userEmail, setUserEmail] = useState(userInfo.user.email);
-  const [postalCode, setPostalCode] = useState(userInfo.user.postal_code);
+  const [postalCode, setPostalCode] = useState(userInfo.user.postalCode);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -81,7 +81,7 @@ export function UserSettings() {
 
   function handleOptionChange(optionSelected: 'dataEdit' | 'passwordEdit') {
     setOption(optionSelected)
-  };
+  }
 
   const handleShowPassword = () => {
     setShowPassword(showPassword ? false : true);

@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import { Avatar, Divider } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 
-import { CameraImg, VideoImg } from '../../components/Svgs';
-import { Button } from '../../components/Button';
+import { CameraImg, VideoImg } from '../Svgs';
+import { Button } from '../Button';
 
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -33,7 +33,7 @@ import { useState } from 'react';
 interface ModalDonationsProps {
   isOpen: boolean;
   handleClose: () => void;
-  handleAddPhotoPost: () => void;
+  handleAddPhotoPost: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
   handleAddVideoPost: () => void;
   handleRemoveMedia: (itemId: string) => void;
   mediaPost: MediaPost[];
@@ -115,10 +115,10 @@ export function ModalDonations({ isOpen, handleClose, handleAddPhotoPost, handle
           />
           <ImageList sx={{ width: 450, height: 'auto', marginTop: '0' }}>
             {mediaPost.map((item) => (
-              <ImageListItem key={item.id}>
+              <ImageListItem key={item.temporaryUrl}>
                 <img
-                  src={`${item.mediaUrl}?w=248&fit=crop&auto=format`}
-                  srcSet={`${item.mediaUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                    src={`${item.temporaryUrl}?w=248&fit=crop&auto=format`}
+                    srcSet={`${item.temporaryUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
                   loading="lazy"
                 />
                 <ImageListItemBar
@@ -131,7 +131,7 @@ export function ModalDonations({ isOpen, handleClose, handleAddPhotoPost, handle
                       sx={{ color: 'rgba(27, 27, 27, 0.94)' }}
                     >
                       <CancelRoundedIcon color="action"
-                        onClick={() => handleRemoveMedia(item.id)} />
+                        onClick={() => handleRemoveMedia(item.temporaryUrl)} />
                     </IconButton>
                   }
                 />

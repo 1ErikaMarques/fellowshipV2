@@ -13,7 +13,7 @@ export function CommentEntry() {
   return (
     <Container>
       <Avatar
-        src={userInfo.user.profile_pic}
+        src={userInfo.user.profilePic}
         style={{ marginLeft: '0.5rem', cursor: 'pointer' }}
       />
       <TextareaAutosize

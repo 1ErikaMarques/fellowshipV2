@@ -39,7 +39,7 @@ import { useState } from 'react';
 interface ModalHomeProps {
   isOpen: boolean;
   handleClose: () => void;
-  handleAddPhotoPost: () => void;
+  handleAddPhotoPost: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
   handleAddVideoPost: () => void;
   handleRemoveMedia: (itemId: string) => void;
   mediaPost: MediaPost[];
@@ -181,10 +181,10 @@ export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVi
           />
           <ImageList sx={{ width: 450, height: 'auto', marginTop: '0' }}>
             {mediaPost.map((item) => (
-              <ImageListItem key={item.id}>
+              <ImageListItem key={item.temporaryUrl}>
                 <img
-                  src={`${item.mediaUrl}?w=248&fit=crop&auto=format`}
-                  srcSet={`${item.mediaUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                    src={`${item.temporaryUrl}?w=248&fit=crop&auto=format`}
+                    srcSet={`${item.temporaryUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
                   loading="lazy"
                 />
                 <ImageListItemBar
@@ -197,7 +197,7 @@ export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVi
                       sx={{ color: 'rgba(27, 27, 27, 0.94)' }}
                     >
                       <CancelRoundedIcon color="action"
-                        onClick={() => handleRemoveMedia(item.id)} />
+                        onClick={() => handleRemoveMedia(item.temporaryUrl)} />
                     </IconButton>
                   }
                 />
