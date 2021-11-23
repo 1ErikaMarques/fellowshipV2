@@ -50,7 +50,7 @@ export function Profile() {
      */
     async function handleSaveUserDetails(profileEvent: UserDetails) {
 
-        await api.put('/user/update-profile"', {
+        await api.put('/user/update_profile', {
             job: profileEvent.job,
             birthdayDate: profileEvent.birthdayDate,
             city: profileEvent.city,
