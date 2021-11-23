@@ -3,9 +3,9 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { NewPost } from '../NewPost';
+import { Timeline } from '../Timeline';
 import { Container } from './styles';
 import { useTheme } from 'styled-components';
-import { Timeline } from '../Timeline';
 
 interface TabPanelProps {
     children?: React.ReactNode;

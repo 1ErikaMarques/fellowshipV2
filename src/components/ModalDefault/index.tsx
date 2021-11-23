@@ -1,8 +1,8 @@
+import * as React from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { Avatar, Divider } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import * as React from 'react';
 
 import { CameraImg, VideoImg } from '../../components/Svgs';
 import { Button } from '../../components/Button';
@@ -13,6 +13,7 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 
+import { useAuth } from '../../hooks/AuthContext';
 import { useTheme } from 'styled-components';
 import {
   Content,
@@ -52,8 +53,7 @@ export const style = {
 export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAddVideoPost, handleRemoveMedia, mediaPost, isMediaSelected }: ModalDefaultProps) {
 
   const theme = useTheme();
-
-
+  const { userInfo } = useAuth();
 
   return (
     <Modal
@@ -66,11 +66,11 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
           <Header>
             <CloseButtonTW onClick={handleClose}>X</CloseButtonTW>
             <h3>Criar publicação</h3>
-            <Divider
+            <hr
               style={{
                 backgroundColor: theme.colors.gray_light,
-                marginBottom: '2rem',
-                marginTop: '1.2rem'
+                marginBottom: '1rem',
+                marginTop: '0.5rem'
               }}
             />
           </Header>
@@ -81,7 +81,7 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
                 height: '2.6rem'
               }}
             />
-            <h4>Mayk Fofilis</h4>
+            <h4>{userInfo.user.name}</h4>
           </UserInfo>
           <TextareaAutosize
             maxRows={12}
@@ -103,9 +103,9 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
               {mediaPost.map((item) => (
                 <ImageListItem key={item.temporaryUrl}>
                   <img
-                      src={item.temporaryUrl}
-                      srcSet={`${item.temporaryUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                      loading="lazy"
+                    src={item.temporaryUrl}
+                    srcSet={`${item.temporaryUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                    loading="lazy"
                   />
                   <ImageListItemBar
                     position="top"
@@ -125,12 +125,7 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
               ))}
             </ImageList>
           }
-          <Divider style={{
-            backgroundColor: '#F4F5F7',
-            marginBottom: '2rem',
-            marginTop: '4rem'
-          }}
-          />
+
           <Icons>
             <label htmlFor="contained-button-file">
               <input
@@ -138,7 +133,7 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
                 id="contained-button-file"
                 multiple type="file"
                 style={{ display: 'none' }}
-                onChange={( event ) => handleAddPhotoPost(event)}
+                onChange={(event) => handleAddPhotoPost(event)}
               />
               <CameraImg />
             </label>

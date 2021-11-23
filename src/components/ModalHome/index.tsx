@@ -1,13 +1,14 @@
+import * as React from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import { Avatar, Divider } from '@mui/material';
+import { Avatar } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import * as React from 'react';
+
 import { Theme, useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
@@ -20,6 +21,7 @@ import { Button } from '../../components/Button';
 
 import { MediaPost } from '../../Screens/Feed/NewPost';
 
+import { useAuth } from '../../hooks/AuthContext';
 import { useTheme as useThemeStyledComponents } from 'styled-components';
 import {
   Content,
@@ -80,11 +82,10 @@ export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVi
 
   const themeStyled = useThemeStyledComponents();
   const theme = useTheme();
-
+  const { userInfo } = useAuth();
   const [isSell, setIsSell] = useState(false);
   const [isRent, setIsRent] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
-
   const [personName, setPersonName] = React.useState<string[]>([]);
 
   const handleChange = (event: SelectChangeEvent<typeof personName>) => {
@@ -125,11 +126,11 @@ export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVi
           <Header>
             <CloseButtonTW onClick={handleClose}>X</CloseButtonTW>
             <h3>Criar publicação</h3>
-            <Divider
+            <hr
               style={{
                 backgroundColor: themeStyled.colors.gray_light,
-                marginBottom: '2rem',
-                marginTop: '1.2rem'
+                marginBottom: '1rem',
+                marginTop: '0.5rem'
               }}
             />
           </Header>
@@ -162,7 +163,7 @@ export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVi
                 height: '2.6rem'
               }}
             />
-            <h4>Mayk Fofilis</h4>
+            <h4>{userInfo.user.name}</h4>
           </UserInfo>
           <TextareaAutosize
             maxRows={12}
@@ -183,8 +184,8 @@ export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVi
             {mediaPost.map((item) => (
               <ImageListItem key={item.temporaryUrl}>
                 <img
-                    src={`${item.temporaryUrl}?w=248&fit=crop&auto=format`}
-                    srcSet={`${item.temporaryUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                  src={`${item.temporaryUrl}?w=248&fit=crop&auto=format`}
+                  srcSet={`${item.temporaryUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
                   loading="lazy"
                 />
                 <ImageListItemBar
@@ -204,13 +205,6 @@ export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVi
               </ImageListItem>
             ))}
           </ImageList>
-
-          <Divider style={{
-            backgroundColor: '#F4F5F7',
-            marginBottom: '2rem',
-            marginTop: '4rem'
-          }}
-          />
 
           <Icons>
             <label htmlFor="contained-button-file">

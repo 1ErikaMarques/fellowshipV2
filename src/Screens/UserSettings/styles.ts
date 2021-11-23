@@ -75,13 +75,12 @@ export const User = styled.div`
   justify-content: space-evenly;
   margin-top: 4rem;
   margin-bottom: 3rem;
-  padding: 1rem;
+
 
   h2{
     font-size: 0.9rem;
-    font-weight: 500;
-    margin-left: 1rem;
-    color: ${({ theme }) => theme.colors.gray_dark};    
+    font-weight: 500;  
+    color: ${({ theme }) => theme.colors.gray_dark};
   }
 `;
 

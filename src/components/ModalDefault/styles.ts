@@ -22,6 +22,7 @@ export const CloseButton = styled.span`
   font-size: 0.9rem;
   font-weight: bold;  
   padding: 0.4rem 0.6rem;
+
   color: #b5b5b5;
   cursor: pointer;  
 
@@ -52,4 +53,5 @@ export const UserInfo = styled.div`
 
 export const Icons = styled.div`
   display: flex;
+  margin-top: 1rem;
 `;

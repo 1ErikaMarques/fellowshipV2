@@ -1,13 +1,27 @@
-import {Avatar} from '@mui/material';
-import React, {createRef, useEffect, useState} from 'react';
-import {useForm} from 'react-hook-form';
-import {useParams} from 'react-router-dom';
-import {useTheme} from 'styled-components';
+import React, { createRef, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+import { useTheme } from 'styled-components';
+import { Avatar } from '@mui/material';
 
-import {BirthdayImg, CityImg, HobbiesImg, PhoneImg, RelationshipImg, WorkImg} from '../../components/Svgs';
-import {api} from '../../services/api';
+import { api } from '../../services/api';
+import {
+    BirthdayImg,
+    CityImg,
+    HobbiesImg,
+    PhoneImg,
+    RelationshipImg,
+    WorkImg
+} from '../../components/Svgs';
 
-import {Button, Container, Content, HeaderProfile, ProfileInput, TextArea} from './styles';
+import {
+    Button,
+    Container,
+    Content,
+    HeaderProfile,
+    ProfileInput,
+    TextArea
+} from './styles';
 
 enum profileButton {
     EDITAR = 'Editar',
@@ -19,7 +33,7 @@ interface UserInfo {
     profile_pic?: string;
 }
 
-interface UserDetails extends UserInfo {
+export interface UserDetails extends UserInfo {
     job?: string;
     city?: string;
     relationship?: string;
@@ -27,6 +41,7 @@ interface UserDetails extends UserInfo {
     hobbies?: string;
     contact?: string;
     about?: string;
+    neighbourhood?: string;
 }
 
 export function Profile() {
@@ -35,12 +50,13 @@ export function Profile() {
     const [userInfo, setUserInfo] = useState<UserInfo>({} as UserInfo);
     const [buttonText, setButtonText] = useState(profileButton.EDITAR);
     const [allowEditing, setAllowEditing] = useState(false);
+
     const { userId } = useParams<{ userId: string }>();
 
     // Criando referencia no formulario para disparar submit programaticamente.
     const formRef: React.RefObject<HTMLFormElement> = createRef();
 
-    const { register, handleSubmit , setFocus } = useForm<UserDetails>();
+    const { register, handleSubmit, setFocus } = useForm<UserDetails>();
 
     const theme = useTheme();
 
@@ -50,7 +66,7 @@ export function Profile() {
      */
     async function handleSaveUserDetails(profileEvent: UserDetails) {
 
-        await api.put('/user/update_profile', {
+        await api.put<UserDetails>('/user/update_profile', {
             job: profileEvent.job,
             birthdayDate: profileEvent.birthdayDate,
             city: profileEvent.city,
@@ -58,10 +74,20 @@ export function Profile() {
             contact: profileEvent.contact,
             relationship: profileEvent.relationship,
             about: profileEvent.about
+        }).then(response => {
+            setUserDetails({
+                job: response.data.job,
+                birthdayDate: response.data.birthdayDate,
+                city: response.data.city,
+                hobbies: response.data.hobbies,
+                contact: response.data.contact,
+                relationship: response.data.relationship,
+                about: response.data.about
+            });
         });
     }
 
-    //Carregando detalhes do profile do user ao abrir a pagina
+    //Carregando dados do profile do user ao abrir a pagina
     useEffect(() => {
         api.get<UserDetails>(`/user/${userId}`, {
             params: {
@@ -96,8 +122,7 @@ export function Profile() {
         api.put('/user/profile_pic/update', {
             profile_url: ""
         })
-
-    }
+    };
 
     /**
      * Altera texto do botao e libera/bloqueia os inputs.
@@ -210,6 +235,7 @@ export function Profile() {
                         {...register('contact')}
                         defaultValue={userDetails.contact}
                         disabled={!allowEditing}
+                        maxLength={12}
                     />
 
                     <TextArea

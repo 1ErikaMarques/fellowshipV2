@@ -1,3 +1,4 @@
+import { ButtonBaseProps } from '@mui/material';
 import { ButtonStyle } from './styles';
 
 interface ButtonProps {
@@ -21,7 +22,6 @@ export function Button({ title, onClick, style, form }: ButtonProps) {
 
     return (
         <ButtonStyle
-
             width={style.width}
             marginBottom={style.marginBottom}
             boxShadowLength={style.boxShadowLength}
@@ -31,8 +31,10 @@ export function Button({ title, onClick, style, form }: ButtonProps) {
             height={style.height}
             form={form}
             type={"submit"}
-            onClick={onClick}>{title}
+            onClick={onClick}
 
+        >
+            {title}
         </ButtonStyle>
     )
 }

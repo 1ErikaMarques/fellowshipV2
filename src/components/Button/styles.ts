@@ -8,6 +8,7 @@ interface ButtonProps {
   marginBottom?: string;
   backgroundColor?: string;
   height?: string;
+
 }
 
 export const ButtonStyle = styled.button<ButtonProps>`

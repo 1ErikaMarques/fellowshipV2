@@ -1,15 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../../hooks/AuthContext';
+import { api } from '../../services/api';
 
-import { AlignCenter, Eye } from 'react-feather';
+import { Eye } from 'react-feather';
 import { EyeOff } from 'react-feather';
 import { Avatar } from '@mui/material';
 import Lottie from 'lottie-react';
 import settingsAnimated from '../../assets/UserSettings/settings_animated.json';
 
 import { SecurityImg, UserAccountImg } from '../../components/Svgs';
+import { Button } from '../../components/Button';
+import { ViaCep } from '../Signup';
+import { InputDisabled } from '../Signup/styles';
 
 import {
   Container,
@@ -22,11 +30,7 @@ import {
   Input,
   Campos,
 } from './styles';
-import { InputDisabled } from '../Signup/styles';
 import { useTheme } from 'styled-components';
-import { useForm } from 'react-hook-form';
-import { Button } from '../../components/Button';
-
 
 interface UpdateFormSecurityData {
   email: string
@@ -37,6 +41,7 @@ interface UpdateFormSecurityData {
 interface UpdateFormPersonalData {
   fullName: string
   postalCode: string
+  neighbourhood: string
 }
 
 const schema = yup.object({
@@ -49,24 +54,8 @@ const schema = yup.object({
 
 export function UserSettings() {
 
-  const { userInfo } = useAuth();
-
-  const {
-    register: registerSecurity,
-    handleSubmit: handleSecurityData,
-    formState: { errors } } = useForm<UpdateFormSecurityData>({
-      resolver: yupResolver(schema)
-    });
-
-  const {
-    register: registerPersonalData,
-    handleSubmit: handlePersonalData,
-    formState: { errors: errorsPersonalData } } = useForm<UpdateFormPersonalData>({
-      resolver: yupResolver(schema)
-    });
-
-  const onSubmitPersonalData = (PersonalData: UpdateFormPersonalData) => console.log(PersonalData);
-  const onSubmitSecurityData = (SecurityData: UpdateFormSecurityData) => console.log(SecurityData);
+  const { userInfo, updateUserInfo } = useAuth();
+  const theme = useTheme();
 
   const [userName, setUserName] = useState(userInfo.user.name);
   const [userEmail, setUserEmail] = useState(userInfo.user.email);
@@ -76,12 +65,57 @@ export function UserSettings() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [option, setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
+  const [neighbourhood, setNeighbourhood] = useState(userInfo.user.neighbourhood);
+  const [isButtonVisibility, setIsButtonVisibility] = useState<boolean | undefined>(false);
 
-  const theme = useTheme();
+  const {
+    register: registerPersonalData,
+    handleSubmit: handlePersonalData,
+    formState: { errors: errorsPersonalData } } = useForm<UpdateFormPersonalData>({
+      resolver: yupResolver(schema)
+    });
 
+  const {
+    register: registerSecurity,
+    handleSubmit: handleSecurityData,
+    formState: { errors } } = useForm<UpdateFormSecurityData>({
+      resolver: yupResolver(schema)
+    });
+
+  //salva dados pessoais 
+  const onSubmitPersonalData = async (personalData: UpdateFormPersonalData) => {
+    await api.put('/user/update_settings', {
+      name: personalData.fullName,
+      postalCode: personalData.postalCode,
+      neighbourhood: personalData.neighbourhood
+    }).then(response => {
+      toast.success('Suas informações foram salvas com sucesso', {
+        theme: 'colored'
+      })
+      updateUserInfo({
+        name: personalData.fullName,
+        postalCode: personalData.postalCode,
+        neighbourhood: personalData.neighbourhood
+      })
+    })
+  };
+
+  //salva dados de segurança
+  const onSubmitSecurityData = async (securityData: UpdateFormSecurityData) => {
+    await api.put('/user/update_settings', {
+      email: securityData.email,
+      password: securityData.password,
+    }).then(response => {
+      toast.success('Suas informações foram salvas com sucesso', {
+        theme: 'colored'
+      })
+    })
+  };
+
+  //opçoes do menu
   function handleOptionChange(optionSelected: 'dataEdit' | 'passwordEdit') {
     setOption(optionSelected)
-  }
+  };
 
   const handleShowPassword = () => {
     setShowPassword(showPassword ? false : true);
@@ -91,8 +125,46 @@ export function UserSettings() {
     setShowConfirmPassword(showConfirmPassword ? false : true);
   };
 
+  //buscando bairro da api
+  const handleSearchNeighbourhood = async () => {
+    //retira caracteres especiais
+    const postalCodeTratado = postalCode.replace(/\D/g, '');
+
+    //regex para validar se tem somente numeros
+    const validaPostalCode = /^[0-9]{8}$/;
+
+    //valida se o regex for true
+    if (validaPostalCode.test(postalCodeTratado)) {
+      await axios.get<ViaCep>(`https://viacep.com.br/ws/${postalCodeTratado}/json`)
+        .then(resp => {
+          if (!("erro" in resp)) {
+            setNeighbourhood(`${resp.data.bairro} - ${resp.data.uf}`);
+          } else {
+            toast.warning("Cep não encontrado", {
+              theme: 'colored'
+            });
+            setNeighbourhood('');
+          }
+        })
+
+        //erro na api
+        .catch(error => {
+          toast.error("erro ao carregar cep", {
+            theme: 'colored'
+          });
+          console.error(`erro ao carregar cep ${postalCodeTratado} error: ${error}`)
+        })
+
+    } else {
+      toast.error("Cep Invàlido", {
+        theme: 'colored'
+      });
+    }
+  };
+
   return (
     <Container>
+      <ToastContainer />
       <Menu>
         <User>
           <Avatar sx={{ width: '3.2rem', height: '3.2rem' }} />
@@ -103,7 +175,6 @@ export function UserSettings() {
           onClick={() => handleOptionChange('dataEdit')}
         >
           Conta
-
           <UserAccountImg
             stroke={option === 'dataEdit' ? theme.colors.primary : theme.colors.gray_dark}
           />
@@ -126,7 +197,10 @@ export function UserSettings() {
       <Content>
         {
           option === 'dataEdit' ?
-            <form onSubmit={handlePersonalData(onSubmitPersonalData)}>
+            <form
+              id="personal_data"
+              onSubmit={handlePersonalData(onSubmitPersonalData)}
+            >
               <Card>
                 <h1>Dados Pessoais</h1>
                 <Campos>
@@ -135,6 +209,7 @@ export function UserSettings() {
                     value={userName}
                     {...registerPersonalData("fullName")}
                     onChange={e => { setUserName(e.target.value) }}
+                    onFocus={() => setIsButtonVisibility(true)}
                     style={{
                       maxWidth: "22rem",
                       marginTop: "0",
@@ -147,6 +222,7 @@ export function UserSettings() {
                     value={postalCode}
                     {...registerPersonalData("postalCode")}
                     onChange={e => { setPostalCode(e.target.value) }}
+                    onBlur={handleSearchNeighbourhood}
                     style={{
                       maxWidth: "22rem",
                       marginTop: "0",
@@ -155,7 +231,7 @@ export function UserSettings() {
                   />
 
                   <InputDisabled
-                    defaultValue={userInfo.user.neighbourhood}
+                    value={neighbourhood}
                     style={{
                       maxWidth: "22rem",
                       marginTop: "1rem",
@@ -165,18 +241,26 @@ export function UserSettings() {
                     readOnly
                   />
                 </Campos>
-                <Button
-                  title="Salvar"
-                  style={{
-                    width: "12rem",
-                    marginBottom: "2rem"
-                  }}
-                />
+                {isButtonVisibility &&
+                  <Button
+                    title="Salvar"
+                    form="personal_data"
+                    style={{
+                      width: "12rem",
+                      marginBottom: "2rem",
+
+                    }}
+                  />
+                }
+
 
               </Card>
             </form>
             :
-            <form onSubmit={handleSecurityData(onSubmitSecurityData)}>
+            <form
+              id="security_data"
+              onSubmit={handleSecurityData(onSubmitSecurityData)}
+            >
               <Card>
                 <h1>Conta</h1>
 
@@ -284,6 +368,7 @@ export function UserSettings() {
                 </Campos>
                 <p>{errors.passwordConfirm?.message}</p>
                 <Button
+                  form="security_data"
                   title="Salvar"
                   style={{
                     width: "12rem",

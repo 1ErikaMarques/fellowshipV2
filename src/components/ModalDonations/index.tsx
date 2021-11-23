@@ -14,6 +14,7 @@ import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 
 import { MediaPost } from '../../Screens/Feed/NewPost';
 
+import { useAuth } from '../../hooks/AuthContext';
 import { useTheme } from 'styled-components';
 import {
   Content,
@@ -44,6 +45,7 @@ export function ModalDonations({ isOpen, handleClose, handleAddPhotoPost, handle
 
   const [isDonation, setIsDonation] = useState(false);
   const [isNeedDonation, setIsNeedDonation] = useState(false);
+  const { userInfo } = useAuth();
 
   const theme = useTheme();
 
@@ -68,11 +70,11 @@ export function ModalDonations({ isOpen, handleClose, handleAddPhotoPost, handle
           <Header>
             <CloseButtonTW onClick={handleClose}>X</CloseButtonTW>
             <h3>Criar publicação</h3>
-            <Divider
+            <hr
               style={{
                 backgroundColor: theme.colors.gray_light,
-                marginBottom: '2rem',
-                marginTop: '1.2rem'
+                marginBottom: '1rem',
+                marginTop: '0.5rem'
               }}
             />
           </Header>
@@ -96,7 +98,7 @@ export function ModalDonations({ isOpen, handleClose, handleAddPhotoPost, handle
                 height: '2.6rem'
               }}
             />
-            <h4>Mayk Fofilis</h4>
+            <h4>{userInfo.user.name}</h4>
           </UserInfo>
           <TextareaAutosize
             maxRows={12}
@@ -117,8 +119,8 @@ export function ModalDonations({ isOpen, handleClose, handleAddPhotoPost, handle
             {mediaPost.map((item) => (
               <ImageListItem key={item.temporaryUrl}>
                 <img
-                    src={`${item.temporaryUrl}?w=248&fit=crop&auto=format`}
-                    srcSet={`${item.temporaryUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                  src={`${item.temporaryUrl}?w=248&fit=crop&auto=format`}
+                  srcSet={`${item.temporaryUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
                   loading="lazy"
                 />
                 <ImageListItemBar
@@ -139,12 +141,6 @@ export function ModalDonations({ isOpen, handleClose, handleAddPhotoPost, handle
             ))}
           </ImageList>
 
-          <Divider style={{
-            backgroundColor: '#F4F5F7',
-            marginBottom: '2rem',
-            marginTop: '4rem'
-          }}
-          />
           <Icons>
             <label htmlFor="contained-button-file">
               <input

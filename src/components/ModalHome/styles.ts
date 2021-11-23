@@ -88,5 +88,6 @@ export const ContentChoice = styled.div`
   margin-top: 1rem;
 `;
 export const Icons = styled.div`
-  display: flex;  
+  display: flex;
+  margin-top: 1rem;
 `;

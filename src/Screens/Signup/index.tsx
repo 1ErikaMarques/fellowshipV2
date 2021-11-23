@@ -1,13 +1,12 @@
+import { useState } from 'react';
 import axios from 'axios';
-import {useState} from 'react';
-
-import {Eye, EyeOff} from 'react-feather';
-import {toast, ToastContainer} from 'react-toastify';
+import { Eye, EyeOff } from 'react-feather';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {Button} from '../../components/Button';
 
-import {Modals} from '../../components/Modals';
-import {useAuth} from '../../hooks/AuthContext';
+import { Button } from '../../components/Button';
+import { Modals } from '../../components/Modals';
+import { useAuth } from '../../hooks/AuthContext';
 
 import theme from '../../styles/theme';
 
@@ -48,7 +47,7 @@ const modalStyle = {
   }
 }
 
-interface ViaCep {
+export interface ViaCep {
   bairro: string;
   uf: string;
 }
@@ -71,7 +70,7 @@ export function Signup() {
   const [postal_code, setPostalCode] = useState('');
   const [birthday_date, setBirthdayDate] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [neighbourhood, setneighbourhood] = useState('');
+  const [neighbourhood, setNeighbourhood] = useState('');
 
   const { signUp } = useAuth();
 
@@ -85,14 +84,14 @@ export function Signup() {
       name,
       email,
       password,
-      postalCode:postal_code,
-      birthdayDate:birthday_date,
+      postalCode: postal_code,
+      birthdayDate: birthday_date,
       neighbourhood
     }
-    await signUp (data);
+    await signUp(data);
   }
 
-  const handleSearchneighbourhood = async () => {
+  const handleSearchNeighbourhood = async () => {
     //retira caracteres especiais
     const postalCodeTratado = postal_code.replace(/\D/g, '');
 
@@ -104,12 +103,12 @@ export function Signup() {
       await axios.get<ViaCep>(`https://viacep.com.br/ws/${postalCodeTratado}/json`)
         .then(resp => {
           if (!("erro" in resp)) {
-            setneighbourhood(`${resp.data.bairro} - ${resp.data.uf}`);
+            setNeighbourhood(`${resp.data.bairro} - ${resp.data.uf}`);
           } else {
             toast.warning("Cep não encontrado", {
               theme: 'colored'
             });
-            setneighbourhood('');
+            setNeighbourhood('');
           }
         })
 
@@ -132,7 +131,11 @@ export function Signup() {
     <Container>
       <ToastContainer />
       <h5 onClick={handleOpenModal}>Cadastre-se</h5>
-      <Modals isOpen={isModalOpen} onRequestClose={handleCloseModal} customStyles={modalStyle}>
+      <Modals
+        isOpen={isModalOpen}
+        onRequestClose={handleCloseModal}
+        customStyles={modalStyle}
+      >
         <Content>
           <Header>
             <CloseButtonTW onClick={handleCloseModal} >X</CloseButtonTW>
@@ -204,7 +207,7 @@ export function Signup() {
               type="string"
               value={postal_code}
               onChange={e => setPostalCode(e.target.value)}
-              onBlur={handleSearchneighbourhood}
+              onBlur={handleSearchNeighbourhood}
               name="postal_code"
               placeholder="ex: 04444-044"
               maxLength={10}
