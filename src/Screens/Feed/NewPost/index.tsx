@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Avatar } from '@mui/material';
 
 import { ModalDefault } from '../../../components/ModalDefault';
@@ -79,11 +79,19 @@ export function NewPost({ modalType, postType }: NewPostProps) {
         setMediaPost(old => old.filter(
             media => media.temporaryUrl !== temporaryUrl
         ));
+
         URL.revokeObjectURL(temporaryUrl)
+
+    };
+
+    /**
+     * Altera o tamanho da modal se n houver mais fotos/videos
+     */
+    useEffect(() => {
         if (mediaPost.length < 1) {
             setIsMediaSelected(false)
         }
-    };
+    },[mediaPost]);
 
     return (
         <Container>

@@ -26,10 +26,19 @@ interface SignInCredentials {
 interface SignUp extends User, SignInCredentials {
 }
 
+interface updateUserProfile {
+    email?: string;
+    name?: string;
+    postalCode?: string;
+    neighbourhood?: string;
+    profilePic?: string;
+}
+
 interface AuthContextData {
     userInfo: AuthState;
     signIn: (credentials: SignInCredentials) => Promise<void>;
     signUp: (signUp: SignUp) => Promise<void>;
+    updateUserInfo: (userInfo: updateUserProfile) => void;
     logout: () => Promise<void>;
     isAuthenticated: boolean;
 }
@@ -63,7 +72,7 @@ export function AuthProvider({children}: AuthProviderProps) {
             setIsAuthenticated (true);
         }).catch (e => {
             if (e.response?.data.status === 401) {
-                toast.error ("Usuario ou senha incorreto", {
+                toast.error ('Usuario ou senha incorreto', {
                     theme: 'colored'
                 });
             } else {
@@ -73,6 +82,34 @@ export function AuthProvider({children}: AuthProviderProps) {
             }
         });
     }
+
+    const updateUserInfo = (userInfo: updateUserProfile) => {
+
+        const oldUserInfo: AuthState = data;
+
+        if (userInfo.name != null) {
+            oldUserInfo.user.name = userInfo.name;
+        }
+        if (userInfo.email != null) {
+            oldUserInfo.user.email = userInfo.email;
+        }
+        if (userInfo.profilePic != null) {
+            oldUserInfo.user.profilePic = userInfo.profilePic;
+        }
+        if (userInfo.neighbourhood != null) {
+            oldUserInfo.user.neighbourhood = userInfo.neighbourhood;
+        }
+        if (userInfo.postalCode != null) {
+            oldUserInfo.user.postalCode = userInfo.postalCode;
+        }
+
+        sessionStorage.setItem ('loggedUser', JSON.stringify ({
+            token: oldUserInfo.token,
+            user: oldUserInfo.user
+        }));
+
+        setData ({token: oldUserInfo.token, user: oldUserInfo.user});
+    };
 
     /**
      * função para cadastrar usuario
@@ -129,7 +166,7 @@ export function AuthProvider({children}: AuthProviderProps) {
     }, []);
 
     return (
-        <AuthContext.Provider value={{userInfo: data, signIn, isAuthenticated, signUp, logout}}>
+        <AuthContext.Provider value={{userInfo: data, signIn, updateUserInfo, isAuthenticated, signUp, logout}}>
             {children}
         </AuthContext.Provider>
     );
