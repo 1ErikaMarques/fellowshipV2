@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import { Avatar } from '@mui/material';
+import {Avatar, CardMedia} from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -16,10 +16,8 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 
-import { CameraImg, VideoImg } from '../../components/Svgs';
-import { Button } from '../../components/Button';
-
-import { MediaPost } from '../../Screens/Feed/NewPost';
+import { CameraImg, VideoImg } from '../Svgs';
+import { Button } from '../Button';
 
 import { useAuth } from '../../hooks/AuthContext';
 import { useTheme as useThemeStyledComponents } from 'styled-components';
@@ -34,19 +32,8 @@ import {
   ContentChoice,
   Icons,
 } from './styles';
-import { style } from '../ModalDefault';
+import {ModalProps, style} from '../ModalDefault';
 import { useState } from 'react';
-
-
-interface ModalHomeProps {
-  isOpen: boolean;
-  handleClose: () => void;
-  handleAddPhotoPost: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
-  handleAddVideoPost: () => void;
-  handleRemoveMedia: (itemId: string) => void;
-  mediaPost: MediaPost[];
-}
-
 
 const ITEM_HEIGHT = 23;
 const ITEM_PADDING_TOP = 0;
@@ -77,8 +64,7 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
   };
 }
 
-
-export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVideoPost, handleRemoveMedia, mediaPost }: ModalHomeProps) {
+export function ModalHome({ isOpen, handleClose, handleMediaToPost, handleRemoveMedia, mediaPost,isMediaSelected }: ModalProps) {
 
   const themeStyled = useThemeStyledComponents();
   const theme = useTheme();
@@ -113,7 +99,7 @@ export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVi
       setIsSell(false)
       setIsRent(false)
     }
-  };
+  }
 
   return (
     <Modal
@@ -181,50 +167,60 @@ export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVi
               fontSize: '1.1rem',
             }}
           />
-          <ImageList sx={{ width: 450, height: 'auto', marginTop: '0' }}>
-            {mediaPost.map((item) => (
+          {isMediaSelected &&
+          <ImageList sx={{width: 450, height: 'auto', marginTop: '0'}}>
+            {mediaPost.map ((item) => (
                 <ImageListItem key={item.temporaryUrl}>
-                  <img
-                      src={item.temporaryUrl}
-                      srcSet={item.temporaryUrl}
-                      loading="lazy"
-                   alt="Imagem carregada"/>
-                <ImageListItemBar
-                  position="top"
-                  sx={{
-                    background: 'transparent'
-                  }}
-                  actionIcon={
-                    <IconButton
-                      sx={{ color: 'rgba(27, 27, 27, 0.94)' }}
-                    >
-                      <CancelRoundedIcon color="action"
-                        onClick={() => handleRemoveMedia(item.temporaryUrl)} />
-                    </IconButton>
+                  {item.mediaType.startsWith ('video') ?
+                      <CardMedia
+                          component={'video'}
+                          height="140"
+                          src={item.temporaryUrl}
+                          controls
+                      /> :
+                      <CardMedia
+                          component={'img'}
+                          height="140"
+                          src={item.temporaryUrl}
+                      />
                   }
-                />
-              </ImageListItem>
+                  <ImageListItemBar
+                      position="top"
+                      sx={{
+                        background: 'transparent'
+                      }}
+                      actionIcon={
+                        <IconButton
+                            sx={{color: 'rgba(27, 27, 27, 0.94)'}}
+                        >
+                          <CancelRoundedIcon color="action"
+                                             onClick={() => handleRemoveMedia (item.temporaryUrl)}/>
+                        </IconButton>
+                      }
+                  />
+                </ImageListItem>
             ))}
           </ImageList>
+          }
 
           <Icons>
-            <label htmlFor="contained-button-file">
+            <label htmlFor="contained-image-button-file">
               <input
-                accept="image/*"
-                id="contained-button-file"
-                multiple type="file"
-                style={{ display: 'none' }}
-                onChange={handleAddPhotoPost}
+                  accept="image/*"
+                  id="contained-image-button-file"
+                  multiple type="file"
+                  style={{ display: 'none' }}
+                  onChange={(event) => handleMediaToPost(event)}
               />
               <CameraImg />
             </label>
-            <label htmlFor="contained-button-file">
+            <label htmlFor="contained-video-button-file">
               <input
-                accept="image/*"
-                id="contained-button-file"
-                multiple type="file"
-                style={{ display: 'none' }}
-                onChange={handleAddVideoPost}
+                  accept="video/mp4,video/x-m4v,video/*"
+                  id="contained-video-button-file"
+                  multiple type="file"
+                  style={{ display: 'none' }}
+                  onChange={(event) => handleMediaToPost(event)}
               />
               <VideoImg />
             </label>

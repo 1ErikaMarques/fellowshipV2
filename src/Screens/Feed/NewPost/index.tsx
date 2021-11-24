@@ -43,25 +43,25 @@ export function NewPost({ modalType, postType }: NewPostProps) {
 
     const {userInfo} = useAuth();
 
-    const handleAddPhotoPost = async (file : React.ChangeEvent<HTMLInputElement>) => {
+    const handleMediaToPost = (file : React.ChangeEvent<HTMLInputElement>) => {
 
-        let newArray : MediaPost[] = [...mediaPost];
+        // Copia os antigos valores de media post
+        let newMediaPostArray : MediaPost[] = [...mediaPost];
 
-
-        // --> [1,2,3,4]
         const files = file.target.files;
         if(files !== null){
+            // Percorre todos os arquivos selecionados
             for (let i = 0; i < files.length; i++) {
                const newMedia : MediaPost = {
                    temporaryUrl : (window.URL ? URL : webkitURL).createObjectURL (files[i]),
-                   mediaType:'image'
+                   mediaType:files[i].type
                }
-                newArray.push(newMedia)
+                newMediaPostArray.push(newMedia)
             }
-            //const temporaryUrl = URL.createObjectURL(file);
         }
-
-
+        setMediaPost (() => [...newMediaPostArray]);
+        setIsMediaSelected (true)
+        console.log(newMediaPostArray)
 
         //const file = await fetch (arrayPost[1].mediaUrl).then (r => r.blob ());
 
@@ -71,11 +71,7 @@ export function NewPost({ modalType, postType }: NewPostProps) {
             console.log (`Uploaded a blob or file! , ${publicImageUrl}`);
         });*/
 
-        setMediaPost (() => [...newArray]);
-        setIsMediaSelected (true)
-    };
 
-    const handleAddVideoPost = () => {
     };
 
     const handleRemoveMedia = (temporaryUrl: string) => {
@@ -83,6 +79,7 @@ export function NewPost({ modalType, postType }: NewPostProps) {
             media => media.temporaryUrl !== temporaryUrl
         ));
 
+        // Remove URL temporaria da memoria
         URL.revokeObjectURL(temporaryUrl)
 
     };
@@ -115,8 +112,7 @@ export function NewPost({ modalType, postType }: NewPostProps) {
                     <ModalDefault
                         isOpen={isOpenModalDefault}
                         handleClose={handleCloseModalDefault}
-                        handleAddPhotoPost={ (event: React.ChangeEvent<HTMLInputElement>) => handleAddPhotoPost(event)}
-                        handleAddVideoPost={handleAddVideoPost}
+                        handleMediaToPost={ (event: React.ChangeEvent<HTMLInputElement>) => handleMediaToPost(event)}
                         handleRemoveMedia={handleRemoveMedia}
                         mediaPost={mediaPost}
                         isMediaSelected={isMediaSelected}
@@ -131,11 +127,10 @@ export function NewPost({ modalType, postType }: NewPostProps) {
                     <ModalHome
                         isOpen={isOpenModalHome}
                         handleClose={handleCloseModalHome}
-                        handleAddPhotoPost={ (event: React.ChangeEvent<HTMLInputElement>) => handleAddPhotoPost(event)}
-                        handleAddVideoPost={handleAddVideoPost}
+                        handleMediaToPost={ (event: React.ChangeEvent<HTMLInputElement>) => handleMediaToPost(event)}
                         handleRemoveMedia={handleRemoveMedia}
                         mediaPost={mediaPost}
-                    />
+                        isMediaSelected={isMediaSelected}/>
                 </>
 
                 ) || (modalType === NewPostModalType.DONATIONS &&
@@ -146,11 +141,10 @@ export function NewPost({ modalType, postType }: NewPostProps) {
                         <ModalDonations
                             isOpen={isOpenModalDonations}
                             handleClose={handleCloseModalDonations}
-                            handleAddPhotoPost={ (event: React.ChangeEvent<HTMLInputElement>) => handleAddPhotoPost(event)}
-                            handleAddVideoPost={handleAddVideoPost}
+                            handleMediaToPost={ (event: React.ChangeEvent<HTMLInputElement>) => handleMediaToPost(event)}
                             handleRemoveMedia={handleRemoveMedia}
                             mediaPost={mediaPost}
-                        />
+                            isMediaSelected={isMediaSelected}/>
                     </>
                 )
             }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import { Avatar } from '@mui/material';
+import { Avatar, CardMedia } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 import { CameraImg, VideoImg } from '../Svgs';
@@ -25,11 +25,10 @@ import {
 
 import { MediaPost } from '../../Screens/Feed/NewPost';
 
-interface ModalDefaultProps {
+export interface ModalProps {
   isOpen: boolean;
   handleClose: () => void;
-  handleAddPhotoPost: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
-  handleAddVideoPost: () => void;
+  handleMediaToPost: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleRemoveMedia: (itemId: string) => void;
   isMediaSelected: boolean;
   mediaPost: MediaPost[];
@@ -49,7 +48,7 @@ export const style = {
   borderRadius: '0.25rem',
 };
 
-export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAddVideoPost, handleRemoveMedia, mediaPost, isMediaSelected }: ModalDefaultProps) {
+export function ModalDefault({ isOpen, handleClose, handleMediaToPost, handleRemoveMedia, mediaPost, isMediaSelected }: ModalProps) {
 
   const theme = useTheme();
   const { userInfo } = useAuth();
@@ -102,11 +101,19 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
             <ImageList sx={{ width: 450, height: 280, marginTop: '0', }}>
               {mediaPost.map((item) => (
                 <ImageListItem key={item.temporaryUrl}>
-                  <img
-                      src={item.temporaryUrl}
-                      srcSet={item.temporaryUrl}
-                      loading="lazy"
-                      alt="Imagem carregada"/>
+                  {item.mediaType.startsWith ('video') ?
+                      <CardMedia
+                          component={'video'}
+                          height="140"
+                          src={item.temporaryUrl}
+                          controls
+                      /> :
+                      <CardMedia
+                          component={'img'}
+                          height="140"
+                          src={item.temporaryUrl}
+                      />
+                  }
                   <ImageListItemBar
                     position="top"
                     sx={{
@@ -127,23 +134,23 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
           }
 
           <Icons>
-            <label htmlFor="contained-button-file">
+            <label htmlFor="contained-image-button-file">
               <input
                 accept="image/*"
-                id="contained-button-file"
+                id="contained-image-button-file"
                 multiple type="file"
                 style={{ display: 'none' }}
-                onChange={(event) => handleAddPhotoPost(event)}
+                onChange={(event) => handleMediaToPost(event)}
               />
               <CameraImg />
             </label>
-            <label htmlFor="contained-button-file">
+            <label htmlFor="contained-video-button-file">
               <input
-                accept="image/*"
-                id="contained-button-file"
+                accept="video/mp4,video/x-m4v,video/*"
+                id="contained-video-button-file"
                 multiple type="file"
                 style={{ display: 'none' }}
-                onChange={handleAddVideoPost}
+                onChange={(event) => handleMediaToPost(event)}
               />
               <VideoImg />
             </label>
