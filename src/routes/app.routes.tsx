@@ -9,7 +9,6 @@ import {useAuth} from '../hooks/AuthContext';
 import {Profile} from '../Screens/Profile';
 import {Header} from '../Screens/Header';
 import {MenuNav} from '../Screens/Feed/MenuNav';
-import {NewPost} from '../Screens/Feed/NewPost';
 import {UserSettings} from '../Screens/UserSettings';
 import {ROUTES} from './index';
 

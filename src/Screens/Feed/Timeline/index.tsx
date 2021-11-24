@@ -1,41 +1,33 @@
-import * as React from 'react';
-import { useAuth } from '../../../hooks/AuthContext';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import OutlinedFlagSharpIcon from '@mui/icons-material/OutlinedFlagSharp';
 
-//menu deletar post
-import Menu from '@mui/material/Menu';
+import {Avatar} from '@mui/material';
 
 //area de texto e carousel;
 import Box from '@mui/material/Box';
-import MobileStepper from '@mui/material/MobileStepper';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import SwipeableViews from 'react-swipeable-views';
-import { autoPlay } from 'react-swipeable-views-utils';
-
-import { Avatar } from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import OutlinedFlagSharpIcon from '@mui/icons-material/OutlinedFlagSharp';
 import IconButton from '@mui/material/IconButton';
 
-import { InteractionsPost } from '../../../components/InteractionsPost';
-import { CommentsPost } from '../../../components/CommentsPost';
-import { CommentEntry } from '../../../components/CommentEntry';
+//menu deletar post
+import Menu from '@mui/material/Menu';
+import MobileStepper from '@mui/material/MobileStepper';
+import Paper from '@mui/material/Paper';
+import {useTheme} from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import SwipeableViews from 'react-swipeable-views';
+import {autoPlay} from 'react-swipeable-views-utils';
+import {useTheme as useThemeStyledComponents} from 'styled-components';
+import {CommentEntry} from '../../../components/CommentEntry';
+import {CommentsPost} from '../../../components/CommentsPost';
 
-import {
-  Container,
-  Content,
-  Header,
-  ContentHeaderPost,
-  MenuItemStyles,
-  ContentInteractions,
-  Separador
-} from './styles';
-import { useTheme as useThemeStyledComponents } from 'styled-components';
-import { useTheme } from '@mui/material/styles';
+import {InteractionsPost} from '../../../components/InteractionsPost';
+import {useAuth} from '../../../hooks/AuthContext';
+
+import {Container, Content, ContentHeaderPost, Header, MenuItemStyles, Separador} from './styles';
 //menu
 const ITEM_HEIGHT = 48;
 

@@ -1,46 +1,36 @@
-import {makeStyles, styled} from '@mui/styles';
-import React, {useEffect, useState} from 'react';
-import {Link, generatePath} from 'react-router-dom';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
-import {ROUTES} from '../../routes';
-import {useAuth} from '../../hooks/AuthContext';
 
-import {
-    HomeImg,
-    LogoImg,
-    NotificationImg,
-    UserImg
-} from '../../components/Svgs';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import SearchIcon from '@mui/icons-material/Search';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
 import {
     Avatar,
     Badge,
     Button,
+    Divider,
+    InputAdornment,
     List,
     ListItem,
     ListItemAvatar,
     ListItemText,
     Menu,
     MenuItem,
-    Typography,
-    Divider,
-    Autocomplete, TextField,InputAdornment
+    TextField,
+    Typography
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import React, {useEffect, useState} from 'react';
+import {generatePath, Link} from 'react-router-dom';
 
+import {HomeImg, LogoImg, NotificationImg, UserImg} from '../../components/Svgs';
+import {useAuth} from '../../hooks/AuthContext';
 
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import {ROUTES} from '../../routes';
 import {api} from '../../services/api';
 import theme from '../../styles/theme';
 
-import {
-    AutoComplete,
-    Container,
-    Content,
-    NeighborhoodName,
-} from './styles';
+import {AutoComplete, Container, Content, NeighborhoodName,} from './styles';
 
 
 interface HeaderProps {

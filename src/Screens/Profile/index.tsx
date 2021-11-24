@@ -1,8 +1,10 @@
-import React, { createRef, useEffect, useState } from 'react';
+import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
+import React, {ChangeEvent, createRef, useEffect, useState} from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { useTheme } from 'styled-components';
 import { Avatar } from '@mui/material';
+import {useAuth} from '../../hooks/AuthContext';
 
 import { api } from '../../services/api';
 import {
@@ -13,6 +15,7 @@ import {
     RelationshipImg,
     WorkImg
 } from '../../components/Svgs';
+import {storage} from '../../services/firebase';
 
 import {
     Button,
@@ -30,7 +33,7 @@ enum profileButton {
 
 interface UserInfo {
     name?: string;
-    profile_pic?: string;
+    profilePic?: string;
 }
 
 export interface UserDetails extends UserInfo {
@@ -52,13 +55,15 @@ export function Profile() {
     const [allowEditing, setAllowEditing] = useState(false);
 
     const { userId } = useParams<{ userId: string }>();
+    const {updateUserInfo} = useAuth();
+    const theme = useTheme();
 
     // Criando referencia no formulario para disparar submit programaticamente.
     const formRef: React.RefObject<HTMLFormElement> = createRef();
 
     const { register, handleSubmit, setFocus } = useForm<UserDetails>();
 
-    const theme = useTheme();
+
 
     /**
      * Salva as informacoes preenchidas no profile.
@@ -106,22 +111,43 @@ export function Profile() {
 
             setUserInfo({
                 name: response.data.name,
-                profile_pic: response.data.profile_pic
-
+                profilePic: response.data.profilePic
             })
         })
 
     }, [userId])
 
 
-    /** Muda foto de perfil
-     * 
+    /**
+     * Muda foto de perfil
      * 
     */
-    const handleChangeProfilePic = () => {
-        api.put('/user/profile_pic/update', {
-            profile_url: ""
-        })
+    const handleChangeProfilePic = async (inputFile: ChangeEvent<HTMLInputElement>) => {
+
+        const file = inputFile.target.files;
+        // Valida se existe uma foto a ser carregada
+        if (file !== null) {
+            // Cria a referencia do storage do firebase utilizando o id do usuario , assim nao precisa deletar a antiga foto caso o usuario troque de foto
+            const storagePostsRef = ref (storage, userId);
+            uploadBytes (storagePostsRef, file[0]).then (async () => {
+                // Apos o upload da foto , efetua o download da image como URL
+                await getDownloadURL (storagePostsRef).then (async upload => {
+                    // Envia a URL publica da image para o backend
+                    await api.put<UserInfo>('/user/profile_pic/update', {
+                        profilePic: upload
+                    }).then (() => {
+                        // Atualiza o contexto para pode utilizar a foto do perfil em outros components
+                        updateUserInfo ({
+                            profilePic: upload
+                        });
+                        setUserInfo ({
+                            profilePic: upload
+                        });
+                    });
+                });
+
+            });
+        }
     };
 
     /**
@@ -155,10 +181,10 @@ export function Profile() {
                         id="contained-button-file"
                         multiple type="file"
                         style={{ display: "none" }}
-                        onChange={handleChangeProfilePic}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) => handleChangeProfilePic(event)}
                     />
                     <Avatar
-                        src={userInfo.profile_pic}
+                        src={userInfo.profilePic}
                         style={{ cursor: "pointer" }}
                     />
                 </label>

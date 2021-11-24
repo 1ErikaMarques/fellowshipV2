@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -36,7 +36,7 @@ interface UpdateFormSecurityData {
   email: string
   password: string
   passwordConfirm: string
-};
+}
 
 interface UpdateFormPersonalData {
   fullName: string
@@ -115,7 +115,7 @@ export function UserSettings() {
   //opçoes do menu
   function handleOptionChange(optionSelected: 'dataEdit' | 'passwordEdit') {
     setOption(optionSelected)
-  };
+  }
 
   const handleShowPassword = () => {
     setShowPassword(showPassword ? false : true);
@@ -167,7 +167,7 @@ export function UserSettings() {
       <ToastContainer />
       <Menu>
         <User>
-          <Avatar sx={{ width: '3.2rem', height: '3.2rem' }} />
+          <Avatar src={userInfo.user.profilePic} sx={{ width: '3.2rem', height: '3.2rem' }} />
           <h2>{userInfo.user.name}</h2>
         </User>
         <Option

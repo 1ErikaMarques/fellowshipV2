@@ -1,7 +1,8 @@
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import { Avatar, Divider } from '@mui/material';
+import { Avatar } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import * as React from 'react';
 
 import { CameraImg, VideoImg } from '../Svgs';
 import { Button } from '../Button';
@@ -93,6 +94,7 @@ export function ModalDonations({ isOpen, handleClose, handleAddPhotoPost, handle
           </ContentChoiceDonation>
           <UserInfo>
             <Avatar
+                src={userInfo.user.profilePic}
               sx={{
                 width: '2.6rem',
                 height: '2.6rem'
@@ -117,12 +119,12 @@ export function ModalDonations({ isOpen, handleClose, handleAddPhotoPost, handle
           />
           <ImageList sx={{ width: 450, height: 'auto', marginTop: '0' }}>
             {mediaPost.map((item) => (
-              <ImageListItem key={item.temporaryUrl}>
-                <img
-                  src={`${item.temporaryUrl}?w=248&fit=crop&auto=format`}
-                  srcSet={`${item.temporaryUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                  loading="lazy"
-                />
+                <ImageListItem key={item.temporaryUrl}>
+                  <img
+                      src={item.temporaryUrl}
+                      srcSet={item.temporaryUrl}
+                      loading="lazy"
+                      alt="Imagem carregada"/>
                 <ImageListItemBar
                   position="top"
                   sx={{

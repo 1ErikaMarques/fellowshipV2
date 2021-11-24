@@ -4,6 +4,7 @@ import { Avatar } from '@mui/material';
 import { ModalDefault } from '../../../components/ModalDefault';
 import { ModalHome } from '../../../components/ModalHome';
 import { ModalDonations } from '../../../components/ModalDonations';
+import {useAuth} from '../../../hooks/AuthContext';
 
 import { NewPostModalType, PostType } from '../MenuNav';
 import { Container, ButtonPub, } from './styles';
@@ -39,6 +40,8 @@ export function NewPost({ modalType, postType }: NewPostProps) {
 
     const [isMediaSelected, setIsMediaSelected] = useState(false);
     const [mediaPost, setMediaPost] = useState<MediaPost[]>([]);
+
+    const {userInfo} = useAuth();
 
     const handleAddPhotoPost = async (file : React.ChangeEvent<HTMLInputElement>) => {
 
@@ -95,7 +98,9 @@ export function NewPost({ modalType, postType }: NewPostProps) {
 
     return (
         <Container>
-            <Avatar sx={{
+            <Avatar
+                src={userInfo.user.profilePic}
+                sx={{
                 width: '3rem',
                 height: '3rem',
                 marginLeft: '1.5rem',

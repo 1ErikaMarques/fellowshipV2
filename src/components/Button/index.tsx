@@ -1,5 +1,4 @@
-import { ButtonBaseProps } from '@mui/material';
-import { ButtonStyle } from './styles';
+import {ButtonStyle} from './styles';
 
 interface ButtonProps {
     title: string;

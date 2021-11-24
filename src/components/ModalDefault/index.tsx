@@ -1,11 +1,11 @@
 import * as React from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import { Avatar, Divider } from '@mui/material';
+import { Avatar } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 
-import { CameraImg, VideoImg } from '../../components/Svgs';
-import { Button } from '../../components/Button';
+import { CameraImg, VideoImg } from '../Svgs';
+import { Button } from '../Button';
 
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -24,7 +24,6 @@ import {
 } from './styles';
 
 import { MediaPost } from '../../Screens/Feed/NewPost';
-import { useState } from 'react';
 
 interface ModalDefaultProps {
   isOpen: boolean;
@@ -76,6 +75,7 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
           </Header>
           <UserInfo>
             <Avatar
+                src={userInfo.user.profilePic}
               sx={{
                 width: '2.6rem',
                 height: '2.6rem'
@@ -103,10 +103,10 @@ export function ModalDefault({ isOpen, handleClose, handleAddPhotoPost, handleAd
               {mediaPost.map((item) => (
                 <ImageListItem key={item.temporaryUrl}>
                   <img
-                    src={item.temporaryUrl}
-                    srcSet={`${item.temporaryUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                    loading="lazy"
-                  />
+                      src={item.temporaryUrl}
+                      srcSet={item.temporaryUrl}
+                      loading="lazy"
+                      alt="Imagem carregada"/>
                   <ImageListItemBar
                     position="top"
                     sx={{

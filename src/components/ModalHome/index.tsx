@@ -158,6 +158,7 @@ export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVi
 
           <UserInfo>
             <Avatar
+                src={userInfo.user.profilePic}
               sx={{
                 width: '2.6rem',
                 height: '2.6rem'
@@ -182,12 +183,12 @@ export function ModalHome({ isOpen, handleClose, handleAddPhotoPost, handleAddVi
           />
           <ImageList sx={{ width: 450, height: 'auto', marginTop: '0' }}>
             {mediaPost.map((item) => (
-              <ImageListItem key={item.temporaryUrl}>
-                <img
-                  src={`${item.temporaryUrl}?w=248&fit=crop&auto=format`}
-                  srcSet={`${item.temporaryUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                  loading="lazy"
-                />
+                <ImageListItem key={item.temporaryUrl}>
+                  <img
+                      src={item.temporaryUrl}
+                      srcSet={item.temporaryUrl}
+                      loading="lazy"
+                   alt="Imagem carregada"/>
                 <ImageListItemBar
                   position="top"
                   sx={{
