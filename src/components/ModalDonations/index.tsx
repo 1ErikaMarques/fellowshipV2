@@ -109,18 +109,18 @@ export function ModalDonations({ isOpen, handleClose, handleMediaToPost, handleR
           {isMediaSelected &&
           <ImageList sx={{width: 450, height: 'auto', marginTop: '0'}}>
             {mediaPost.map ((item) => (
-                <ImageListItem key={item.temporaryUrl}>
+                <ImageListItem key={item.mediaUrl}>
                   {item.mediaType.startsWith ('video') ?
                       <CardMedia
                           component={'video'}
                           height="140"
-                          src={item.temporaryUrl}
+                          src={item.mediaUrl}
                           controls
                       /> :
                       <CardMedia
                           component={'img'}
                           height="140"
-                          src={item.temporaryUrl}
+                          src={item.mediaUrl}
                       />
                   }
                   <ImageListItemBar
@@ -133,7 +133,7 @@ export function ModalDonations({ isOpen, handleClose, handleMediaToPost, handleR
                             sx={{color: 'rgba(27, 27, 27, 0.94)'}}
                         >
                           <CancelRoundedIcon color="action"
-                                             onClick={() => handleRemoveMedia (item.temporaryUrl)}/>
+                                             onClick={() => handleRemoveMedia (item.mediaUrl)}/>
                         </IconButton>
                       }
                   />
