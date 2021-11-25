@@ -1,108 +1,93 @@
-import React, {useEffect, useState} from 'react';
-import { Avatar } from '@mui/material';
+import React, {ChangeEvent, useEffect, useState} from 'react';
+import {Avatar} from '@mui/material';
 
-import { ModalDefault } from '../../../components/ModalDefault';
-import { ModalHome } from '../../../components/ModalHome';
-import { ModalDonations } from '../../../components/ModalDonations';
+import {ModalDefault} from '../../../components/ModalDefault';
+import {ModalHome} from '../../../components/ModalHome';
+import {ModalDonations} from '../../../components/ModalDonations';
 import {useAuth} from '../../../hooks/AuthContext';
 
-import { NewPostModalType, PostType } from '../MenuNav';
-import { Container, ButtonPub, } from './styles';
-
-import {ref, uploadBytes,getDownloadURL} from 'firebase/storage';
-import {storage} from "../../../services/firebase";
-
+import {NewPostModalType, Post, PostType} from '../MenuNav';
+import {Container, ButtonPub,} from './styles';
 
 interface NewPostProps {
     modalType: NewPostModalType;
     postType: PostType;
+    handleCreatePost: (postContent : Post) => Promise<void>;
 }
 
 export interface MediaPost {
-    mediaUrl?: string;
-    temporaryUrl : string;
-    mediaType:string;
+    mediaUrl: string;
+    mediaType: string;
 }
 
-export function NewPost({ modalType, postType }: NewPostProps) {
 
-    const [isOpenModalDefault, setIsOpenModalDefault] = React.useState(false);
-    const handleOpenModalDefault = () => setIsOpenModalDefault(true);
-    const handleCloseModalDefault = () => setIsOpenModalDefault(false);
+export function NewPost({modalType, postType,handleCreatePost}: NewPostProps) {
 
-    const [isOpenModalHome, setIsOpenModalHome] = React.useState(false);
-    const handleIsOpenModalHome = () => setIsOpenModalHome(true);
-    const handleCloseModalHome = () => setIsOpenModalHome(false);
+    const [isOpenModalDefault, setIsOpenModalDefault] = React.useState (false);
+    const handleOpenModalDefault = () => setIsOpenModalDefault (true);
+    const handleCloseModalDefault = () => setIsOpenModalDefault (false);
 
-    const [isOpenModalDonations, setIsOpenModalDonations] = React.useState(false);
-    const handleOpenModalDonations = () => setIsOpenModalDonations(true);
-    const handleCloseModalDonations = () => setIsOpenModalDonations(false);
+    const [isOpenModalHome, setIsOpenModalHome] = React.useState (false);
+    const handleIsOpenModalHome = () => setIsOpenModalHome (true);
+    const handleCloseModalHome = () => setIsOpenModalHome (false);
 
-    const [isMediaSelected, setIsMediaSelected] = useState(false);
-    const [mediaPost, setMediaPost] = useState<MediaPost[]>([]);
+    const [isOpenModalDonations, setIsOpenModalDonations] = React.useState (false);
+    const handleOpenModalDonations = () => setIsOpenModalDonations (true);
+    const handleCloseModalDonations = () => setIsOpenModalDonations (false);
 
-    const {userInfo} = useAuth();
+    const [isMediaSelected, setIsMediaSelected] = useState (false);
+    const [mediaPost, setMediaPost] = useState<MediaPost[]> ([]);
 
-    const handleMediaToPost = (file : React.ChangeEvent<HTMLInputElement>) => {
+    const {userInfo} = useAuth ();
+
+    const handleMediaToPost = (file: ChangeEvent<HTMLInputElement>) => {
 
         // Copia os antigos valores de media post
-        let newMediaPostArray : MediaPost[] = [...mediaPost];
+        let newMediaPostArray: MediaPost[] = [...mediaPost];
 
         const files = file.target.files;
-        if(files !== null){
+        if (files !== null) {
             // Percorre todos os arquivos selecionados
             for (let i = 0; i < files.length; i++) {
-               const newMedia : MediaPost = {
-                   temporaryUrl : (window.URL ? URL : webkitURL).createObjectURL (files[i]),
-                   mediaType:files[i].type
-               }
-                newMediaPostArray.push(newMedia)
+                const newMedia: MediaPost = {
+                    mediaUrl: (window.URL ? URL : webkitURL).createObjectURL (files[i]),
+                    mediaType: files[i].type
+                };
+                newMediaPostArray.push (newMedia);
             }
         }
         setMediaPost (() => [...newMediaPostArray]);
-        setIsMediaSelected (true)
-        console.log(newMediaPostArray)
-
-        //const file = await fetch (arrayPost[1].mediaUrl).then (r => r.blob ());
-
-        /*const storagePostsRef = ref(storage, 'posts');
-        uploadBytes (storagePostsRef, file).then (async () => {
-            const publicImageUrl = await getDownloadURL(storagePostsRef);
-            console.log (`Uploaded a blob or file! , ${publicImageUrl}`);
-        });*/
-
-
+        setIsMediaSelected (true);
     };
 
     const handleRemoveMedia = (temporaryUrl: string) => {
-        setMediaPost(old => old.filter(
-            media => media.temporaryUrl !== temporaryUrl
+        setMediaPost (old => old.filter (
+            media => media.mediaUrl !== temporaryUrl
         ));
 
         // Remove URL temporaria da memoria
-        URL.revokeObjectURL(temporaryUrl)
-
+        URL.revokeObjectURL (temporaryUrl);
     };
 
     /**
      * Altera o tamanho da modal se n houver mais fotos/videos
      */
-    useEffect(() => {
+    useEffect (() => {
         if (mediaPost.length < 1) {
-            setIsMediaSelected(false)
+            setIsMediaSelected (false);
         }
-    },[mediaPost]);
+    }, [mediaPost]);
 
     return (
         <Container>
             <Avatar
                 src={userInfo.user.profilePic}
                 sx={{
-                width: '3rem',
-                height: '3rem',
-                marginLeft: '1.5rem',
-                marginRight: '1rem'
-            }}
+                    width: '3rem',
+                    height: '3rem',
+                    marginLeft: '1.5rem',
+                    marginRight: '1rem'
+                }}
             />
 
             {(modalType === NewPostModalType.DEFAULT &&
@@ -112,10 +97,12 @@ export function NewPost({ modalType, postType }: NewPostProps) {
                     <ModalDefault
                         isOpen={isOpenModalDefault}
                         handleClose={handleCloseModalDefault}
-                        handleMediaToPost={ (event: React.ChangeEvent<HTMLInputElement>) => handleMediaToPost(event)}
+                        handleMediaToPost={(event: ChangeEvent<HTMLInputElement>) => handleMediaToPost (event)}
                         handleRemoveMedia={handleRemoveMedia}
+                        handleCreatePost={handleCreatePost}
                         mediaPost={mediaPost}
                         isMediaSelected={isMediaSelected}
+                        postType={postType}
                     />
                 </>
 
@@ -127,26 +114,33 @@ export function NewPost({ modalType, postType }: NewPostProps) {
                     <ModalHome
                         isOpen={isOpenModalHome}
                         handleClose={handleCloseModalHome}
-                        handleMediaToPost={ (event: React.ChangeEvent<HTMLInputElement>) => handleMediaToPost(event)}
+                        handleMediaToPost={(event: ChangeEvent<HTMLInputElement>) => handleMediaToPost (event)}
                         handleRemoveMedia={handleRemoveMedia}
+                        handleCreatePost={handleCreatePost}
                         mediaPost={mediaPost}
-                        isMediaSelected={isMediaSelected}/>
+                        isMediaSelected={isMediaSelected}
+                        postType={postType}
+                    />
+
                 </>
 
-                ) || (modalType === NewPostModalType.DONATIONS &&
+            ) || (modalType === NewPostModalType.DONATIONS &&
 
-                    <>
-                        <ButtonPub onClick={handleOpenModalDonations}>Começar publicação</ButtonPub>
+                <>
+                    <ButtonPub onClick={handleOpenModalDonations}>Começar publicação</ButtonPub>
 
-                        <ModalDonations
-                            isOpen={isOpenModalDonations}
-                            handleClose={handleCloseModalDonations}
-                            handleMediaToPost={ (event: React.ChangeEvent<HTMLInputElement>) => handleMediaToPost(event)}
-                            handleRemoveMedia={handleRemoveMedia}
-                            mediaPost={mediaPost}
-                            isMediaSelected={isMediaSelected}/>
-                    </>
-                )
+                    <ModalDonations
+                        isOpen={isOpenModalDonations}
+                        handleClose={handleCloseModalDonations}
+                        handleMediaToPost={(event: ChangeEvent<HTMLInputElement>) => handleMediaToPost (event)}
+                        handleRemoveMedia={handleRemoveMedia}
+                        handleCreatePost={handleCreatePost}
+                        mediaPost={mediaPost}
+                        isMediaSelected={isMediaSelected}
+                        postType={postType}
+                    />
+                </>
+            )
             }
         </Container>
     );

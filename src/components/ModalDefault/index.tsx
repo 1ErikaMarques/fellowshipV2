@@ -1,8 +1,10 @@
+import {useState} from 'react';
 import * as React from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { Avatar, CardMedia } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import {Post, PostType} from '../../Screens/Feed/MenuNav';
 
 import { CameraImg, VideoImg } from '../Svgs';
 import { Button } from '../Button';
@@ -28,10 +30,12 @@ import { MediaPost } from '../../Screens/Feed/NewPost';
 export interface ModalProps {
   isOpen: boolean;
   handleClose: () => void;
-  handleMediaToPost: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleRemoveMedia: (itemId: string) => void;
   isMediaSelected: boolean;
   mediaPost: MediaPost[];
+  postType:PostType;
+  handleMediaToPost: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleRemoveMedia: (itemId: string) => void;
+  handleCreatePost: (postContent : Post) => Promise<void>
 }
 
 export const style = {
@@ -48,10 +52,29 @@ export const style = {
   borderRadius: '0.25rem',
 };
 
-export function ModalDefault({ isOpen, handleClose, handleMediaToPost, handleRemoveMedia, mediaPost, isMediaSelected }: ModalProps) {
+export function ModalDefault({ isOpen, handleClose, handleMediaToPost, handleRemoveMedia, mediaPost,
+                               isMediaSelected,handleCreatePost,postType }: ModalProps) {
 
   const theme = useTheme();
   const { userInfo } = useAuth();
+  const [text, setText] = useState<string> ("");
+
+  const handleSubmit = async () => {
+
+      await handleCreatePost ({
+          name: userInfo.user.name,
+          userId: userInfo.user.userId,
+          profilePic: userInfo.user.profilePic,
+          postType: postType,
+          postLocalization: userInfo.user.postalCode,
+          createdAt: new Date ().getTime (),
+          text: text,
+          mediaPosts: mediaPost,
+      }).then(() =>{
+          setText('');
+          handleClose();
+      });
+  }
 
   return (
     <Modal
@@ -87,6 +110,7 @@ export function ModalDefault({ isOpen, handleClose, handleMediaToPost, handleRem
             aria-label="maximum height"
             placeholder="Compartilhe algo com a gente"
             defaultValue=""
+            onChange={(event => setText(event.target.value))}
             style={{
               width: 450,
               paddingBottom: 50,
@@ -157,8 +181,7 @@ export function ModalDefault({ isOpen, handleClose, handleMediaToPost, handleRem
           </Icons>
           <Button
             title="Publicar"
-            onClick={() => {
-            }}
+            onClick={handleSubmit}
             style={{
               height: '3rem',
               width: '16rem',
