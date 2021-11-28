@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { KeyboardEventHandler } from 'react';
 import { Avatar } from '@mui/material';
 import { useAuth } from '../../hooks/AuthContext';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
@@ -6,10 +7,12 @@ import {
   Container
 } from './styles';
 import theme from '../../styles/theme';
+import { CommentProps } from './types';
 
-
-export function CommentEntry() {
+export function CommentEntry({ handleAddComment }: CommentProps) {
   const { userInfo } = useAuth();
+
+
   return (
     <Container>
       <Avatar
@@ -28,6 +31,7 @@ export function CommentEntry() {
           padding: '0.5rem',
           color: theme.colors.gray_dark,
         }}
+        onClick={handleAddComment}
       />
     </Container>
   );
