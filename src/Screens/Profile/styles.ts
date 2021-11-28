@@ -94,10 +94,10 @@ export const ProfileInput = styled.input`
 export const TextArea = styled.textarea`
   grid-column-start: 2;
   height: 10rem;
+  width: 100%;
   padding: 0.7rem;
-  border-radius: 0.25rem;
   background-color: ${({ theme }) => theme.colors.shape};
-  border: 1px solid transparent;
+  border: 1px solid transparent;  
   cursor: text;
   outline-style: none;
   transition: 200ms ease-out;
