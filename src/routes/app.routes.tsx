@@ -8,7 +8,7 @@ import {useAuth} from '../hooks/AuthContext';
 
 import {Profile} from '../Screens/Profile';
 import {Header} from '../Screens/Header';
-import {MenuNav} from '../Screens/Feed/MenuNav';
+import {Timeline} from '../Screens/Feed/Timeline';
 import {UserSettings} from '../Screens/UserSettings';
 import {ROUTES} from './index';
 
@@ -23,7 +23,7 @@ export function AppRoutes() {
                 <Route path={ROUTES.PROFILE} children={<Profile/>}/>
                 <Route path={ROUTES.CONFIGURATIONS} children={<UserSettings/>}/>
                 <Route path={ROUTES.HOME} children={
-                        <MenuNav/>
+                        <Timeline/>
                 }/>
             </Switch>
         </BrowserRouter>

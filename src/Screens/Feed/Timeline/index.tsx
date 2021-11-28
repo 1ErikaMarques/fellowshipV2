@@ -1,263 +1,193 @@
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import OutlinedFlagSharpIcon from '@mui/icons-material/OutlinedFlagSharp';
-
-import {Avatar} from '@mui/material';
-
-//area de texto e carousel;
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-
-//menu deletar post
-import Menu from '@mui/material/Menu';
-import MobileStepper from '@mui/material/MobileStepper';
-import Paper from '@mui/material/Paper';
-import {useTheme} from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import * as React from 'react';
-import SwipeableViews from 'react-swipeable-views';
-import {autoPlay} from 'react-swipeable-views-utils';
-import {useTheme as useThemeStyledComponents} from 'styled-components';
-import {CommentEntry} from '../../../components/CommentEntry';
-import {CommentsPost} from '../../../components/CommentsPost';
+import { SyntheticEvent, useState } from 'react';
+import { useTheme } from 'styled-components';
+import { v4 as uuid } from 'uuid';
+import { api } from '../../../services/api';
+import { storage } from '../../../services/firebase';
+import { MediaPost, NewPost } from '../NewPost';
+import { Post } from '../Post';
+import { PostProps } from '../Post/types';
+import { Container } from './styles';
+import { NewPostModalType, PostType, TabPanelProps } from './types';
 
-import {InteractionsPost} from '../../../components/InteractionsPost';
-import {useAuth} from '../../../hooks/AuthContext';
-import {Post} from '../MenuNav';
+function TabPanel(props: TabPanelProps) {
+    const { children, value, index, ...other } = props;
 
-import {Container, Content, ContentHeaderPost, Header, MenuItemStyles, Separador} from './styles';
-//menu
-const ITEM_HEIGHT = 48;
-
-//Carousel
-const AutoPlaySwipeableViews = autoPlay (SwipeableViews);
-
-interface TimelineProps {
-    post: Post;
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}>
+            {value === index && (
+                <Container>
+                    <Box sx={{ p: 0 }}>
+                        {children}
+                    </Box>
+                </Container>
+            )}
+        </div>
+    );
 }
 
-export function Timeline({post}: TimelineProps) {
+function a11yProps(index: number) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
 
-    const themeStyledComponents = useThemeStyledComponents ();
-    const theme = useTheme ();
 
-    //expandi comentarios
-    const [expanded, setExpanded] = React.useState (false);
 
-    const handleExpandClick = () => {
-        setExpanded (!expanded);
+export function Timeline() {
+    const [value, setValue] = useState<PostType>(PostType.NOTICIAS);
+    const [posts, setPosts] = useState<PostProps[]>([{}] as PostProps[]);
+
+    const theme = useTheme();
+
+    const handleChange = (event: SyntheticEvent, newValue: number) => {
+        setValue(newValue);
+        handlePostType(newValue)
     };
 
-    //menu
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement> (null);
-    const open = Boolean (anchorEl);
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl (event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl (null);
-    };
+    const handlePostType = (postType: PostType) => {
+        // setPosts(() => posts.filter(old => old.postType === postType.valueOf()))
+    }
 
-    //carousel
-    const [activeStep, setActiveStep] = React.useState (0);
-    const maxSteps = post.mediaPosts? post.mediaPosts.length : 0;
+    const handleCreatePost = async (postContent: PostProps) => {
+        let mediaPost: MediaPost[] = [];
 
-    const handleNext = () => {
-        setActiveStep ((prevActiveStep) => prevActiveStep + 1);
-    };
+        if (postContent.mediaPosts) {
 
-    const handleBack = () => {
-        setActiveStep ((prevActiveStep) => prevActiveStep - 1);
-    };
+            for (let index = 0; index < postContent.mediaPosts.length; index++) {
+                //alocando url temporaria e mediatype
+                const element = postContent.mediaPosts[index];
+                //buscando url temporaria
+                await fetch(element.mediaUrl)
+                    //convertendo url temporaria para arquivo
+                    .then(response => {
+                        URL.revokeObjectURL(element.mediaUrl);//tira da memoria a url temporaria                        
+                        return response.blob()//sera retornado para o prox bloco
+                    })
+                    .then(async (file) => { //elemento convertido para arquivo
+                        //cria referencia do firebase
+                        const storagePostsRef = ref(storage, uuid());
+                        //carrega para o firebase
+                        await uploadBytes(storagePostsRef, file)
+                            .then(async () => {
+                                //busca a url do firebase
+                                await getDownloadURL(storagePostsRef)
+                                    //alocando url dentro do array, para cada uma gera uma urlPublica e um mediaType(que ja vem da modal)
+                                    .then((urlPublica) => {
+                                        mediaPost.push({
+                                            mediaUrl: urlPublica,
+                                            mediaType: element.mediaType
+                                        })
+                                    })
+                            });
+                    })
+            }
+        }
 
-    const handleStepChange = (step: number) => {
-        setActiveStep (step);
-    };
+        await api.post<PostProps>('post/create', {
+            userId: postContent.userId,
+            text: postContent.text,
+            name: postContent.name,
+            createdAt: postContent.createdAt,
+            postLocalization: postContent.postLocalization,
+            postType: postContent.postType,
+            mediaPosts: mediaPost,
+            profilePic: postContent.profilePic
+        }).then(response =>
+            setPosts([...posts,
+            {
+                userId: response.data.userId,
+                text: response.data.text,
+                name: response.data.name,
+                createdAt: response.data.createdAt,
+                postLocalization: response.data.postLocalization,
+                postType: response.data.postType,
+                mediaPosts: response.data.mediaPosts,
+                profilePic: response.data.profilePic,
+                postId: response.data.postId,
+                tag: response.data.tag,
+                propertyType: response.data.propertyType,
+                propertyPrice: response.data.propertyPrice
+            },
+            ])
+        );
+    }
+
 
     return (
         <Container>
-            <Content>
-                <Header>
-                    <Avatar
-                        src={post.profilePic}
-                        sx={{
-                            width: '3rem',
-                            height: '3rem',
-                            marginLeft: '0.5rem',
-                            marginRight: '1rem',
-                            cursor: 'pointer'
-                        }}
-                    />
-                    <ContentHeaderPost>
-                        <h3>{post.name}</h3>
-                        <div>
-                            <IconButton
-                                aria-label="more"
-                                id="long-button"
-                                aria-controls="long-menu"
-                                aria-expanded={open ? 'true' : undefined}
-                                aria-haspopup="true"
-                                onClick={handleClick}>
-                                <MoreVertIcon/>
-                            </IconButton>
-                            <Menu
-                                id="long-menu"
-                                MenuListProps={{
-                                    'aria-labelledby': 'long-button',
-                                }}
-                                anchorEl={anchorEl}
-                                open={open}
-                                onClose={handleClose}
-                                PaperProps={{
-                                    style: {
-                                        maxHeight: ITEM_HEIGHT * 4.5,
-                                        width: '15ch',
-                                    },
-                                }}>
-                                <MenuItemStyles
-                                    onClick={handleClose}
-                                    disableRipple
-                                    style={{
-                                        padding: '0.6rem'
-                                    }}
-                                >
-                                    <DeleteOutlineOutlinedIcon
-                                        style={{
-                                            marginRight: '0.8rem',
-                                            color: themeStyledComponents.colors.gray_dark,
-                                        }}
-                                    />
-                                    <p
-                                        style={{
-                                            fontSize: '0.9rem',
-                                            fontWeight: 500,
-                                            color: themeStyledComponents.colors.gray_dark,
+            <Box
+                sx={{ maxWidth: 625, bgcolor: theme.colors.shape, boxShadow: '0 10px 70px rgb(0 0 0 / 5%)', height: 48 }}>
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    variant="scrollable"
+                    scrollButtons="auto"
+                    aria-label="scrollable auto tabs example"
+                    TabIndicatorProps={{ style: { background: theme.colors.primary } }}
+                    textColor="primary">
+                    <Tab label="Noticias" {...a11yProps(PostType.NOTICIAS)} />
+                    <Tab label="Estabelecimentos" {...a11yProps(PostType.ESTABELECIMENTOS)} />
+                    <Tab label="Segurança" {...a11yProps(PostType.SEGURANCA)} />
+                    <Tab label="Casas" {...a11yProps(PostType.CASAS)} />
+                    <Tab label="Eventos" {...a11yProps(PostType.EVENTOS)} />
+                    <Tab label="Doações" {...a11yProps(PostType.DOACOES)} />
+                    <Tab label="Desaparecidos" {...a11yProps(PostType.DESAPARECIDOS)} />
+                </Tabs>
 
-                                        }}>
-                                        Apagar
-                                    </p>
-                                </MenuItemStyles>
-                                <MenuItemStyles
-                                    onClick={handleClose}
-                                    disableRipple
-                                    style={{
-                                        padding: '0.6rem',
-                                        marginBottom: '0.5rem'
-                                    }}
-                                >
-                                    <OutlinedFlagSharpIcon
-                                        style={{
-                                            marginRight: '0.8rem',
-                                            color: themeStyledComponents.colors.gray_dark,
-                                        }}
-                                    />
-                                    <p
-                                        style={{
-                                            fontSize: '0.9rem',
-                                            fontWeight: 500,
-                                            color: themeStyledComponents.colors.gray_dark,
-                                        }}>
-                                        Denunciar
-                                    </p>
-                                </MenuItemStyles>
-                            </Menu>
-                        </div>
-                    </ContentHeaderPost>
-                </Header>
-
-                <Box sx={{width: '100%', flexGrow: 1}}>
-                    <Paper
-                        square
-                        elevation={0}
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            height: 50,
-                            pl: 2,
-                            bgcolor: themeStyledComponents.colors.shape,
-                        }}
-                    >
-                        <Typography>{post.text}</Typography>
-                    </Paper>
+                <TabPanel value={value} index={0}>
+                    <NewPost handleCreatePost={handleCreatePost} postType={PostType.NOTICIAS} modalType={NewPostModalType.DEFAULT} />
                     {
-                        post.mediaPosts &&
-                        <>
-                            <AutoPlaySwipeableViews
-                                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                                index={activeStep}
-                                onChangeIndex={handleStepChange}
-                                enableMouseEvents
-                                autoplay={false}
-                            >
-
-
-                                {post.mediaPosts.map ((step, index) => (
-                                    <div key={step.mediaUrl}>
-                                        {Math.abs (activeStep - index) <= 2 ? (
-
-                                            <Box
-                                                component={step.mediaType.startsWith ('image') ? 'img' : 'video'}
-                                                controls
-                                                sx={{
-                                                    height: 'auto',
-                                                    display: 'block',
-                                                    maxWidth: '100%',
-                                                    overflow: 'hidden',
-                                                    width: '100%',
-                                                }}
-                                                src={step.mediaUrl}
-                                            />
-                                        ) : null}
-                                    </div>
-                                ))}
-                            </AutoPlaySwipeableViews>
-                            <MobileStepper
-                                steps={maxSteps}
-                                position="static"
-                                activeStep={activeStep}
-                                style={{display: 'flex', justifyContent: 'space-evenly'}}
-                                nextButton={
-                                    <Button
-                                        size="large"
-                                        onClick={handleNext}
-                                        disabled={activeStep === maxSteps - 1}
-                                    >
-
-                                        {theme.direction === 'rtl' ? (
-                                            <KeyboardArrowLeft/>
-                                        ) : (
-                                            <KeyboardArrowRight
-                                                style={{color: activeStep === maxSteps - 1 ? 'transparent' : themeStyledComponents.colors.primary}}/>
-                                        )}
-                                    </Button>
-                                }
-                                backButton={
-                                    <Button size="large" onClick={handleBack} disabled={activeStep === 0}>
-                                        {theme.direction === 'rtl' ? (
-                                            <KeyboardArrowRight/>
-                                        ) : (
-                                            <KeyboardArrowLeft
-                                                style={{color: activeStep === 0 ? 'transparent' : themeStyledComponents.colors.primary}}/>
-                                        )}
-
-                                    </Button>
-                                }
-                            />
-                        </>
+                        posts.map((post) => <Post key={post.postId} postData={post} />)
                     }
-                </Box>
-
-                <Separador/>
-                <InteractionsPost handleExpandClick={handleExpandClick} expanded={expanded}/>
-
-                <CommentEntry/>
-
-                <CommentsPost expanded={expanded}/>
-                <CommentsPost expanded={expanded}/>
-            </Content>
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <NewPost handleCreatePost={handleCreatePost} postType={PostType.ESTABELECIMENTOS} modalType={NewPostModalType.DEFAULT} />
+                    {
+                        posts.map((post) => <Post key={post.postId} postData={post} />)
+                    }
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                    <NewPost handleCreatePost={handleCreatePost} postType={PostType.SEGURANCA} modalType={NewPostModalType.DEFAULT} />
+                    {
+                        posts.map((post) => <Post key={post.postId} postData={post} />)
+                    }
+                </TabPanel>
+                <TabPanel value={value} index={3}>
+                    <NewPost handleCreatePost={handleCreatePost} postType={PostType.CASAS} modalType={NewPostModalType.HOME} />
+                    {
+                        posts.map((post) => <Post key={post.postId} postData={post} />)
+                    }
+                </TabPanel>
+                <TabPanel value={value} index={4}>
+                    <NewPost handleCreatePost={handleCreatePost} postType={PostType.EVENTOS} modalType={NewPostModalType.DEFAULT} />
+                    {
+                        posts.map((post) => <Post key={post.postId} postData={post} />)
+                    }
+                </TabPanel>
+                <TabPanel value={value} index={5}>
+                    <NewPost handleCreatePost={handleCreatePost} postType={PostType.DOACOES} modalType={NewPostModalType.DONATIONS} />
+                    {
+                        posts.map((post) => <Post key={post.postId} postData={post} />)
+                    }
+                </TabPanel>
+                <TabPanel value={value} index={6}>
+                    <NewPost handleCreatePost={handleCreatePost} postType={PostType.DESAPARECIDOS} modalType={NewPostModalType.DEFAULT} />
+                    {
+                        posts.map((post) => <Post key={post.postId} postData={post} />)
+                    }
+                </TabPanel>
+            </Box>
         </Container>
     );
 }

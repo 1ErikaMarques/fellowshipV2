@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import * as React from 'react';
+import { ChangeEvent, useState } from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { Avatar, CardMedia } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import { Post, PostType } from '../../Screens/Feed/MenuNav';
+import { PostProps } from '../../Screens/Feed/Post/types';
+import { PostType } from '../../Screens/Feed/Timeline/types';
 
 import { CameraImg, VideoImg } from '../Svgs';
 import { Button } from '../Button';
@@ -33,9 +33,9 @@ export interface ModalProps {
   isMediaSelected: boolean;
   mediaPost: MediaPost[];
   postType: PostType;
-  handleMediaToPost: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleMediaToPost: (event: ChangeEvent<HTMLInputElement>) => void;
   handleRemoveMedia: (itemId: string) => void;
-  handleCreatePost: (postContent: Post) => Promise<void>
+  handleCreatePost: (postContent: PostProps) => Promise<void>
 }
 
 export const style = {

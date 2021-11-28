@@ -5,14 +5,15 @@ import {ModalDefault} from '../../../components/ModalDefault';
 import {ModalHome} from '../../../components/ModalHome';
 import {ModalDonations} from '../../../components/ModalDonations';
 import {useAuth} from '../../../hooks/AuthContext';
+import { PostProps } from '../Post/types';
+import { NewPostModalType, PostType } from '../Timeline/types';
 
-import {NewPostModalType, Post, PostType} from '../MenuNav';
 import {Container, ButtonPub,} from './styles';
 
 interface NewPostProps {
     modalType: NewPostModalType;
     postType: PostType;
-    handleCreatePost: (postContent : Post) => Promise<void>;
+    handleCreatePost: (postContent : PostProps) => Promise<void>;
 }
 
 export interface MediaPost {
