@@ -1,13 +1,13 @@
-import {FormEvent, useState} from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import {Eye, EyeOff} from 'react-feather';
-import {toast, ToastContainer} from 'react-toastify';
+import { FormEvent, useState } from 'react';
+import { Eye, EyeOff } from 'react-feather';
+import { CircularProgress } from '@mui/material';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {CircularProgress} from '@mui/material';
-import {Button} from '../../components/Button';
-import {Modals} from '../../components/Modals';
-import {useAuth} from '../../hooks/AuthContext';
+import { Button } from '../../components/Button';
+import { Modals } from '../../components/Modals';
+import { useAuth } from '../../hooks/AuthContext';
 
 import theme from '../../styles/theme';
 
@@ -29,7 +29,6 @@ import {
     LabelPassword,
     Title
 } from './styles';
-
 
 
 const modalStyle = {
@@ -81,15 +80,18 @@ export function Signup() {
         setShowPassword (showPassword ? false : true);
     };
 
-    async function handleAccountCreated(event: FormEvent) {
+    const handleAccountCreated = async (event : FormEvent) => {
+        event.preventDefault ();
+
         if (moment ().diff (moment (birthday_date, 'YYYYMMDD'), 'years') <= 17) {
             toast.warning ('Você precisa ser maior de idade para se cadastrar', {
                 theme: 'colored'
             });
             return;
         }
-        event.preventDefault ();
+
         setIsLoading (true);
+
         const data = {
             name,
             email,
@@ -98,6 +100,7 @@ export function Signup() {
             birthdayDate: birthday_date,
             neighbourhood
         };
+
         await signUp (data).then (() => setIsLoading (false));
     }
 
