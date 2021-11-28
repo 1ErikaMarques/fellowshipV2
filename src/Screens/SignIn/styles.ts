@@ -29,6 +29,39 @@ export const ContentForm = styled.div`
   border-radius: 8px;
 `;
 
+export const Wrapper = styled.div `
+  max-width: 360px;
+  height: 36rem;
+  position: absolute;
+  align-items: center;
+  margin-top: 27.5rem;
+  padding: 3.5rem 2rem;
+  border-radius: 4px;
+
+  h6 {
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+    line-height: 180%;
+    color: gray;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+
+  h5 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: ${({ theme }) => theme.colors.primary};
+    cursor: pointer;
+
+    &:hover {
+      color: ${darken(0.1, '#4285f4')};
+    }
+  }
+`
+
 export const Form = styled.form`
   max-width: 360px;
   height: 36rem;  

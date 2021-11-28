@@ -1,3 +1,4 @@
+import {CircularProgress} from '@mui/material';
 import { FormEvent, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Eye } from 'react-feather';
@@ -21,7 +22,8 @@ import {
     InputEmail,
     InputPassword,
     LabelEmail,
-    LabelPassword
+    LabelPassword,
+    Wrapper
 } from './styles'
 
 
@@ -29,6 +31,7 @@ export function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [ isLoading , setIsLoading] = useState(false);
     const { signIn } = useAuth();
 
     const theme = useTheme();
@@ -39,12 +42,12 @@ export function SignIn() {
 
     async function handleSignIn(event: FormEvent) {
         event.preventDefault();
-
+        setIsLoading(true)
         const data = {
             email,
             password,
         }
-        signIn(data);
+        await signIn (data).then(() => setIsLoading(false));
     }
 
     return (
@@ -101,19 +104,23 @@ export function SignIn() {
                             }}
                         />
                     }
-                    <Button
-                        title="Entrar"
-                        form="sign-in"
-                        style={{
-                            width: '12rem',
-                            marginBottom: '2rem'
-                        }}
-                    />
+                    {isLoading ? <CircularProgress/> :
+                        <Button
+                            title="Entrar"
+                            form="sign-in"
+                            style={{
+                                width: '12rem',
+                                marginBottom: '2rem'
+                            }}
+                        />
+                    }
                     <hr />
                     <h6>Ainda não tem conta? </h6>
+                </Form>
+                <Wrapper>
                     <Signup />
                     <ForgotPassword />
-                </Form>
+                </Wrapper>
             </ContentForm>
         </Container>
     );

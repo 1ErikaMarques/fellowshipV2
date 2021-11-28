@@ -22,6 +22,7 @@ import {
 } from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import {generatePath, Link} from 'react-router-dom';
+import { ModalSneakPeak } from '../../components/ModalSneakPeak';
 
 import {HomeImg, LogoImg, NotificationImg, UserImg} from '../../components/Svgs';
 import {useAuth} from '../../hooks/AuthContext';
@@ -49,6 +50,10 @@ export function Header({neighbourhoodName}: HeaderProps) {
     const [isUserMenuOpen, setIsUserMenuOpen] = useState (false);
     const [neighbourhoods, setNeighbourhoods] = useState<ReadonlyArray<Neighbourhoods>> ([]);
     const [selectedNeighbourhood, setSelectedNeighbourhood] = useState<string> ();
+
+    const [isModalSneakPeakOpen, setIsModalSneakPeakOpen] = React.useState (false);
+    const handleOpenModalSneakPeak = () => setIsModalSneakPeakOpen (true);
+    const handleCloseModalSneakPeak = () => setIsModalSneakPeakOpen (false);
 
     const {logout, userInfo} = useAuth ();
 
@@ -91,7 +96,7 @@ export function Header({neighbourhoodName}: HeaderProps) {
     const handleNeighbourhoodChange = (newInputValue: string) => {
 
         if (neighbourhoods.find (n => n.label === newInputValue)) {
-            alert ('ACHEII JABACOS');
+            handleOpenModalSneakPeak()
         }
     };
 
@@ -104,6 +109,8 @@ export function Header({neighbourhoodName}: HeaderProps) {
             <NeighborhoodName>
                 {neighbourhoodName}
             </NeighborhoodName>
+            <ModalSneakPeak handleCloseSneakPeak={handleCloseModalSneakPeak}
+                            isOpen={isModalSneakPeakOpen}/>
             <AutoComplete
                 id="combo-box-neighbourhood"
                 options={neighbourhoods}

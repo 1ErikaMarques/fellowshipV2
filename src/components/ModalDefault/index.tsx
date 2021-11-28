@@ -82,7 +82,7 @@ export function ModalDefault({ isOpen, handleClose, handleMediaToPost, handleRem
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description">
-      <Box sx={style}>
+      <Box sx={style} component={"div"}>
         <Content>
           <Header>
             <CloseButtonTW onClick={handleClose}>X</CloseButtonTW>

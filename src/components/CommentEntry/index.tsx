@@ -20,8 +20,7 @@ export function CommentEntry() {
         maxRows={4}
         aria-label="maximum height"
         placeholder="Escreva um comentário"
-        defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-      ut labore et dolore magna aliqua."
+        defaultValue=""
         style={{
           width: 500,
           outline: 'none',
