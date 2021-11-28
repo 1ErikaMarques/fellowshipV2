@@ -28,6 +28,7 @@ import {
   LabelPassword,
   Title
 } from './styles';
+import moment from 'moment';
 
 
 const modalStyle = {
@@ -79,6 +80,15 @@ export function Signup() {
   };
 
   async function handleAccountCreated() {
+
+    //valida idade do usuario
+    if (moment().diff(moment(birthday_date, 'YYYYMMDD'), 'years') <= 17) {
+      toast.warning("Você precisa ser maior de idade para se cadastrar", {
+        theme: 'colored'
+      });
+      return;
+    }
+
 
     const data = {
       name,
@@ -234,4 +244,8 @@ export function Signup() {
       </Modals>
     </Container>
   );
+}
+
+function Moment(birthday_date: string, arg1: string) {
+  throw new Error('Function not implemented.');
 }

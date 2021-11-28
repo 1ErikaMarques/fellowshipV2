@@ -1,10 +1,10 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import * as React from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { Avatar, CardMedia } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import {Post, PostType} from '../../Screens/Feed/MenuNav';
+import { Post, PostType } from '../../Screens/Feed/MenuNav';
 
 import { CameraImg, VideoImg } from '../Svgs';
 import { Button } from '../Button';
@@ -32,10 +32,10 @@ export interface ModalProps {
   handleClose: () => void;
   isMediaSelected: boolean;
   mediaPost: MediaPost[];
-  postType:PostType;
+  postType: PostType;
   handleMediaToPost: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleRemoveMedia: (itemId: string) => void;
-  handleCreatePost: (postContent : Post) => Promise<void>
+  handleCreatePost: (postContent: Post) => Promise<void>
 }
 
 export const style = {
@@ -53,27 +53,27 @@ export const style = {
 };
 
 export function ModalDefault({ isOpen, handleClose, handleMediaToPost, handleRemoveMedia, mediaPost,
-                               isMediaSelected,handleCreatePost,postType }: ModalProps) {
+  isMediaSelected, handleCreatePost, postType }: ModalProps) {
 
   const theme = useTheme();
   const { userInfo } = useAuth();
-  const [text, setText] = useState<string> ("");
+  const [text, setText] = useState<string>("");
 
   const handleSubmit = async () => {
 
-      await handleCreatePost ({
-          name: userInfo.user.name,
-          userId: userInfo.user.userId,
-          profilePic: userInfo.user.profilePic,
-          postType: postType,
-          postLocalization: userInfo.user.postalCode,
-          createdAt: new Date ().getTime (),
-          text: text,
-          mediaPosts: mediaPost,
-      }).then(() =>{
-          setText('');
-          handleClose();
-      });
+    await handleCreatePost({
+      name: userInfo.user.name,
+      userId: userInfo.user.userId,
+      profilePic: userInfo.user.profilePic,
+      postType: postType,
+      postLocalization: userInfo.user.postalCode,
+      createdAt: new Date().getTime(),
+      text: text,
+      mediaPosts: mediaPost,
+    }).then(() => {
+      setText('');
+      handleClose();
+    });
   }
 
   return (
@@ -97,7 +97,7 @@ export function ModalDefault({ isOpen, handleClose, handleMediaToPost, handleRem
           </Header>
           <UserInfo>
             <Avatar
-                src={userInfo.user.profilePic}
+              src={userInfo.user.profilePic}
               sx={{
                 width: '2.6rem',
                 height: '2.6rem'
@@ -113,10 +113,10 @@ export function ModalDefault({ isOpen, handleClose, handleMediaToPost, handleRem
             onChange={(event => setText(event.target.value))}
             style={{
               width: 450,
-              paddingBottom: 50,
+              paddingBottom: 10,
               paddingRight: 10,
               outline: 'none',
-              marginTop: '2rem',
+              marginTop: '1.5rem',
               color: '#53525D',
               fontSize: '1.1rem',
             }}
@@ -125,18 +125,18 @@ export function ModalDefault({ isOpen, handleClose, handleMediaToPost, handleRem
             <ImageList sx={{ width: 450, height: 280, marginTop: '0', }}>
               {mediaPost.map((item) => (
                 <ImageListItem key={item.mediaUrl}>
-                  {item.mediaType.startsWith ('video') ?
-                      <CardMedia
-                          component={'video'}
-                          height="140"
-                          src={item.mediaUrl}
-                          controls
-                      /> :
-                      <CardMedia
-                          component={'img'}
-                          height="140"
-                          src={item.mediaUrl}
-                      />
+                  {item.mediaType.startsWith('video') ?
+                    <CardMedia
+                      component={'video'}
+                      height="140"
+                      src={item.mediaUrl}
+                      controls
+                    /> :
+                    <CardMedia
+                      component={'img'}
+                      height="140"
+                      src={item.mediaUrl}
+                    />
                   }
                   <ImageListItemBar
                     position="top"
