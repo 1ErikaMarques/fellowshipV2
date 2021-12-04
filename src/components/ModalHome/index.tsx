@@ -1,5 +1,5 @@
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import { Avatar, CardMedia, InputAdornment } from '@mui/material';
+import { Avatar, CardMedia, InputAdornment, TextField } from '@mui/material';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
@@ -20,6 +20,7 @@ import { useTheme as useThemeStyledComponents } from 'styled-components';
 import { useAuth } from '../../hooks/AuthContext';
 import { Button } from '../Button';
 import { ModalProps, style } from '../ModalDefault';
+import { NumberFormatCustom } from '../NumberFormat/NumberFormatCustom';
 
 import { CameraImg, VideoImg } from '../Svgs';
 import {
@@ -81,7 +82,7 @@ export function ModalHome({
     const [isRent, setIsRent] = useState (false);
     const [isSearch, setIsSearch] = useState (false);
     const [propertyType, setPropertyType] = useState<string[]> ([]);
-    const [propertyPrice, setPropertyPrice] = useState<number> (0);
+    const [propertyPrice, setPropertyPrice] = useState<string> ('');
     const [text, setText] = useState<string> ('');
     const [tag, setTag] = useState<string> ('');
 
@@ -306,15 +307,13 @@ export function ModalHome({
                             </FormControl>
                         </div>
 
-                        <OutlinedInput
+                        <TextField
+                            onChange={event => setPropertyPrice(event.target.value)}
                             id="outlined-adornment-amount"
-                            type={'number'}
-                            onChange={(event => {
-                                setPropertyPrice (Number.parseFloat (event.target.value));
-                            })}
-                            placeholder=" Insira o valor"
-                            sx={{m: 0, width: 180, mt: 0}} size="small"
-                            startAdornment={<InputAdornment position="start">R$</InputAdornment>}
+                            InputProps={{
+                                inputComponent: NumberFormatCustom as any,
+                            }}
+                            variant="standard"
                         />
                     </ContentChoice>
                     <Button

@@ -19,7 +19,7 @@ export interface PostProps {
     mediaPosts?: MediaPost[];
     tag?: string;
     propertyType?: string;
-    propertyPrice?: number;
+    propertyPrice?: string;
 }
 
 export interface Comments {
