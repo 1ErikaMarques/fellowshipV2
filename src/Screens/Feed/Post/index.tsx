@@ -29,32 +29,33 @@ import { InteractionsPost } from '../../../components/InteractionsPost';
 
 import { Container, Content, ContentHeaderPost, Header, MenuItemStyles, Separador } from './styles';
 import { PostDataPros } from './types';
+
 //menu
 const ITEM_HEIGHT = 48;
 
 //Carousel
-const AutoPlaySwipeableViews = autoPlay (SwipeableViews);
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-export function Post({postData}: PostDataPros) {
+export function Post({ postData }: PostDataPros) {
 
-    const themeStyledComponents = useThemeStyledComponents ();
-    const theme = useTheme ();
+    const themeStyledComponents = useThemeStyledComponents();
+    const theme = useTheme();
 
     //expandi comentarios
     const [expanded, setExpanded] = useState (false);
 
     const handleExpandClick = () => {
-        setExpanded (!expanded);
+        setExpanded(!expanded);
     };
 
     //menu
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement> (null);
-    const open = Boolean (anchorEl);
+    const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl (event.currentTarget);
+        setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
-        setAnchorEl (null);
+        setAnchorEl(null);
     };
 
     //carousel
@@ -62,16 +63,21 @@ export function Post({postData}: PostDataPros) {
     const maxSteps = postData.mediaPosts ? postData.mediaPosts.length : 0;
 
     const handleNext = () => {
-        setActiveStep ((prevActiveStep) => prevActiveStep + 1);
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
     const handleBack = () => {
-        setActiveStep ((prevActiveStep) => prevActiveStep - 1);
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
     const handleStepChange = (step: number) => {
-        setActiveStep (step);
+        setActiveStep(step);
     };
+
+    //add comentario
+    const handleAddComment = () => {
+        alert('test')
+    }
 
     return (
         <Container>
@@ -97,7 +103,7 @@ export function Post({postData}: PostDataPros) {
                                 aria-expanded={open ? 'true' : undefined}
                                 aria-haspopup="true"
                                 onClick={handleClick}>
-                                <MoreVertIcon/>
+                                <MoreVertIcon />
                             </IconButton>
                             <Menu
                                 id="long-menu"
@@ -164,7 +170,7 @@ export function Post({postData}: PostDataPros) {
                     </ContentHeaderPost>
                 </Header>
 
-                <Box sx={{width: '100%', flexGrow: 1}}>
+                <Box sx={{ width: '100%', flexGrow: 1 }}>
                     <Paper
                         square
                         elevation={0}
@@ -190,12 +196,12 @@ export function Post({postData}: PostDataPros) {
                             >
 
 
-                                {postData.mediaPosts.map ((step, index) => (
+                                {postData.mediaPosts.map((step, index) => (
                                     <div key={step.mediaUrl}>
-                                        {Math.abs (activeStep - index) <= 2 ? (
+                                        {Math.abs(activeStep - index) <= 2 ? (
 
                                             <Box
-                                                component={step.mediaType.startsWith ('image') ? 'img' : 'video'}
+                                                component={step.mediaType.startsWith('image') ? 'img' : 'video'}
                                                 controls
                                                 sx={{
                                                     height: 'auto',
@@ -214,7 +220,7 @@ export function Post({postData}: PostDataPros) {
                                 steps={maxSteps}
                                 position="static"
                                 activeStep={activeStep}
-                                style={{display: 'flex', justifyContent: 'space-evenly'}}
+                                style={{ display: 'flex', justifyContent: 'space-evenly' }}
                                 nextButton={
                                     <Button
                                         size="large"
@@ -223,20 +229,20 @@ export function Post({postData}: PostDataPros) {
                                     >
 
                                         {theme.direction === 'rtl' ? (
-                                            <KeyboardArrowLeft/>
+                                            <KeyboardArrowLeft />
                                         ) : (
                                             <KeyboardArrowRight
-                                                style={{color: activeStep === maxSteps - 1 ? 'transparent' : themeStyledComponents.colors.primary}}/>
+                                                style={{ color: activeStep === maxSteps - 1 ? 'transparent' : themeStyledComponents.colors.primary }} />
                                         )}
                                     </Button>
                                 }
                                 backButton={
                                     <Button size="large" onClick={handleBack} disabled={activeStep === 0}>
                                         {theme.direction === 'rtl' ? (
-                                            <KeyboardArrowRight/>
+                                            <KeyboardArrowRight />
                                         ) : (
                                             <KeyboardArrowLeft
-                                                style={{color: activeStep === 0 ? 'transparent' : themeStyledComponents.colors.primary}}/>
+                                                style={{ color: activeStep === 0 ? 'transparent' : themeStyledComponents.colors.primary }} />
                                         )}
 
                                     </Button>
@@ -246,16 +252,15 @@ export function Post({postData}: PostDataPros) {
                     }
                 </Box>
 
-                <Separador/>
-                <InteractionsPost handleExpandClick={handleExpandClick} expanded={expanded}/>
-                <CommentEntry/>
+                <Separador />
+                <InteractionsPost handleExpandClick={handleExpandClick} expanded={expanded} />
+                <CommentEntry handleAddComment={handleAddComment} />
                 {
-                    postData.comments?.map (comments => {
-                        return (
-                            <CommentsPost expanded={expanded}/>
-                        );
-                    })
+                    postData.comments?.map((comment) =>
+                        <CommentsPost key={comment.commentId} expanded={expanded} commentsData={comment} />
+                    )
                 }
+
             </Content>
         </Container>
     );

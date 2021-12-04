@@ -23,6 +23,7 @@ import {
 
 import { useTheme as useThemeStyledComponents } from 'styled-components';
 import { useTheme } from '@mui/material/styles';
+import { Comments } from '../../Screens/Feed/Post/types';
 
 
 //menu
@@ -30,12 +31,13 @@ const ITEM_HEIGHT = 48;
 
 interface CommentsPostProps {
   expanded: boolean
+  commentsData: Comments
 }
 
 
 
-export function CommentsPost({ expanded }: CommentsPostProps) {
-  const { userInfo } = useAuth();
+export function CommentsPost({ expanded, commentsData }: CommentsPostProps) {
+
   const themeStyledComponents = useThemeStyledComponents();
   const theme = useTheme();
 
@@ -54,13 +56,13 @@ export function CommentsPost({ expanded }: CommentsPostProps) {
       <Collapse in={expanded} timeout="auto" unmountOnExit >
         <CardContent sx={{ width: '100%', display: 'flex' }}>
           <Avatar
-            src={userInfo.user.profilePic}
+            src={commentsData.profilePic}
             style={{ marginLeft: '0.5rem', cursor: 'pointer' }} />
           <UserInfoContent>
             <Comment>
-              <h3>{userInfo.user.name}</h3>
+              <h3>{commentsData.name}</h3>
               <p>
-                Olá a todos mais uma vez, venho pedir a vossa ajuda vou para a Bélgica no início do mês que vem e estou a procura de emprego nas limpezas ou como babá, não falo muito francês nem inglês se alguém souber de algum trabalho.
+                {commentsData.text}
               </p>
             </Comment>
 
