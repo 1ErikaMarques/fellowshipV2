@@ -2,7 +2,8 @@ import { MediaPost } from '../NewPost';
 import { PostType } from '../Timeline/types';
 
 export interface PostDataPros {
-    postData: PostProps;
+  postData: PostProps;
+  handleDeletePost: (postId: string | undefined) => Promise<void>;
 }
 
 export interface PostProps {
@@ -27,7 +28,7 @@ export interface Comments {
     userId: string;
     text: string;
     createdAt?: number;
-    profilePic?: string;
+    userPic?: string;
     name: string;
 }
 

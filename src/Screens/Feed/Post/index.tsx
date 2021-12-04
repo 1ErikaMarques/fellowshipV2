@@ -28,7 +28,8 @@ import { CommentsPost } from '../../../components/CommentsPost';
 import { InteractionsPost } from '../../../components/InteractionsPost';
 
 import { Container, Content, ContentHeaderPost, Header, MenuItemStyles, Separador } from './styles';
-import { PostDataPros } from './types';
+import { Comments, PostDataPros } from './types';
+
 
 //menu
 const ITEM_HEIGHT = 48;
@@ -36,232 +37,231 @@ const ITEM_HEIGHT = 48;
 //Carousel
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-export function Post({ postData }: PostDataPros) {
+export function Post({ postData, handleDeletePost }: PostDataPros) {
 
-    const themeStyledComponents = useThemeStyledComponents();
-    const theme = useTheme();
+  const themeStyledComponents = useThemeStyledComponents();
+  const theme = useTheme();
 
-    //expandi comentarios
-    const [expanded, setExpanded] = useState (false);
+  //menu
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
+  //carousel
+  const [activeStep, setActiveStep] = useState(0);
+  const maxSteps = postData.mediaPosts ? postData.mediaPosts.length : 0;
 
-    //menu
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement> (null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
 
-    //carousel
-    const [activeStep, setActiveStep] = useState (0);
-    const maxSteps = postData.mediaPosts ? postData.mediaPosts.length : 0;
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
 
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
+  const handleStepChange = (step: number) => {
+    setActiveStep(step);
+  };
 
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
+  //expandi comentarios
+  const [expanded, setExpanded] = useState(false);
 
-    const handleStepChange = (step: number) => {
-        setActiveStep(step);
-    };
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
-    //add comentario
-    const handleAddComment = () => {
-        alert('test')
-    }
+  //atualiza array de comentarios
+  const updateCommentList = (commentData: Comments) => {
+    postData.comments?.push(commentData);
+    setExpanded(true);
+  }
 
-    return (
-        <Container>
-            <Content>
-                <Header>
-                    <Avatar
-                        src={postData.profilePic}
+  return (
+    <Container>
+      <Content>
+        <Header>
+          <Avatar
+            src={postData.profilePic}
+            sx={{
+              width: '3rem',
+              height: '3rem',
+              marginLeft: '0.5rem',
+              marginRight: '1rem',
+              cursor: 'pointer'
+            }}
+          />
+          <ContentHeaderPost>
+            <h3>{postData.name}</h3>
+            <div>
+              <IconButton
+                aria-label="more"
+                id="long-button"
+                aria-controls="long-menu"
+                aria-expanded={open ? 'true' : undefined}
+                aria-haspopup="true"
+                onClick={handleClick}>
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                id="long-menu"
+                MenuListProps={{
+                  'aria-labelledby': 'long-button',
+                }}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                PaperProps={{
+                  style: {
+                    maxHeight: ITEM_HEIGHT * 4.5,
+                    width: '15ch',
+                  },
+                }}>
+                <MenuItemStyles
+                  onClick={() => handleDeletePost(postData.postId)}
+                  disableRipple
+                  style={{
+                    padding: '0.6rem'
+                  }}
+                >
+                  <DeleteOutlineOutlinedIcon
+                    style={{
+                      marginRight: '0.8rem',
+                      color: themeStyledComponents.colors.gray_dark,
+                    }}
+                  />
+                  <p
+                    style={{
+                      fontSize: '0.9rem',
+                      fontWeight: 500,
+                      color: themeStyledComponents.colors.gray_dark,
+                    }}>
+                    Apagar
+                  </p>
+
+                </MenuItemStyles>
+                <MenuItemStyles
+                  onClick={handleClose}
+                  disableRipple
+                  style={{
+                    padding: '0.6rem',
+                    marginBottom: '0.5rem'
+                  }}
+                >
+                  <OutlinedFlagSharpIcon
+                    style={{
+                      marginRight: '0.8rem',
+                      color: themeStyledComponents.colors.gray_dark,
+                    }}
+                  />
+                  <p
+                    style={{
+                      fontSize: '0.9rem',
+                      fontWeight: 500,
+                      color: themeStyledComponents.colors.gray_dark,
+                    }}>
+                    Denunciar
+                  </p>
+                </MenuItemStyles>
+              </Menu>
+            </div>
+          </ContentHeaderPost>
+        </Header>
+
+        <Box sx={{ width: '100%', flexGrow: 1 }}>
+          <Paper
+            square
+            elevation={0}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              height: 50,
+              pl: 2,
+              bgcolor: themeStyledComponents.colors.shape,
+            }}
+          >
+            <Typography>{postData.text}</Typography>
+          </Paper>
+          {
+            postData.mediaPosts && postData.mediaPosts.length > 0 &&
+            <>
+              <AutoPlaySwipeableViews
+                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                index={activeStep}
+                onChangeIndex={handleStepChange}
+                enableMouseEvents
+                autoplay={false}
+              >
+                {postData.mediaPosts.map((step, index) => (
+                  <div key={step.mediaUrl}>
+                    {Math.abs(activeStep - index) <= 2 ? (
+
+                      <Box
+                        component={step.mediaType.startsWith('image') ? 'img' : 'video'}
+                        controls
                         sx={{
-                            width: '3rem',
-                            height: '3rem',
-                            marginLeft: '0.5rem',
-                            marginRight: '1rem',
-                            cursor: 'pointer'
+                          height: 'auto',
+                          display: 'block',
+                          maxWidth: '100%',
+                          overflow: 'hidden',
+                          width: '100%',
                         }}
-                    />
-                    <ContentHeaderPost>
-                        <h3>{postData.name}</h3>
-                        <div>
-                            <IconButton
-                                aria-label="more"
-                                id="long-button"
-                                aria-controls="long-menu"
-                                aria-expanded={open ? 'true' : undefined}
-                                aria-haspopup="true"
-                                onClick={handleClick}>
-                                <MoreVertIcon />
-                            </IconButton>
-                            <Menu
-                                id="long-menu"
-                                MenuListProps={{
-                                    'aria-labelledby': 'long-button',
-                                }}
-                                anchorEl={anchorEl}
-                                open={open}
-                                onClose={handleClose}
-                                PaperProps={{
-                                    style: {
-                                        maxHeight: ITEM_HEIGHT * 4.5,
-                                        width: '15ch',
-                                    },
-                                }}>
-                                <MenuItemStyles
-                                    onClick={handleClose}
-                                    disableRipple
-                                    style={{
-                                        padding: '0.6rem'
-                                    }}
-                                >
-                                    <DeleteOutlineOutlinedIcon
-                                        style={{
-                                            marginRight: '0.8rem',
-                                            color: themeStyledComponents.colors.gray_dark,
-                                        }}
-                                    />
-                                    <p
-                                        style={{
-                                            fontSize: '0.9rem',
-                                            fontWeight: 500,
-                                            color: themeStyledComponents.colors.gray_dark,
+                        src={step.mediaUrl}
+                      />
+                    ) : null}
+                  </div>
+                ))}
+              </AutoPlaySwipeableViews>
+              <MobileStepper
+                steps={maxSteps}
+                position="static"
+                activeStep={activeStep}
+                style={{ display: 'flex', justifyContent: 'space-evenly' }}
+                nextButton={
+                  <Button
+                    size="large"
+                    onClick={handleNext}
+                    disabled={activeStep === maxSteps - 1}
+                  >
 
-                                        }}>
-                                        Apagar
-                                    </p>
-                                </MenuItemStyles>
-                                <MenuItemStyles
-                                    onClick={handleClose}
-                                    disableRipple
-                                    style={{
-                                        padding: '0.6rem',
-                                        marginBottom: '0.5rem'
-                                    }}
-                                >
-                                    <OutlinedFlagSharpIcon
-                                        style={{
-                                            marginRight: '0.8rem',
-                                            color: themeStyledComponents.colors.gray_dark,
-                                        }}
-                                    />
-                                    <p
-                                        style={{
-                                            fontSize: '0.9rem',
-                                            fontWeight: 500,
-                                            color: themeStyledComponents.colors.gray_dark,
-                                        }}>
-                                        Denunciar
-                                    </p>
-                                </MenuItemStyles>
-                            </Menu>
-                        </div>
-                    </ContentHeaderPost>
-                </Header>
-
-                <Box sx={{ width: '100%', flexGrow: 1 }}>
-                    <Paper
-                        square
-                        elevation={0}
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            height: 50,
-                            pl: 2,
-                            bgcolor: themeStyledComponents.colors.shape,
-                        }}
-                    >
-                        <Typography>{postData.text}</Typography>
-                    </Paper>
-                    {
-                        postData.mediaPosts && postData.mediaPosts.length > 0 &&
-                        <>
-                            <AutoPlaySwipeableViews
-                                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                                index={activeStep}
-                                onChangeIndex={handleStepChange}
-                                enableMouseEvents
-                                autoplay={false}
-                            >
-
-
-                                {postData.mediaPosts.map((step, index) => (
-                                    <div key={step.mediaUrl}>
-                                        {Math.abs(activeStep - index) <= 2 ? (
-
-                                            <Box
-                                                component={step.mediaType.startsWith('image') ? 'img' : 'video'}
-                                                controls
-                                                sx={{
-                                                    height: 'auto',
-                                                    display: 'block',
-                                                    maxWidth: '100%',
-                                                    overflow: 'hidden',
-                                                    width: '100%',
-                                                }}
-                                                src={step.mediaUrl}
-                                            />
-                                        ) : null}
-                                    </div>
-                                ))}
-                            </AutoPlaySwipeableViews>
-                            <MobileStepper
-                                steps={maxSteps}
-                                position="static"
-                                activeStep={activeStep}
-                                style={{ display: 'flex', justifyContent: 'space-evenly' }}
-                                nextButton={
-                                    <Button
-                                        size="large"
-                                        onClick={handleNext}
-                                        disabled={activeStep === maxSteps - 1}
-                                    >
-
-                                        {theme.direction === 'rtl' ? (
-                                            <KeyboardArrowLeft />
-                                        ) : (
-                                            <KeyboardArrowRight
-                                                style={{ color: activeStep === maxSteps - 1 ? 'transparent' : themeStyledComponents.colors.primary }} />
-                                        )}
-                                    </Button>
-                                }
-                                backButton={
-                                    <Button size="large" onClick={handleBack} disabled={activeStep === 0}>
-                                        {theme.direction === 'rtl' ? (
-                                            <KeyboardArrowRight />
-                                        ) : (
-                                            <KeyboardArrowLeft
-                                                style={{ color: activeStep === 0 ? 'transparent' : themeStyledComponents.colors.primary }} />
-                                        )}
-
-                                    </Button>
-                                }
-                            />
-                        </>
-                    }
-                </Box>
-
-                <Separador />
-                <InteractionsPost handleExpandClick={handleExpandClick} expanded={expanded} />
-                <CommentEntry handleAddComment={handleAddComment} />
-                {
-                    postData.comments?.map((comment) =>
-                        <CommentsPost key={comment.commentId} expanded={expanded} commentsData={comment} />
-                    )
+                    {theme.direction === 'rtl' ? (
+                      <KeyboardArrowLeft />
+                    ) : (
+                      <KeyboardArrowRight
+                        style={{ color: activeStep === maxSteps - 1 ? 'transparent' : themeStyledComponents.colors.primary }} />
+                    )}
+                  </Button>
                 }
+                backButton={
+                  <Button size="large" onClick={handleBack} disabled={activeStep === 0}>
+                    {theme.direction === 'rtl' ? (
+                      <KeyboardArrowRight />
+                    ) : (
+                      <KeyboardArrowLeft
+                        style={{ color: activeStep === 0 ? 'transparent' : themeStyledComponents.colors.primary }} />
+                    )}
 
-            </Content>
-        </Container>
-    );
+                  </Button>
+                }
+              />
+            </>
+          }
+        </Box>
+
+        <Separador />
+        <InteractionsPost handleExpandClick={handleExpandClick} expanded={expanded} />
+        <CommentEntry updateCommentList={updateCommentList} postId={postData.postId} />
+        {
+          postData.comments?.map((comment) =>
+            <CommentsPost key={comment.commentId} expanded={expanded} commentsData={comment} />
+          )
+        }
+
+      </Content>
+    </Container>
+  );
 }
