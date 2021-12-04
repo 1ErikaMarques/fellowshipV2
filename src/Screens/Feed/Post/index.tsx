@@ -30,272 +30,279 @@ import { InteractionsPost } from '../../../components/InteractionsPost';
 import { Container, Content, ContentHeaderPost, Header, MenuItemStyles, Separador } from './styles';
 import { Comments, PostDataPros } from './types';
 import { api } from '../../../services/api';
+import { useHistory } from 'react-router-dom';
 
 
 //menu
 const ITEM_HEIGHT = 48;
 
 //Carousel
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+const AutoPlaySwipeableViews = autoPlay (SwipeableViews);
 
-export function Post({ postData, handleDeletePost }: PostDataPros) {
-  const [comments, setComments] = useState<Comments[]>(postData.comments);
-  const themeStyledComponents = useThemeStyledComponents();
-  const theme = useTheme();
+export function Post({postData, handleDeletePost}: PostDataPros) {
+    const [comments, setComments] = useState<Comments[]> (postData.comments);
+    const themeStyledComponents = useThemeStyledComponents ();
+    const history = useHistory ();
+    const theme = useTheme ();
 
-  //menu
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+    //menu
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement> (null);
+    const open = Boolean (anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl (event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl (null);
+    };
 
-  //carousel
-  const [activeStep, setActiveStep] = useState(0);
-  const maxSteps = postData.mediaPosts ? postData.mediaPosts.length : 0;
+    //carousel
+    const [activeStep, setActiveStep] = useState (0);
+    const maxSteps = postData.mediaPosts ? postData.mediaPosts.length : 0;
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
+    const handleNext = () => {
+        setActiveStep ((prevActiveStep) => prevActiveStep + 1);
+    };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+    const handleBack = () => {
+        setActiveStep ((prevActiveStep) => prevActiveStep - 1);
+    };
 
-  const handleStepChange = (step: number) => {
-    setActiveStep(step);
-  };
+    const handleStepChange = (step: number) => {
+        setActiveStep (step);
+    };
 
-  //expandi comentarios
-  const [expanded, setExpanded] = useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+    //expandi comentarios
+    const [expanded, setExpanded] = useState (false);
 
-  //atualiza array de comentarios
-  const updateCommentList = (commentData: Comments) => {
-    setComments([commentData,...comments] ) //pega o novo comentario e os antigos
-    setExpanded(true);
-  }
+    const handleExpandClick = () => {
+        setExpanded (!expanded);
+    };
 
-  //deleta comentarios
-  const handleDeleteComment = async (commentId: string | undefined) => {
-    await api.delete(`comment/delete/${commentId}`)
-      .then(() => {
-        const filteredComment = comments.filter(comment => comment.commentId !== commentId);
-        setComments(filteredComment)
-      })
-  }
+    //atualiza array de comentarios
+    const updateCommentList = (commentData: Comments) => {
+        setComments ([commentData, ...comments]); //pega o novo comentario e os antigos
+        setExpanded (true);
+    };
 
-  return (
-    <Container>
-      <Content>
-        <Header>
-          <Avatar
-            src={postData.profilePic}
-            sx={{
-              width: '3rem',
-              height: '3rem',
-              marginLeft: '0.5rem',
-              marginRight: '1rem',
-              cursor: 'pointer'
-            }}
-          />
-          <ContentHeaderPost>
-            <h3>{postData.name}</h3>
-            <div>
-              <IconButton
-                aria-label="more"
-                id="long-button"
-                aria-controls="long-menu"
-                aria-expanded={open ? 'true' : undefined}
-                aria-haspopup="true"
-                onClick={handleClick}>
-                <MoreVertIcon />
-              </IconButton>
-              <Menu
-                id="long-menu"
-                MenuListProps={{
-                  'aria-labelledby': 'long-button',
-                }}
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                PaperProps={{
-                  style: {
-                    maxHeight: ITEM_HEIGHT * 4.5,
-                    width: '15ch',
-                  },
-                }}>
-                <MenuItemStyles
-                  onClick={() => handleDeletePost(postData.postId)}
-                  disableRipple
-                  style={{
-                    padding: '0.6rem'
-                  }}
-                >
-                  <DeleteOutlineOutlinedIcon
-                    style={{
-                      marginRight: '0.8rem',
-                      color: themeStyledComponents.colors.gray_dark,
-                    }}
-                  />
-                  <p
-                    style={{
-                      fontSize: '0.9rem',
-                      fontWeight: 500,
-                      color: themeStyledComponents.colors.gray_dark,
-                    }}>
-                    Apagar
-                  </p>
+    //deleta comentarios
+    const handleDeleteComment = async (commentId: string | undefined) => {
+        await api.delete (`comment/delete/${commentId}`)
+            .then (() => {
+                const filteredComment = comments.filter (comment => comment.commentId !== commentId);
+                setComments (filteredComment);
+            });
+    };
 
-                </MenuItemStyles>
-                <MenuItemStyles
-                  onClick={handleClose}
-                  disableRipple
-                  style={{
-                    padding: '0.6rem',
-                    marginBottom: '0.5rem'
-                  }}
-                >
-                  <OutlinedFlagSharpIcon
-                    style={{
-                      marginRight: '0.8rem',
-                      color: themeStyledComponents.colors.gray_dark,
-                    }}
-                  />
-                  <p
-                    style={{
-                      fontSize: '0.9rem',
-                      fontWeight: 500,
-                      color: themeStyledComponents.colors.gray_dark,
-                    }}>
-                    Denunciar
-                  </p>
-                </MenuItemStyles>
-              </Menu>
-            </div>
-          </ContentHeaderPost>
-        </Header>
+    const handleNavigateToProfile = () => {
+        history.push (`/profile/${postData.userId}`);
+    };
 
-        <Box sx={{ width: '100%', flexGrow: 1 }}>
-          <Paper
-            square
-            elevation={0}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              height: 50,
-              pl: 2,
-              bgcolor: themeStyledComponents.colors.shape,
-            }}
-          >
-            <Typography>{postData.text}</Typography>
-          </Paper>
-          {
-            postData.mediaPosts && postData.mediaPosts.length > 0 &&
-            <>
-              <AutoPlaySwipeableViews
-                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                index={activeStep}
-                onChangeIndex={handleStepChange}
-                enableMouseEvents
-                autoplay={false}
-              >
-                {postData.mediaPosts.map((step, index) => (
-                  <div key={step.mediaUrl}>
-                    {Math.abs(activeStep - index) <= 2 ? (
+    return (
+        <Container>
+            <Content>
+                <Header>
+                    <Avatar onClick={handleNavigateToProfile}
+                            src={postData.profilePic}
+                            sx={{
+                                width: '3rem',
+                                height: '3rem',
+                                marginLeft: '0.5rem',
+                                marginRight: '1rem',
+                                cursor: 'pointer'
+                            }}
+                    />
+                    <ContentHeaderPost>
+                        <h3 onClick={handleNavigateToProfile}>{postData.name}</h3>
+                        <div>
+                            <IconButton
+                                aria-label="more"
+                                id="long-button"
+                                aria-controls="long-menu"
+                                aria-expanded={open ? 'true' : undefined}
+                                aria-haspopup="true"
+                                onClick={handleClick}>
+                                <MoreVertIcon/>
+                            </IconButton>
+                            <Menu
+                                id="long-menu"
+                                MenuListProps={{
+                                    'aria-labelledby': 'long-button',
+                                }}
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={handleClose}
+                                PaperProps={{
+                                    style: {
+                                        maxHeight: ITEM_HEIGHT * 4.5,
+                                        width: '15ch',
+                                    },
+                                }}>
+                                <MenuItemStyles
+                                    onClick={() => handleDeletePost (postData.postId)}
+                                    disableRipple
+                                    style={{
+                                        padding: '0.6rem'
+                                    }}
+                                >
+                                    <DeleteOutlineOutlinedIcon
+                                        style={{
+                                            marginRight: '0.8rem',
+                                            color: themeStyledComponents.colors.gray_dark,
+                                        }}
+                                    />
+                                    <p
+                                        style={{
+                                            fontSize: '0.9rem',
+                                            fontWeight: 500,
+                                            color: themeStyledComponents.colors.gray_dark,
+                                        }}>
+                                        Apagar
+                                    </p>
 
-                      <Box
-                        component={step.mediaType.startsWith('image') ? 'img' : 'video'}
-                        controls
+                                </MenuItemStyles>
+                                <MenuItemStyles
+                                    onClick={handleClose}
+                                    disableRipple
+                                    style={{
+                                        padding: '0.6rem',
+                                        marginBottom: '0.5rem'
+                                    }}
+                                >
+                                    <OutlinedFlagSharpIcon
+                                        style={{
+                                            marginRight: '0.8rem',
+                                            color: themeStyledComponents.colors.gray_dark,
+                                        }}
+                                    />
+                                    <p
+                                        style={{
+                                            fontSize: '0.9rem',
+                                            fontWeight: 500,
+                                            color: themeStyledComponents.colors.gray_dark,
+                                        }}>
+                                        Denunciar
+                                    </p>
+                                </MenuItemStyles>
+                            </Menu>
+                        </div>
+                    </ContentHeaderPost>
+                </Header>
+
+                <Box sx={{width: '100%', flexGrow: 1}}>
+                    <Paper
+                        square
+                        elevation={0}
                         sx={{
-                          height: 'auto',
-                          display: 'block',
-                          maxWidth: '100%',
-                          overflow: 'hidden',
-                          width: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            height: 50,
+                            pl: 2,
+                            bgcolor: themeStyledComponents.colors.shape,
                         }}
-                        src={step.mediaUrl}
-                      />
-                    ) : null}
-                  </div>
-                ))}
-              </AutoPlaySwipeableViews>
-              <MobileStepper
-                steps={maxSteps}
-                position="static"
-                activeStep={activeStep}
-                style={{ display: 'flex', justifyContent: 'space-evenly' }}
-                nextButton={
-                  <Button
-                    size="large"
-                    onClick={handleNext}
-                    disabled={activeStep === maxSteps - 1}
-                  >
+                    >
+                        <Typography>{postData.text}</Typography>
+                    </Paper>
+                    {
+                        postData.mediaPosts && postData.mediaPosts.length > 0 &&
+                        <>
+                            <AutoPlaySwipeableViews
+                                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                                index={activeStep}
+                                onChangeIndex={handleStepChange}
+                                enableMouseEvents
+                                autoplay={false}
+                            >
+                                {postData.mediaPosts.map ((step, index) => (
+                                    <div key={step.mediaUrl}>
+                                        {Math.abs (activeStep - index) <= 2 ? (
 
-                    {theme.direction === 'rtl' ? (
-                      <KeyboardArrowLeft />
-                    ) : (
-                      <KeyboardArrowRight
-                        style={{
-                          color: activeStep === maxSteps - 1
-                            ? 'transparent'
-                            : themeStyledComponents.colors.primary
-                        }}
-                      />
-                    )}
-                  </Button>
+                                            <Box
+                                                component={step.mediaType.startsWith ('image') ? 'img' : 'video'}
+                                                controls
+                                                sx={{
+                                                    height: 'auto',
+                                                    display: 'block',
+                                                    maxWidth: '100%',
+                                                    overflow: 'hidden',
+                                                    width: '100%',
+                                                }}
+                                                src={step.mediaUrl}
+                                            />
+                                        ) : null}
+                                    </div>
+                                ))}
+                            </AutoPlaySwipeableViews>
+                            <MobileStepper
+                                steps={maxSteps}
+                                position="static"
+                                activeStep={activeStep}
+                                style={{display: 'flex', justifyContent: 'space-evenly'}}
+                                nextButton={
+                                    <Button
+                                        size="large"
+                                        onClick={handleNext}
+                                        disabled={activeStep === maxSteps - 1}
+                                    >
+
+                                        {theme.direction === 'rtl' ? (
+                                            <KeyboardArrowLeft/>
+                                        ) : (
+                                            <KeyboardArrowRight
+                                                style={{
+                                                    color: activeStep === maxSteps - 1
+                                                        ? 'transparent'
+                                                        : themeStyledComponents.colors.primary
+                                                }}
+                                            />
+                                        )}
+                                    </Button>
+                                }
+                                backButton={
+                                    <Button
+                                        size="large"
+                                        onClick={handleBack}
+                                        disabled={activeStep === 0}
+                                    >
+                                        {theme.direction === 'rtl' ? (
+                                            <KeyboardArrowRight/>
+                                        ) : (
+                                            <KeyboardArrowLeft
+                                                style={{
+                                                    color: activeStep === 0
+                                                        ? 'transparent'
+                                                        : themeStyledComponents.colors.primary
+                                                }}
+                                            />
+                                        )}
+                                    </Button>
+                                }
+                            />
+                        </>
+                    }
+                </Box>
+
+                <Separador/>
+                <InteractionsPost
+                    handleExpandClick={handleExpandClick}
+                    expanded={expanded}
+                />
+                <CommentEntry
+                    updateCommentList={updateCommentList}
+                    postId={postData.postId}
+                />
+                {comments &&
+                comments.map ((comment) =>
+                    <CommentsPost
+                        key={comment.commentId}
+                        expanded={expanded}
+                        commentsData={comment}
+                        handleDeleteComment={handleDeleteComment}
+                    />
+                )
                 }
-                backButton={
-                  <Button
-                    size="large"
-                    onClick={handleBack}
-                    disabled={activeStep === 0}
-                  >
-                    {theme.direction === 'rtl' ? (
-                      <KeyboardArrowRight />
-                    ) : (
-                      <KeyboardArrowLeft
-                        style={{
-                          color: activeStep === 0
-                            ? 'transparent'
-                            : themeStyledComponents.colors.primary
-                        }}
-                      />
-                    )}
-                  </Button>
-                }
-              />
-            </>
-          }
-        </Box>
 
-        <Separador />
-        <InteractionsPost
-          handleExpandClick={handleExpandClick}
-          expanded={expanded}
-        />
-        <CommentEntry
-          updateCommentList={updateCommentList}
-          postId={postData.postId}
-        />
-        {comments &&
-          comments.map((comment) =>
-            <CommentsPost
-              key={comment.commentId}
-              expanded={expanded}
-              commentsData={comment}
-              handleDeleteComment={handleDeleteComment}
-            />
-          )
-        }
-
-      </Content>
-    </Container>
-  );
+            </Content>
+        </Container>
+    );
 }
