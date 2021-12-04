@@ -53,7 +53,6 @@ export function Header({ neighbourhoodName }: HeaderProps) {
   const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [neighbourhoods, setNeighbourhoods] = useState<ReadonlyArray<Neighbourhoods>>([]);
-  const [selectedNeighbourhood, setSelectedNeighbourhood] = useState<string>();
 
   const [isModalSneakPeakOpen, setIsModalSneakPeakOpen] = React.useState(false);
   const handleOpenModalSneakPeak = () => setIsModalSneakPeakOpen(true);

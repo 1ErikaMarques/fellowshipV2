@@ -70,8 +70,7 @@ export function UserSettings() {
 
   const {
     register: registerPersonalData,
-    handleSubmit: handlePersonalData,
-    formState: { errors: errorsPersonalData } } = useForm<UpdateFormPersonalData>({
+    handleSubmit: handlePersonalData } = useForm<UpdateFormPersonalData>({
       resolver: yupResolver(schema)
     });
 

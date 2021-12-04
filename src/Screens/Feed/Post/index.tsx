@@ -80,7 +80,6 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
     setActiveStep(step);
   };
 
-
   //expandi comentarios
   const [expanded, setExpanded] = useState(false);
 

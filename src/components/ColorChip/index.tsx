@@ -41,7 +41,7 @@ export default function ColorChips({ labelGreen, labelYellow, labelPink }: ChipP
             <Chip
               label={labelPink}
               style={{
-                backgroundColor: '#ffe4ef',
+                backgroundColor: '#FF1778',
                 color: '#FFFFFF',
                 fontWeight: 'bold',
                 letterSpacing: '0.08rem',

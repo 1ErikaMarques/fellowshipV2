@@ -1,32 +1,23 @@
-import { MenuItem } from '@mui/material';
-import * as React from 'react';
-import { generatePath, Link, useHistory } from 'react-router-dom';
-import { useAuth } from '../../hooks/AuthContext';
-//menu deletar post
-import Menu from '@mui/material/Menu';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import OutlinedFlagSharpIcon from '@mui/icons-material/OutlinedFlagSharp';
-import IconButton from '@mui/material/IconButton';
+import Avatar from '@mui/material/Avatar';
 
 //expandir comentarios
 import CardContent from '@mui/material/CardContent';
 import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import { ROUTES } from '../../routes';
-
-
-import {
-  Container,
-  UserInfoContent,
-  Comment,
-  MenuItemStyles,
-} from './styles';
+import IconButton from '@mui/material/IconButton';
+//menu deletar post
+import Menu from '@mui/material/Menu';
+import * as React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { useTheme as useThemeStyledComponents } from 'styled-components';
-import { useTheme } from '@mui/material/styles';
 import { Comments } from '../../Screens/Feed/Post/types';
+
+
+import { Comment, Container, MenuItemStyles, UserInfoContent, } from './styles';
 
 
 //menu

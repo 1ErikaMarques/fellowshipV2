@@ -28,10 +28,16 @@ import {
   Icons
 } from './styles';
 
-export function ModalDonations({ isOpen, handleClose, handleMediaToPost, handleRemoveMedia, mediaPost, isMediaSelected, handleCreatePost }: ModalProps) {
+enum ModalText {
+  DONATION = ('Doar Algo'),
+  NEED_DONATION = ('Preciso de doações')
+}
+
+export function ModalDonations({ isOpen, handleClose, handleMediaToPost, handleRemoveMedia, mediaPost, isMediaSelected, handleCreatePost,postType }: ModalProps) {
 
   const [isDonation, setIsDonation] = useState(false);
   const [isNeedDonation, setIsNeedDonation] = useState(false);
+  const [text, setText] = useState<string>("");
   const { userInfo } = useAuth();
 
   const theme = useTheme();
@@ -44,6 +50,25 @@ export function ModalDonations({ isOpen, handleClose, handleMediaToPost, handleR
       setIsNeedDonation(true)
       setIsDonation(false)
     }
+  }
+
+  const handleSubmit = async () => {
+
+    await handleCreatePost({
+      name: userInfo.user.name,
+      userId: userInfo.user.userId,
+      profilePic: userInfo.user.profilePic,
+      postType: postType,
+      postLocalization: userInfo.user.postalCode,
+      createdAt: new Date().getTime(),
+      text: text,
+      tag: isDonation ? ModalText.DONATION.toString() :ModalText.NEED_DONATION.toString(),
+      mediaPosts: mediaPost,
+      comments: []
+    }).then(() => {
+      setText('');
+      handleClose();
+    });
   }
 
   return (
@@ -69,13 +94,13 @@ export function ModalDonations({ isOpen, handleClose, handleMediaToPost, handleR
             <ButtonChoiceDonation
               active={isDonation}
               onClick={() => handleDonationChoice("isDonation")}>
-              Doar Algo
+              {ModalText.DONATION}
             </ButtonChoiceDonation>
             <Separador />
             <ButtonChoiceDonation
               active={isNeedDonation}
               onClick={() => handleDonationChoice("isNeedDonation")}>
-              Preciso de doações
+              {ModalText.NEED_DONATION}
             </ButtonChoiceDonation>
           </ContentChoiceDonation>
           <UserInfo>
@@ -92,6 +117,7 @@ export function ModalDonations({ isOpen, handleClose, handleMediaToPost, handleR
             maxRows={12}
             aria-label="maximum height"
             placeholder="Precisando de doações ou doando algo?"
+            onChange={(event => setText(event.target.value))}
             defaultValue=""
             style={{
               width: 450,
@@ -163,8 +189,7 @@ export function ModalDonations({ isOpen, handleClose, handleMediaToPost, handleR
           </Icons>
           <Button
             title="Publicar"
-            onClick={() => {
-            }}
+            onClick={handleSubmit}
             style={{
               height: '3rem',
               width: '16rem',
