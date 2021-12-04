@@ -17,6 +17,7 @@ import MobileStepper from '@mui/material/MobileStepper';
 import Paper from '@mui/material/Paper';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { useState } from 'react';
 import * as React from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
@@ -40,14 +41,14 @@ export function Post({postData}: PostDataPros) {
     const theme = useTheme ();
 
     //expandi comentarios
-    const [expanded, setExpanded] = React.useState (false);
+    const [expanded, setExpanded] = useState (false);
 
     const handleExpandClick = () => {
         setExpanded (!expanded);
     };
 
     //menu
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement> (null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement> (null);
     const open = Boolean (anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl (event.currentTarget);
@@ -57,8 +58,8 @@ export function Post({postData}: PostDataPros) {
     };
 
     //carousel
-    const [activeStep, setActiveStep] = React.useState (0);
-    const maxSteps = postData.mediaPosts? postData.mediaPosts.length : 0;
+    const [activeStep, setActiveStep] = useState (0);
+    const maxSteps = postData.mediaPosts ? postData.mediaPosts.length : 0;
 
     const handleNext = () => {
         setActiveStep ((prevActiveStep) => prevActiveStep + 1);
@@ -178,7 +179,7 @@ export function Post({postData}: PostDataPros) {
                         <Typography>{postData.text}</Typography>
                     </Paper>
                     {
-                        postData.mediaPosts &&
+                        postData.mediaPosts && postData.mediaPosts.length > 0 &&
                         <>
                             <AutoPlaySwipeableViews
                                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -247,11 +248,14 @@ export function Post({postData}: PostDataPros) {
 
                 <Separador/>
                 <InteractionsPost handleExpandClick={handleExpandClick} expanded={expanded}/>
-
                 <CommentEntry/>
-
-                <CommentsPost expanded={expanded}/>
-                <CommentsPost expanded={expanded}/>
+                {
+                    postData.comments?.map (comments => {
+                        return (
+                            <CommentsPost expanded={expanded}/>
+                        );
+                    })
+                }
             </Content>
         </Container>
     );
