@@ -2,8 +2,8 @@ import { MediaPost } from '../NewPost';
 import { PostType } from '../Timeline/types';
 
 export interface PostDataPros {
-  postData: PostProps;
-  handleDeletePost: (postId: string | undefined) => Promise<void>;
+    postData: PostProps;
+    handleDeletePost: (postId: string | undefined) => Promise<void>;
 }
 
 export interface PostProps {
@@ -20,6 +20,14 @@ export interface PostProps {
     tag?: string;
     propertyType?: string;
     propertyPrice?: string;
+    likes?: Likes[];
+}
+
+export interface Likes {
+    cheerId: string;
+    postId?: string;
+    userId: string;
+    active: boolean;
 }
 
 export interface Comments {
