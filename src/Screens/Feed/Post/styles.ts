@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 import MenuItem from '@mui/material/MenuItem';
 
-
 export const Container = styled.main`
   display: flex;
   align-items: center;
-  width: 100%;
   height: auto;
   margin-top: 3rem;
   font-family: Poppins, Helvetica, sans-serif;
@@ -24,12 +22,14 @@ export const Header = styled.div`
   display: flex;
   align-items: center;
   padding: 1rem;
+  width: 100%;
+
 `;
 
 export const ContentHeaderPost = styled.div`
-  width: 100%;
   display: flex;    
   align-items: center;
+  width: 100%;
   justify-content: space-between;
 
   h3{
@@ -38,11 +38,13 @@ export const ContentHeaderPost = styled.div`
     color: ${({ theme }) => theme.colors.gray_dark};
     cursor: pointer;
 
+
   &:hover {
       filter: brightness(0.6);
       transition: 200ms ease;
       }
   }
+
 
 `;
 export const MenuItemStyles = styled(MenuItem)`

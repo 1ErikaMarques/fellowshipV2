@@ -1,11 +1,9 @@
+import * as React from 'react';
+import { useState } from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { Avatar, CardMedia } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import * as React from 'react';
-
-import { CameraImg, VideoImg } from '../Svgs';
-import { Button } from '../Button';
 
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -13,9 +11,12 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 
-
 import { useAuth } from '../../hooks/AuthContext';
 import { useTheme } from 'styled-components';
+
+import { CameraImg, VideoImg } from '../Svgs';
+import { ModalProps, style } from '../ModalDefault';
+import { Button } from '../Button';
 import {
   Content,
   Header,
@@ -24,14 +25,10 @@ import {
   ContentChoiceDonation,
   ButtonChoiceDonation,
   Separador,
-  Icons,
-
+  Icons
 } from './styles';
-import { ModalProps, style } from '../ModalDefault';
-import { useState } from 'react';
 
-
-export function ModalDonations({ isOpen, handleClose, handleMediaToPost, handleRemoveMedia, mediaPost, isMediaSelected }: ModalProps) {
+export function ModalDonations({ isOpen, handleClose, handleMediaToPost, handleRemoveMedia, mediaPost, isMediaSelected, handleCreatePost }: ModalProps) {
 
   const [isDonation, setIsDonation] = useState(false);
   const [isNeedDonation, setIsNeedDonation] = useState(false);
