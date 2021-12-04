@@ -32,15 +32,12 @@ const ITEM_HEIGHT = 48;
 interface CommentsPostProps {
   expanded: boolean
   commentsData: Comments
+  handleDeleteComment: (commentId: string | undefined) => Promise<void>
 }
 
-
-
-export function CommentsPost({ expanded, commentsData }: CommentsPostProps) {
+export function CommentsPost({ expanded, commentsData, handleDeleteComment }: CommentsPostProps) {
 
   const themeStyledComponents = useThemeStyledComponents();
-  const theme = useTheme();
-
 
   //menu
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -51,6 +48,7 @@ export function CommentsPost({ expanded, commentsData }: CommentsPostProps) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <Container>
       <Collapse in={expanded} timeout="auto" unmountOnExit >
@@ -94,7 +92,7 @@ export function CommentsPost({ expanded, commentsData }: CommentsPostProps) {
               }}
             >
               <MenuItemStyles
-                onClick={handleClose}
+                onClick={() => handleDeleteComment(commentsData.commentId)}
                 disableRipple
                 style={{
                   padding: "0.6rem"

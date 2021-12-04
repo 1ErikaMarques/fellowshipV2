@@ -15,7 +15,7 @@ export interface PostProps {
     createdAt: number;
     postLocalization: string;
     postType: PostType;
-    comments?: Comments[];
+    comments: Comments[];
     mediaPosts?: MediaPost[];
     tag?: string;
     propertyType?: string;

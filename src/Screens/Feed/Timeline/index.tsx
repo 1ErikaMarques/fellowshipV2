@@ -121,7 +121,8 @@ export function Timeline() {
         postId: response.data.postId,
         tag: response.data.tag,
         propertyType: response.data.propertyType,
-        propertyPrice: response.data.propertyPrice
+        propertyPrice: response.data.propertyPrice,
+        comments: []
       }, ...posts,
       ])
     );

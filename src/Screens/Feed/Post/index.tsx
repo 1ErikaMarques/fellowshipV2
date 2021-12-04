@@ -29,6 +29,7 @@ import { InteractionsPost } from '../../../components/InteractionsPost';
 
 import { Container, Content, ContentHeaderPost, Header, MenuItemStyles, Separador } from './styles';
 import { Comments, PostDataPros } from './types';
+import { api } from '../../../services/api';
 
 
 //menu
@@ -38,7 +39,7 @@ const ITEM_HEIGHT = 48;
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 export function Post({ postData, handleDeletePost }: PostDataPros) {
-
+  const [comments, setComments] = useState<Comments[]>(postData.comments);
   const themeStyledComponents = useThemeStyledComponents();
   const theme = useTheme();
 
@@ -77,8 +78,17 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
 
   //atualiza array de comentarios
   const updateCommentList = (commentData: Comments) => {
-    postData.comments?.push(commentData);
+    setComments([commentData,...comments] ) //pega o novo comentario e os antigos
     setExpanded(true);
+  }
+
+  //deleta comentarios
+  const handleDeleteComment = async (commentId: string | undefined) => {
+    await api.delete(`comment/delete/${commentId}`)
+      .then(() => {
+        const filteredComment = comments.filter(comment => comment.commentId !== commentId);
+        setComments(filteredComment)
+      })
   }
 
   return (
@@ -232,19 +242,32 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
                       <KeyboardArrowLeft />
                     ) : (
                       <KeyboardArrowRight
-                        style={{ color: activeStep === maxSteps - 1 ? 'transparent' : themeStyledComponents.colors.primary }} />
+                        style={{
+                          color: activeStep === maxSteps - 1
+                            ? 'transparent'
+                            : themeStyledComponents.colors.primary
+                        }}
+                      />
                     )}
                   </Button>
                 }
                 backButton={
-                  <Button size="large" onClick={handleBack} disabled={activeStep === 0}>
+                  <Button
+                    size="large"
+                    onClick={handleBack}
+                    disabled={activeStep === 0}
+                  >
                     {theme.direction === 'rtl' ? (
                       <KeyboardArrowRight />
                     ) : (
                       <KeyboardArrowLeft
-                        style={{ color: activeStep === 0 ? 'transparent' : themeStyledComponents.colors.primary }} />
+                        style={{
+                          color: activeStep === 0
+                            ? 'transparent'
+                            : themeStyledComponents.colors.primary
+                        }}
+                      />
                     )}
-
                   </Button>
                 }
               />
@@ -253,11 +276,22 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
         </Box>
 
         <Separador />
-        <InteractionsPost handleExpandClick={handleExpandClick} expanded={expanded} />
-        <CommentEntry updateCommentList={updateCommentList} postId={postData.postId} />
-        {
-          postData.comments?.map((comment) =>
-            <CommentsPost key={comment.commentId} expanded={expanded} commentsData={comment} />
+        <InteractionsPost
+          handleExpandClick={handleExpandClick}
+          expanded={expanded}
+        />
+        <CommentEntry
+          updateCommentList={updateCommentList}
+          postId={postData.postId}
+        />
+        {comments &&
+          comments.map((comment) =>
+            <CommentsPost
+              key={comment.commentId}
+              expanded={expanded}
+              commentsData={comment}
+              handleDeleteComment={handleDeleteComment}
+            />
           )
         }
 

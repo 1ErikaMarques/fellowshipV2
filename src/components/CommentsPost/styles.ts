@@ -31,12 +31,10 @@ export const UserInfoContent = styled.div`
     }
 `;
 export const Comment = styled.span`
-    width: 100%;
-    height: auto;
-    word-break: keep-all;
+    max-width: 480px;
+    word-break: break-word;
     text-align: justify;
-    border-radius: 1rem;
-    margin: 0.4rem 0 0 1rem ;
+    margin: 0.4rem 0 0 1rem;
 `;
 
 export const MenuItemStyles = styled(MenuItem)`

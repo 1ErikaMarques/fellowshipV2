@@ -18,7 +18,6 @@ export const Container = styled.main`
 export const Content = styled.div`
   width: 100%;
   height: auto;
-
 `;
 
 export const Header = styled.div`
@@ -61,7 +60,8 @@ export const ContentInteractions = styled.div`
 
 export const Separador = styled.div`
   width: 100%;
-  height: 2px;  
+  height: 2px;
+  margin-top:2rem;
   margin-bottom: 1rem;
   background-color: ${({ theme }) => theme.colors.gray_light}
 `;
