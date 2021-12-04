@@ -11,7 +11,7 @@ export const UserInfoContent = styled.div`
 
     h3{
         height: auto;
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         font-weight: 600;
         color: ${({ theme }) => theme.colors.gray_dark};
         cursor: pointer;
@@ -31,10 +31,11 @@ export const UserInfoContent = styled.div`
     }
 `;
 export const Comment = styled.span`
-    max-width: 480px;
+    max-width: 470px;
     word-break: break-word;
     text-align: justify;
     margin: 0.4rem 0 0 1rem;
+    line-height: 1rem;
 `;
 
 export const MenuItemStyles = styled(MenuItem)`

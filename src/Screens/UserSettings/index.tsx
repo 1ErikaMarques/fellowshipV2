@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -16,8 +16,8 @@ import settingsAnimated from '../../assets/UserSettings/settings_animated.json';
 
 import { SecurityImg, UserAccountImg } from '../../components/Svgs';
 import { Button } from '../../components/Button';
-import { ViaCep } from '../Signup';
-import { InputDisabled } from '../Signup/styles';
+import { ViaCep } from '../SignUp';
+import { InputDisabled } from '../SignUp/styles';
 
 import {
   Container,
@@ -293,19 +293,6 @@ export function UserSettings() {
                   />
 
                   {!showPassword ?
-                    <Eye
-                      size={18}
-                      onClick={handleShowPassword}
-                      style={{
-                        position: 'absolute',
-                        alignSelf: 'flex-end',
-                        marginTop: '8.1rem',
-                        marginRight: '2rem',
-                        color: theme.colors.gray_dark,
-                        cursor: 'pointer',
-                      }}
-                    />
-                    :
                     <EyeOff
                       size={18}
                       onClick={handleShowPassword}
@@ -317,6 +304,20 @@ export function UserSettings() {
                         marginRight: '2rem',
                         color: theme.colors.gray_dark,
                         cursor: 'pointer'
+                      }}
+                    />
+                    :
+
+                    <Eye
+                      size={18}
+                      onClick={handleShowPassword}
+                      style={{
+                        position: 'absolute',
+                        alignSelf: 'flex-end',
+                        marginTop: '8.1rem',
+                        marginRight: '2rem',
+                        color: theme.colors.gray_dark,
+                        cursor: 'pointer',
                       }}
                     />
                   }
@@ -337,7 +338,7 @@ export function UserSettings() {
                     }}
                   />
                   {!showConfirmPassword ?
-                    <Eye
+                    <EyeOff
                       size={18}
                       onClick={handleShowConfirmPassword}
                       style={{
@@ -351,7 +352,8 @@ export function UserSettings() {
                       }}
                     />
                     :
-                    <EyeOff
+
+                    <Eye
                       size={18}
                       onClick={handleShowConfirmPassword}
                       style={{

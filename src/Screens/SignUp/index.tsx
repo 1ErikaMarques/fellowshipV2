@@ -53,7 +53,7 @@ export interface ViaCep {
     uf: string;
 }
 
-export function Signup() {
+export function SignUp() {
 
     const [isModalOpen, setIsModalOpen] = useState (false);
 

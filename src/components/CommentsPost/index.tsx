@@ -18,10 +18,10 @@ import { ROUTES } from '../../routes';
 
 
 import {
-    Container,
-    UserInfoContent,
-    Comment,
-    MenuItemStyles,
+  Container,
+  UserInfoContent,
+  Comment,
+  MenuItemStyles,
 } from './styles';
 
 import { useTheme as useThemeStyledComponents } from 'styled-components';
@@ -33,121 +33,130 @@ import { Comments } from '../../Screens/Feed/Post/types';
 const ITEM_HEIGHT = 48;
 
 interface CommentsPostProps {
-    expanded: boolean
-    commentsData: Comments
-    handleDeleteComment: (commentId: string | undefined) => Promise<void>
+  expanded: boolean
+  commentsData: Comments
+  handleDeleteComment: (commentId: string | undefined) => Promise<void>
 }
 
-export function CommentsPost({expanded, commentsData, handleDeleteComment}: CommentsPostProps) {
+export function CommentsPost({ expanded, commentsData, handleDeleteComment }: CommentsPostProps) {
 
-    const themeStyledComponents = useThemeStyledComponents ();
-    const history = useHistory ();
+  const themeStyledComponents = useThemeStyledComponents();
+  const history = useHistory();
 
-    //menu
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement> (null);
-    const open = Boolean (anchorEl);
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl (event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl (null);
-    };
+  //menu
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-    const handleNavigateToProfile = () => {
-        history.push (`/profile/${commentsData.userId}`);
-    };
+  const handleNavigateToProfile = () => {
+    history.push(`/profile/${commentsData.userId}`);
+  };
 
-    return (
-        <Container>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent sx={{width: '100%', display: 'flex'}}>
-                    <Avatar onClick={handleNavigateToProfile}
-                            src={commentsData.userPic}
-                            style={{marginLeft: '0.5rem', cursor: 'pointer'}}/>
-                    <UserInfoContent>
-                        <Comment>
-                            <h3 onClick={handleNavigateToProfile}>{commentsData.name}</h3>
-                            <p>{commentsData.text}</p>
-                        </Comment>
+  return (
+    <Container>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent sx={{ width: '100%', display: 'flex' }}>
+          <Avatar onClick={handleNavigateToProfile}
+            src={commentsData.userPic}
+            style={{ marginLeft: '0.5rem', cursor: 'pointer' }} />
+          <UserInfoContent>
+            <Comment>
+              <h3 onClick={handleNavigateToProfile}>{commentsData.name}</h3>
+              <p>{commentsData.text}</p>
+            </Comment>
+          </UserInfoContent>
 
-                    </UserInfoContent>
-                    <div style={{marginTop: '0.4rem'}}>
-                        <IconButton
-                            aria-label="more"
-                            id="long-button"
-                            aria-controls="long-menu"
-                            aria-expanded={open ? 'true' : undefined}
-                            aria-haspopup="true"
-                            onClick={handleClick}
-                        >
-                            <MoreVertIcon/>
-                        </IconButton>
-                        <Menu
-                            id="long-menu"
-                            MenuListProps={{
-                                'aria-labelledby': 'long-button',
-                            }}
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
-                            PaperProps={{
-                                style: {
-                                    maxHeight: ITEM_HEIGHT * 4.5,
-                                    width: '12ch',
-                                },
-                            }}
-                        >
-                            <MenuItemStyles
-                                onClick={() => handleDeleteComment (commentsData.commentId)}
-                                disableRipple
-                                style={{
-                                    padding: '0.6rem'
-                                }}
-                            >
-                                <DeleteOutlineOutlinedIcon
-                                    style={{
-                                        marginRight: '0.8rem',
-                                        color: themeStyledComponents.colors.gray_dark,
-                                    }}
-                                />
-                                <p
-                                    style={{
-                                        fontSize: '0.8rem',
-                                        fontWeight: 500,
-                                        color: themeStyledComponents.colors.gray_dark,
+        </CardContent>
+        <div style={{
 
-                                    }}>
-                                    Apagar
-                                </p>
-                            </MenuItemStyles>
-                            <MenuItemStyles
-                                onClick={handleClose}
-                                disableRipple
-                                style={{
-                                    padding: '0.6rem',
-                                    marginBottom: '0rem'
-                                }}
-                            >
-                                <OutlinedFlagSharpIcon
-                                    style={{
-                                        marginRight: '0.8rem',
-                                        color: themeStyledComponents.colors.gray_dark,
-                                    }}
-                                />
-                                <p
-                                    style={{
-                                        fontSize: '0.8rem',
-                                        fontWeight: 500,
-                                        color: themeStyledComponents.colors.gray_dark,
-                                    }}>
-                                    Denunciar
-                                </p>
-                            </MenuItemStyles>
-                        </Menu>
-                    </div>
+          alignItems: 'center',
+          maxWidth: '25px',
+          float: 'right',
+          marginRight: '1.5rem',
+          marginTop: '-45px'
+        }}
+        >
+          <IconButton
+            aria-label="more"
+            id="long-button"
+            aria-controls="long-menu"
+            aria-expanded={open ? 'true' : undefined}
+            aria-haspopup="true"
+            onClick={handleClick}
+            style={{ padding: '5px', marginLeft: '5px' }}
+          >
+            <MoreVertIcon style={{ width: '20px'}} />
+          </IconButton>
+          <Menu
+            id="long-menu"
+            MenuListProps={{
+              'aria-labelledby': 'long-button',
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              style: {
+                maxHeight: ITEM_HEIGHT * 4.5,
+                width: '12ch',
+              },
+            }}
+          >
+            <MenuItemStyles
+              onClick={() => handleDeleteComment(commentsData.commentId)}
+              disableRipple
+              style={{
+                padding: '0.6rem'
+              }}
+            >
+              <DeleteOutlineOutlinedIcon
+                style={{
+                  marginRight: '0.8rem',
+                  color: themeStyledComponents.colors.gray_dark,
+                }}
+              />
+              <p
+                style={{
+                  fontSize: '0.8rem',
+                  fontWeight: 500,
+                  color: themeStyledComponents.colors.gray_dark,
 
-                </CardContent>
-            </Collapse>
-        </Container>
-    );
+                }}>
+                Apagar
+              </p>
+            </MenuItemStyles>
+            <MenuItemStyles
+              onClick={handleClose}
+              disableRipple
+              style={{
+                padding: '0.6rem',
+                marginBottom: '0rem'
+              }}
+            >
+              <OutlinedFlagSharpIcon
+                style={{
+                  marginRight: '0.8rem',
+                  color: themeStyledComponents.colors.gray_dark,
+                }}
+              />
+              <p
+                style={{
+                  fontSize: '0.8rem',
+                  fontWeight: 500,
+                  color: themeStyledComponents.colors.gray_dark,
+                }}>
+                Denunciar
+              </p>
+            </MenuItemStyles>
+          </Menu>
+        </div>
+
+      </Collapse>
+    </Container>
+  );
 }
