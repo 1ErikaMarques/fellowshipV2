@@ -8,57 +8,58 @@ import { Comments } from '../../Screens/Feed/Post/types';
 import { api } from '../../services/api';
 
 import {
-  Container
+    Container
 } from './styles';
 import theme from '../../styles/theme';
-import { useState } from 'react';
+import { createRef, RefObject } from 'react';
 
 
+export function CommentEntry({updateCommentList, postId}: CommentProps) {
+    const {userInfo} = useAuth ();
+    const commentTextRef: RefObject<HTMLTextAreaElement> = createRef ();
 
-export function CommentEntry({ updateCommentList, postId }: CommentProps) {
-  const { userInfo } = useAuth();
-  const [commentText, setCommentText] = useState('');
+    const handleAddComment = async (event: React.KeyboardEvent<HTMLTextAreaElement>): Promise<void> => {
 
-  const handleAddComment = async (event: React.KeyboardEvent<HTMLTextAreaElement>): Promise<void> => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      event.stopPropagation();
+        if (event.key === 'Enter') {
+            event.preventDefault ();
+            event.stopPropagation ();
 
-      await api.post<Comments>('comment/create', {
-        userId: userInfo.user.userId,
-        postId: postId,
-        name: userInfo.user.name,
-        userPic: userInfo.user.profilePic,
-        text: event.currentTarget.value,
-        createdAt: new Date().getTime(),
-      }).then((response) => {
-        updateCommentList(response.data);
-        setCommentText('')
-      })
-    }
-  }
+            if (event.currentTarget.value) {
+                await api.post<Comments> ('comment/create', {
+                    userId: userInfo.user.userId,
+                    postId: postId,
+                    name: userInfo.user.name,
+                    userPic: userInfo.user.profilePic,
+                    text: event.currentTarget.value,
+                    createdAt: new Date ().getTime (),
+                }).then ((response) => {
+                    if (commentTextRef.current?.value) {
+                        commentTextRef.current.value = '';
+                    }
+                    updateCommentList (response.data);
+                });
+            }
+        }
+    };
 
-  return (
-    <Container>
-      <Avatar
-        src={userInfo.user.profilePic}
-        style={{ marginLeft: '0.5rem', cursor: 'pointer' }}
-      />
-      <TextareaAutosize
-        maxRows={4}
-        aria-label="maximum height"
-        placeholder="Escreva um comentário"
-        defaultValue={commentText}
-        onKeyDown={(event) => handleAddComment(event)}
-        onChange={(e) => setCommentText(e.target.value)}
-        style={{
-          width: 500,
-          outline: 'none',
-          marginLeft: '0.9rem',
-          padding: '0.5rem',
-          color: theme.colors.gray_dark,
-        }}
-      />
-    </Container>
-  );
+    return (
+        <Container>
+            <Avatar
+                src={userInfo.user.profilePic}
+                style={{marginLeft: '0.5rem', cursor: 'pointer'}}
+            />
+            <TextareaAutosize
+                ref={commentTextRef}
+                placeholder="Escreva um comentário"
+                onKeyDown={(event) => handleAddComment (event)}
+                style={{
+                    width: 500,
+                    outline: 'none',
+                    marginLeft: '0.9rem',
+                    padding: '0.5rem',
+                    color: theme.colors.gray_dark,
+                }}
+            />
+        </Container>
+    );
 }

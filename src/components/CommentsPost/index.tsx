@@ -59,9 +59,7 @@ export function CommentsPost({ expanded, commentsData, handleDeleteComment }: Co
           <UserInfoContent>
             <Comment>
               <h3>{commentsData.name}</h3>
-              <p>
-                {commentsData.text}
-              </p>
+              <p>{commentsData.text}</p>
             </Comment>
 
           </UserInfoContent>
