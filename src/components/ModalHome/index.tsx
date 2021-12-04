@@ -101,20 +101,20 @@ export function ModalHome({
             setIsSell (true);
             setIsRent (false);
             setIsSearch (false);
-            setTag ('Vender');
+            setTag ('Vendendo');
 
         } else if (choice === 'isRent') {
 
             setIsRent (true);
             setIsSearch (false);
             setIsSell (false);
-            setTag ('Alugar');
+            setTag ('Alugando');
 
         } else {
             setIsSearch (true);
             setIsSell (false);
             setIsRent (false);
-            setTag ('Procurar');
+            setTag ('Procurando');
         }
     }
 
