@@ -7,6 +7,7 @@ import * as React from 'react';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { useTheme } from 'styled-components';
 import { v4 as uuid } from 'uuid';
+import { useAuth } from '../../../hooks/AuthContext';
 import { api } from '../../../services/api';
 import { storage } from '../../../services/firebase';
 import { MediaPost, NewPost } from '../NewPost';
@@ -50,6 +51,7 @@ export function Timeline() {
     const [isLoading, setIsLoading] = useState (false);
 
     const theme = useTheme ();
+    const {userInfo} = useAuth();
 
     const handleChange = (event: SyntheticEvent, postType: number) => {
         setPostType (postType);
@@ -57,12 +59,12 @@ export function Timeline() {
 
     useEffect (() => {
         setIsLoading (true);
-        api.get<PostProps[]> (`/post/${postType}`)
+        api.get<PostProps[]> (`/post/${postType}/${userInfo.user.postalCode}`)
             .then ((response) => {
                 setPosts (response.data);
                 setIsLoading (false);
             });
-    }, [postType]);
+    }, [postType,userInfo]);
 
     const handleCreatePost = async (postContent: PostProps) => {
         let mediaPost: MediaPost[] = [];

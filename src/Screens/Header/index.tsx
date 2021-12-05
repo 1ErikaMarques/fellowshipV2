@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { generatePath, Link } from 'react-router-dom';
+import { generatePath, Link, useHistory } from 'react-router-dom';
 
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -26,7 +26,7 @@ import { useAuth } from '../../hooks/AuthContext';
 import { ROUTES } from '../../routes';
 import { api } from '../../services/api';
 
-import { ModalSneakPeak } from '../../components/ModalSneakPeak';
+import { ModalSneakPeak, SneakPeakPros } from '../../components/ModalSneakPeak';
 import { HomeImg, LogoImg, NotificationImg, UserImg } from '../../components/Svgs';
 
 import theme from '../../styles/theme';
@@ -59,7 +59,8 @@ export function Header({ neighbourhoodName }: HeaderProps) {
   const handleOpenModalSneakPeak = () => setIsModalSneakPeakOpen(true);
   const handleCloseModalSneakPeak = () => setIsModalSneakPeakOpen(false);
 
-  const { logout, userInfo } = useAuth();
+  const { logout, userInfo , updateUserInfo } = useAuth();
+  const history = useHistory()
 
   const handleClick = (event: any) => {
 
@@ -88,6 +89,21 @@ export function Header({ neighbourhoodName }: HeaderProps) {
     }
     setAnchorEl(null);
   };
+
+  const handleStopSneakPeak = () => {
+    const sneakPeak = sessionStorage.getItem('sneakPeak');
+
+    if (sneakPeak) {
+      const sneakPeakUserData = JSON.parse (sneakPeak) as SneakPeakPros;
+      updateUserInfo ({
+        postalCode: sneakPeakUserData.postalCode,
+        neighbourhood: sneakPeakUserData.neighbourhood,
+        sneakPeak: false
+      });
+      sessionStorage.removeItem('sneakPeak');
+      history.go(0)
+    }
+  }
 
   useEffect(() => {
     api.get<Neighbourhoods[]>('/utils/neighbourhoods')
@@ -153,7 +169,7 @@ export function Header({ neighbourhoodName }: HeaderProps) {
 
       <Content>
         <Link to={generatePath(ROUTES.HOME)}>
-          <Button
+          <Button onClick={handleStopSneakPeak}
             style={{ background: 'none', borderRadius: '0.5rem' }}
           >
             <HomeImg />

@@ -57,6 +57,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
+    "postinstall":"tsc",
     "eject": "react-scripts eject",
     "api": "json-server ./src/services/server.json --host localhost --port 3333 --delay 700"
   },

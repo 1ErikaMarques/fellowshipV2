@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import * as React from 'react';
-import { generatePath, Link } from 'react-router-dom';
+import { generatePath, Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../hooks/AuthContext';
 import { ROUTES } from '../../routes';
 import theme from '../../styles/theme';
@@ -16,19 +16,29 @@ interface ModalProps {
     neighbourhood: string;
 }
 
+export interface SneakPeakPros {
+    postalCode: string;
+    neighbourhood: string;
+}
+
 export function ModalSneakPeak({isOpen, handleCloseSneakPeak, postalCode, neighbourhood}: ModalProps) {
 
-    const {updateUserInfo} = useAuth ();
+    const {updateUserInfo,userInfo} = useAuth ();
+    const history = useHistory()
 
     const handleSneakPeak = () => {
+        sessionStorage.setItem ('sneakPeak', JSON.stringify ({
+            postalCode: userInfo.user.postalCode,
+            neighbourhood: userInfo.user.neighbourhood,
+        }));
 
         updateUserInfo ({
             postalCode: postalCode,
             neighbourhood: neighbourhood,
             sneakPeak: true
         });
-        window.history.replaceState({}, document.title, '/');
-        handleCloseSneakPeak();
+        handleCloseSneakPeak ();
+        history.go(0)
     };
 
     return (

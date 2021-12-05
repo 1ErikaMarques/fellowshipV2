@@ -1,5 +1,5 @@
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import { Avatar, CardMedia, InputAdornment, TextField } from '@mui/material';
+import { Avatar, CardMedia, TextField } from '@mui/material';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
@@ -311,6 +311,7 @@ export function ModalHome({
                         <TextField
                             onChange={event => setPropertyPrice(event.target.value)}
                             id="outlined-adornment-amount"
+                            placeholder="Insira o valor "
                             InputProps={{
                                 inputComponent: NumberFormatCustom as any,
                             }}

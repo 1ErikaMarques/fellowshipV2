@@ -8,7 +8,7 @@ import {
 } from './styles';
 
 import { styled } from '@mui/material/styles';
-import { ContentExpandMore } from '../InteractionsPost/styles';
+import { ContentExpandMore } from './styles';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { fontSize } from '@mui/system';
