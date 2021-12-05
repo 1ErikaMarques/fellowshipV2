@@ -125,7 +125,8 @@ export function Timeline() {
                 tag: response.data.tag,
                 propertyType: response.data.propertyType,
                 propertyPrice: response.data.propertyPrice,
-                comments: []
+                comments: [],
+                likes: []
             }, ...posts,
             ])
         );

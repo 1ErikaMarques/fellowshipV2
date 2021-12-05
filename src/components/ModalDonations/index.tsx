@@ -64,7 +64,8 @@ export function ModalDonations({ isOpen, handleClose, handleMediaToPost, handleR
       text: text,
       tag: isDonation ? ModalText.DONATION.toString() :ModalText.NEED_DONATION.toString(),
       mediaPosts: mediaPost,
-      comments: []
+      comments: [],
+      likes: []
     }).then(() => {
       setText('');
       handleClose();

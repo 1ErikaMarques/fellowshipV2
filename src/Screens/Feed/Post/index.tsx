@@ -29,7 +29,7 @@ import { Avatar } from '@mui/material';
 import { InteractionsPost } from '../../../components/InteractionsPost';
 import ColorChip from '../../../components/ColorChip';
 import { useAuth } from '../../../hooks/AuthContext';
-import { Comments, PostDataPros } from './types';
+import { Comments, Likes, PostDataPros } from './types';
 import { PostType } from '../Timeline/types';
 import { api } from '../../../services/api';
 import { useHistory } from 'react-router-dom';
@@ -51,10 +51,12 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 export function Post({ postData, handleDeletePost }: PostDataPros) {
   const [comments, setComments] = useState<Comments[]>(postData.comments);
+  const [likes, setLikes] = useState<Likes[]>(postData.likes);
   const themeStyledComponents = useThemeStyledComponents();
+
   const history = useHistory();
   const theme = useTheme();
-  const {userInfo} = useAuth();
+  const { userInfo } = useAuth();
 
   //menu
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -103,6 +105,21 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
       });
   };
 
+  //add like, userInfo = user logado
+  const handleAddLike = async (event: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+    await api.post<Likes>('/post/add-like', {
+      postId: postData.postId,
+      userId: userInfo.user.userId,
+      active: event.target.checked
+    }).then((response) => {
+      response.data.active
+        ?
+        setLikes([response.data, ...likes])       
+        :
+        setLikes(likes.filter(like => like.userId !== userInfo.user.userId)) //removendo like        
+    })
+  };
+
   const handleNavigateToProfile = () => {
     history.push(`/profile/${postData.userId}`);
   };
@@ -140,7 +157,7 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
                 />
               )}
 
-              <div>
+            <div>
               <IconButton
                 aria-label="more"
                 id="long-button"
@@ -164,31 +181,31 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
                     width: '15ch',
                   },
                 }}>
-                  { userInfo.user.userId === postData.userId &&
-                      <MenuItemStyles
-                  onClick={() => handleDeletePost(postData.postId)}
-                  disableRipple
-                  style={{
-                    padding: '0.6rem'
-                  }}
-                >
-                  <DeleteOutlineOutlinedIcon
+                {userInfo.user.userId === postData.userId &&
+                  <MenuItemStyles
+                    onClick={() => handleDeletePost(postData.postId)}
+                    disableRipple
                     style={{
-                      marginRight: '0.8rem',
-                      color: themeStyledComponents.colors.gray_dark,
+                      padding: '0.6rem'
                     }}
-                  />
-                  <p
-                    style={{
-                      fontSize: '0.9rem',
-                      fontWeight: 500,
-                      color: themeStyledComponents.colors.gray_dark,
-                    }}>
-                    Apagar
-                  </p>
+                  >
+                    <DeleteOutlineOutlinedIcon
+                      style={{
+                        marginRight: '0.8rem',
+                        color: themeStyledComponents.colors.gray_dark,
+                      }}
+                    />
+                    <p
+                      style={{
+                        fontSize: '0.9rem',
+                        fontWeight: 500,
+                        color: themeStyledComponents.colors.gray_dark,
+                      }}>
+                      Apagar
+                    </p>
 
-                </MenuItemStyles>
-                  }
+                  </MenuItemStyles>
+                }
                 <MenuItemStyles
                   onClick={handleClose}
                   disableRipple
@@ -223,13 +240,14 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
             elevation={0}
             sx={{
               display: 'flex',
-              alignItems: 'center',
+              alignItems: 'right',
               height: 50,
-              pl: 2,
+              pl: 4,
+              paddingRight: '2rem',
               bgcolor: themeStyledComponents.colors.shape,
             }}
           >
-            <Typography>{postData.text}</Typography>
+            <Typography style={{ textAlign: 'justify' }}>{postData.text}</Typography>
           </Paper>
           {
             postData.mediaPosts && postData.mediaPosts.length > 0 &&
@@ -315,7 +333,8 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
           handleExpandClick={handleExpandClick}
           expanded={expanded}
           commentsTotal={comments ? comments.length : 0}
-          likesTotal={postData.likes ? postData.likes.length : 0}
+          likesTotal={likes ? likes.length : 0} handleAddLike={handleAddLike}
+          isActiveLike={!!likes?.find(like => like.userId === userInfo.user.userId)}
         />
         <CommentEntry
           updateCommentList={updateCommentList}

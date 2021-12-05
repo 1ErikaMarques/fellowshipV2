@@ -70,7 +70,8 @@ export function ModalDefault({ isOpen, handleClose, handleMediaToPost, handleRem
       createdAt: new Date().getTime(),
       text: text,
       mediaPosts: mediaPost,
-      comments: []
+      comments: [],
+      likes: []
     }).then(() => {
       setText('');
       handleClose();

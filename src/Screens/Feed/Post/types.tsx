@@ -20,7 +20,7 @@ export interface PostProps {
     tag?: string;
     propertyType?: string;
     propertyPrice?: string;
-    likes?: Likes[];
+    likes: Likes[];
 }
 
 export interface Likes {

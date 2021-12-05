@@ -1,5 +1,4 @@
-import * as React from 'react';
-
+import { useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
@@ -13,11 +12,13 @@ import { ContentExpandMore } from '../InteractionsPost/styles';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { fontSize } from '@mui/system';
+
 import { useTheme } from 'styled-components';
+import { api } from '../../services/api';
+import { Likes } from '../../Screens/Feed/Post/types';
 
 //interacao
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
 
 //expande comentarios
 interface ExpandMoreProps extends IconButtonProps {
@@ -40,9 +41,13 @@ interface InteractionsPostProps {
   expanded: boolean;
   commentsTotal: number;
   likesTotal: number;
+  handleAddLike: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
+  isActiveLike: boolean;
 }
 
-export function InteractionsPost({ handleExpandClick, expanded, commentsTotal, likesTotal }: InteractionsPostProps) {
+
+export function InteractionsPost({ handleExpandClick, expanded, commentsTotal, likesTotal, handleAddLike, isActiveLike }: InteractionsPostProps) {
+
   const theme = useTheme();
 
   return (
@@ -52,18 +57,21 @@ export function InteractionsPost({ handleExpandClick, expanded, commentsTotal, l
           marginLeft: '0.6rem',
           display: 'flex',
           alignItems: 'center'
-        }}>
+        }}
+      >
         <Checkbox
           {...label}
           icon={<FavoriteBorder />}
-          checkedIcon={<Favorite />} />
+          checkedIcon={<Favorite />}
+          checked={isActiveLike}
+          onChange={handleAddLike}
+        />
         <p style={{
           fontSize: '0.8rem',
           fontFamily: 'Poppins, Helvetica, sans-serif',
           fontWeight: 500,
           color: theme.colors.gray_dark,
           marginTop: '3px',
-
         }}>{likesTotal}</p>
       </div>
 

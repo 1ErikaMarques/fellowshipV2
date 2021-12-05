@@ -140,7 +140,8 @@ export function ModalHome({
             propertyType: propertyType.join (', '),
             propertyPrice: propertyPrice,
             mediaPosts: mediaPost,
-            comments: []
+            comments: [],
+            likes: []
         }).then (() => {
             resetModalValues();
         });
