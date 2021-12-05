@@ -18,6 +18,7 @@ import {
   Menu,
   MenuItem,
   TextField,
+  Tooltip,
   Typography
 } from '@mui/material';
 
@@ -222,6 +223,7 @@ export function Header({ neighbourhoodName }: HeaderProps) {
             </ListItem>
           </List>
         </Menu>
+        <Tooltip title="Conta" arrow >
         <Button
           id="user-specifics"
           aria-controls="user-specifics-menu"
@@ -230,9 +232,12 @@ export function Header({ neighbourhoodName }: HeaderProps) {
           onClick={handleClick}
           style={{ background: 'none' }}
         >
+
           <UserImg fill={isUserMenuOpen ? theme.colors.primary : theme.colors.gray_dark}
             stroke={isUserMenuOpen ? theme.colors.primary : theme.colors.gray_medium} />
+
         </Button>
+      </Tooltip>
         <Menu
           id="user-specifics-menu"
           anchorEl={anchorEl}
@@ -242,11 +247,14 @@ export function Header({ neighbourhoodName }: HeaderProps) {
             'aria-labelledby': 'user-specifics',
           }}>
           <MenuItem onClick={handleClose}>
-
+      
             <Link to={generatePath(ROUTES.PROFILE, { userId: userInfo ? userInfo.user.userId : '' })}>
-              <PersonOutlineOutlinedIcon style={{ marginRight: '10', color: '#53525D' }} />
+
+<PersonOutlineOutlinedIcon style={{ marginRight: '10', color: '#53525D' }} />
               Perfil
+
             </Link>
+
           </MenuItem>
           <MenuItem onClick={handleClose}>
             <Link to={generatePath(ROUTES.CONFIGURATIONS)}>

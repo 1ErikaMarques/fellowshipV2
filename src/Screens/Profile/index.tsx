@@ -1,13 +1,13 @@
-import Menu from '@mui/material/Menu';
+import React, { ChangeEvent, createRef, useEffect, useState } from 'react';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
-import React, {ChangeEvent, createRef, useEffect, useState} from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { useTheme } from 'styled-components';
-import { Avatar } from '@mui/material';
-import {useAuth} from '../../hooks/AuthContext';
+import { Avatar, Tooltip } from '@mui/material';
 
+import { useAuth } from '../../hooks/AuthContext';
 import { api } from '../../services/api';
+import { storage } from '../../services/firebase';
 import {
     BirthdayImg,
     CityImg,
@@ -16,7 +16,6 @@ import {
     RelationshipImg,
     WorkImg
 } from '../../components/Svgs';
-import {storage} from '../../services/firebase';
 
 import {
     Button,
@@ -64,8 +63,6 @@ export function Profile() {
     const formRef: React.RefObject<HTMLFormElement> = createRef();
 
     const { register, handleSubmit, setFocus } = useForm<UserDetails>();
-
-
 
     /**
      * Salva as informacoes preenchidas no profile.
@@ -185,10 +182,12 @@ export function Profile() {
                         style={{ display: "none" }}
                         onChange={(event: ChangeEvent<HTMLInputElement>) => handleChangeProfilePic(event)}
                     />
+            <Tooltip title="Alterar foto de perfil" arrow >
                     <Avatar
                         src={userInfo.profilePic}
                         style={{ cursor: "pointer" }}
                     />
+      </Tooltip>
                 </label>
                 <h3>{userInfo.name}</h3>
 
@@ -207,11 +206,12 @@ export function Profile() {
 
             <form id={'profile'} onSubmit={handleSubmit(handleSaveUserDetails)} ref={formRef}>
                 <Content>
+
                     <WorkImg
                         fill={userDetails.job ? theme.colors.shape : theme.colors.gray_medium}
                         stroke={userDetails.job ? theme.colors.primary : theme.colors.gray_medium}
-
                     />
+
                     <ProfileInput
                         {...register('job')}
                         defaultValue={userDetails.job}
@@ -275,7 +275,7 @@ export function Profile() {
                         defaultValue={userDetails.about}
                         disabled={!allowEditing}
                     />
-
+ 
                 </Content>
             </form>
 

@@ -31,6 +31,7 @@ import {
   UserAccount
 } from './styles';
 
+import Tooltip from '@mui/material/Tooltip';
 
 export const LogoImg = () => {
   return (
@@ -43,8 +44,10 @@ export const LogoImg = () => {
 
 export const NotificationImg = (props: IconsProps) => {
   return (
-    <Notification title="Notificações" fill={props.fill} stroke={props.stroke}>
+    <Notification fill={props.fill} stroke={props.stroke}>
+      <Tooltip title="Notificações" arrow >
       <NotificationIcon />
+      </Tooltip>
     </Notification>
   )
 }
@@ -52,7 +55,9 @@ export const NotificationImg = (props: IconsProps) => {
 export const HomeImg = () => {
   return (
     <Home>
+      <Tooltip title="Página inicial" arrow >
       <HomeIcon />
+      </Tooltip>
     </Home>
   )
 }
@@ -64,10 +69,13 @@ export const UserImg = (props: IconsProps) => {
     </User>
   )
 }
+
 export const WorkImg = (props: IconsProps) => {
   return (
     <Work fill={props.fill} stroke={props.stroke}>
+      <Tooltip title="Trabalho" arrow >
       <WorkIcon />
+      </Tooltip>
     </Work>
   )
 }
@@ -75,15 +83,20 @@ export const WorkImg = (props: IconsProps) => {
 export const CityImg = (props: IconsProps) => {
   return (
     <City fill={props.fill} stroke={props.stroke}>
+      <Tooltip title="Cidade" arrow >
       <CityIcon />
+      </Tooltip>
     </City>
   )
 }
 
 export const RelationshipImg = (props: IconsProps) => {
   return (
+
     <Relationship fill={props.fill} stroke={props.stroke}>
+      <Tooltip title="Relacionamento" arrow >
       <RelationshipIcon />
+      </Tooltip>
     </Relationship>
   )
 }
@@ -91,7 +104,9 @@ export const RelationshipImg = (props: IconsProps) => {
 export const BirthdayImg = (props: IconsProps) => {
   return (
     <Birthday fill={props.fill} stroke={props.stroke}>
+      <Tooltip title="Aniversário" arrow >
       <BirthdayIcon />
+      </Tooltip>
     </Birthday>
   )
 }
@@ -99,7 +114,9 @@ export const BirthdayImg = (props: IconsProps) => {
 export const HobbiesImg = (props: IconsProps) => {
   return (
     <Hobbies fill={props.fill} stroke={props.stroke}>
+      <Tooltip title="O que gosta de fazer" arrow >
       <HobbiesIcon />
+      </Tooltip>
     </Hobbies>
   )
 }
@@ -107,7 +124,9 @@ export const HobbiesImg = (props: IconsProps) => {
 export const PhoneImg = (props: IconsProps) => {
   return (
     <Phone fill={props.fill} stroke={props.stroke}>
+      <Tooltip title="Telefone" arrow >
       <PhoneIcon />
+      </Tooltip>
     </Phone>
   )
 }
@@ -115,7 +134,9 @@ export const PhoneImg = (props: IconsProps) => {
 export const CameraImg = (props: IconsProps) => {
   return (
     <Camera fill={props.fill} stroke={props.stroke}>
+      <Tooltip title="Adicione fotos" arrow >
       <CameraIcon />
+      </Tooltip>
     </Camera>
   )
 }
@@ -123,7 +144,9 @@ export const CameraImg = (props: IconsProps) => {
 export const VideoImg = (props: IconsProps) => {
   return (
     <Video fill={props.fill} stroke={props.stroke}>
+      <Tooltip title="Adicione videos" arrow >
       <VideoIcon />
+      </Tooltip>
     </Video>
   )
 }
