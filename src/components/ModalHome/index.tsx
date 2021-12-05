@@ -18,7 +18,7 @@ import { useState } from 'react';
 import { useTheme as useThemeStyledComponents } from 'styled-components';
 
 import { useAuth } from '../../hooks/AuthContext';
-import { Button } from '../Button';
+import { ButtonStyle } from '../Button/styles';
 import { ModalProps, style } from '../ModalDefault';
 import { NumberFormatCustom } from '../NumberFormat/NumberFormatCustom';
 
@@ -318,17 +318,14 @@ export function ModalHome({
                             variant="standard"
                         />
                     </ContentChoice>
-                    <Button
-                        title="Publicar"
+                    <ButtonStyle
                         onClick={handleSubmit}
                         style={{
                             height: '3rem',
                             width: '16rem',
-                            backgroundColor: themeStyled.colors.primary,
                             fontSize: '1rem',
-                            color: themeStyled.colors.ice
                         }}
-                    />
+                    >Publicar</ButtonStyle>
 
                 </Content>
             </Box>

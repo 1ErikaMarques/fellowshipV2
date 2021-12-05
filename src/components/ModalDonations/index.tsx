@@ -1,31 +1,31 @@
-import * as React from 'react';
-import { useState } from 'react';
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { Avatar, CardMedia } from '@mui/material';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
 
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import IconButton from '@mui/material/IconButton';
-import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-
-import { useAuth } from '../../hooks/AuthContext';
+import Modal from '@mui/material/Modal';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
+import * as React from 'react';
+import { useState } from 'react';
 import { useTheme } from 'styled-components';
 
-import { CameraImg, VideoImg } from '../Svgs';
+import { useAuth } from '../../hooks/AuthContext';
+import { ButtonStyle } from '../Button/styles';
 import { ModalProps, style } from '../ModalDefault';
-import { Button } from '../Button';
+
+import { CameraImg, VideoImg } from '../Svgs';
 import {
-  Content,
-  Header,
-  CloseButtonTW,
-  UserInfo,
-  ContentChoiceDonation,
   ButtonChoiceDonation,
+  CloseButtonTW,
+  Content,
+  ContentChoiceDonation,
+  Header,
+  Icons,
   Separador,
-  Icons
+  UserInfo
 } from './styles';
 
 enum ModalText {
@@ -188,17 +188,14 @@ export function ModalDonations({ isOpen, handleClose, handleMediaToPost, handleR
               <VideoImg />
             </label>
           </Icons>
-          <Button
-            title="Publicar"
-            onClick={handleSubmit}
-            style={{
-              height: '3rem',
-              width: '16rem',
-              backgroundColor: theme.colors.primary,
-              fontSize: '1rem',
-              color: theme.colors.ice
-            }}
-          />
+          <ButtonStyle
+              onClick={handleSubmit}
+              style={{
+                height: '3rem',
+                width: '16rem',
+                fontSize: '1rem',
+              }}
+          >Publicar</ButtonStyle>
         </Content>
       </Box>
     </Modal>
