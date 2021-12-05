@@ -65,6 +65,7 @@ export function CommentsPost({ expanded, commentsData, handleDeleteComment }: Co
           </UserInfoContent>
 
         </CardContent>
+        {!userInfo.user.sneakPeak &&
         <div style={{
 
           alignItems: 'center',
@@ -75,30 +76,30 @@ export function CommentsPost({ expanded, commentsData, handleDeleteComment }: Co
         }}
         >
           <IconButton
-            aria-label="more"
-            id="long-button"
-            aria-controls="long-menu"
-            aria-expanded={open ? 'true' : undefined}
-            aria-haspopup="true"
-            onClick={handleClick}
-            style={{ padding: '5px', marginLeft: '5px' }}
+              aria-label="more"
+              id="long-button"
+              aria-controls="long-menu"
+              aria-expanded={open ? 'true' : undefined}
+              aria-haspopup="true"
+              onClick={handleClick}
+              style={{padding: '5px', marginLeft: '5px'}}
           >
-            <MoreVertIcon style={{ width: '20px'}} />
+            <MoreVertIcon style={{width: '20px'}}/>
           </IconButton>
           <Menu
-            id="long-menu"
-            MenuListProps={{
-              'aria-labelledby': 'long-button',
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            PaperProps={{
-              style: {
-                maxHeight: ITEM_HEIGHT * 4.5,
-                width: '12ch',
-              },
-            }}
+              id="long-menu"
+              MenuListProps={{
+                'aria-labelledby': 'long-button',
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              PaperProps={{
+                style: {
+                  maxHeight: ITEM_HEIGHT * 4.5,
+                  width: '12ch',
+                },
+              }}
           >
             {userInfo.user.userId === commentsData.userId &&
             <MenuItemStyles
@@ -126,31 +127,31 @@ export function CommentsPost({ expanded, commentsData, handleDeleteComment }: Co
             </MenuItemStyles>
             }
             <MenuItemStyles
-              onClick={handleClose}
-              disableRipple
-              style={{
-                padding: '0.6rem',
-                marginBottom: '0rem'
-              }}
+                onClick={handleClose}
+                disableRipple
+                style={{
+                  padding: '0.6rem',
+                  marginBottom: '0rem'
+                }}
             >
               <OutlinedFlagSharpIcon
-                style={{
-                  marginRight: '0.8rem',
-                  color: themeStyledComponents.colors.gray_dark,
-                }}
+                  style={{
+                    marginRight: '0.8rem',
+                    color: themeStyledComponents.colors.gray_dark,
+                  }}
               />
               <p
-                style={{
-                  fontSize: '0.8rem',
-                  fontWeight: 500,
-                  color: themeStyledComponents.colors.gray_dark,
-                }}>
+                  style={{
+                    fontSize: '0.8rem',
+                    fontWeight: 500,
+                    color: themeStyledComponents.colors.gray_dark,
+                  }}>
                 Denunciar
               </p>
             </MenuItemStyles>
           </Menu>
         </div>
-
+        }
       </Collapse>
     </Container>
   );

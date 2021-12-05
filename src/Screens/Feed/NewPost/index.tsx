@@ -93,7 +93,7 @@ export function NewPost({modalType, postType,handleCreatePost}: NewPostProps) {
 
             {(modalType === NewPostModalType.DEFAULT &&
                 <>
-                    <ButtonPub onClick={handleOpenModalDefault}>Começar publicação</ButtonPub>
+                    <ButtonPub  style={{ cursor: userInfo.user.sneakPeak ? 'not-allowed' : 'pointer'}} disabled={userInfo.user.sneakPeak}onClick={handleOpenModalDefault}>Começar publicação</ButtonPub>
 
                     <ModalDefault
                         isOpen={isOpenModalDefault}
@@ -110,7 +110,7 @@ export function NewPost({modalType, postType,handleCreatePost}: NewPostProps) {
             ) || (modalType === NewPostModalType.HOME &&
 
                 <>
-                    <ButtonPub onClick={handleIsOpenModalHome}>Começar publicação</ButtonPub>
+                    <ButtonPub style={{ cursor: userInfo.user.sneakPeak ? 'not-allowed' : 'pointer'}} disabled={userInfo.user.sneakPeak} onClick={handleIsOpenModalHome}>Começar publicação</ButtonPub>
 
                     <ModalHome
                         isOpen={isOpenModalHome}
@@ -128,7 +128,7 @@ export function NewPost({modalType, postType,handleCreatePost}: NewPostProps) {
             ) || (modalType === NewPostModalType.DONATIONS &&
 
                 <>
-                    <ButtonPub onClick={handleOpenModalDonations}>Começar publicação</ButtonPub>
+                    <ButtonPub  style={{ cursor: userInfo.user.sneakPeak ? 'not-allowed' : 'pointer'}} disabled={userInfo.user.sneakPeak} onClick={handleOpenModalDonations}>Começar publicação</ButtonPub>
 
                     <ModalDonations
                         isOpen={isOpenModalDonations}

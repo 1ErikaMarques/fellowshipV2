@@ -29,6 +29,7 @@ import { Avatar } from '@mui/material';
 import { InteractionsPost } from '../../../components/InteractionsPost';
 import ColorChip from '../../../components/ColorChip';
 import { useAuth } from '../../../hooks/AuthContext';
+import { ButtonPub } from '../NewPost/styles';
 import { Comments, Likes, PostDataPros } from './types';
 import { PostType } from '../Timeline/types';
 import { api } from '../../../services/api';
@@ -157,6 +158,7 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
                 />
               )}
 
+            {!userInfo.user.sneakPeak &&
             <div>
               <IconButton
                 aria-label="more"
@@ -231,6 +233,7 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
                 </MenuItemStyles>
               </Menu>
             </div>
+            }
           </ContentHeaderPost>
         </Header>
 

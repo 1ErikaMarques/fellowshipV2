@@ -1,7 +1,9 @@
-import { useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
+import React, { ChangeEvent } from 'react';
+import { useAuth } from '../../hooks/AuthContext';
+import { ButtonPub } from '../../Screens/Feed/NewPost/styles';
 
 import {
   Container
@@ -11,11 +13,8 @@ import { styled } from '@mui/material/styles';
 import { ContentExpandMore } from './styles';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { fontSize } from '@mui/system';
 
 import { useTheme } from 'styled-components';
-import { api } from '../../services/api';
-import { Likes } from '../../Screens/Feed/Post/types';
 
 //interacao
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
@@ -41,7 +40,7 @@ interface InteractionsPostProps {
   expanded: boolean;
   commentsTotal: number;
   likesTotal: number;
-  handleAddLike: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
+  handleAddLike: (event: ChangeEvent<HTMLInputElement>) => Promise<void>;
   isActiveLike: boolean;
 }
 
@@ -49,6 +48,7 @@ interface InteractionsPostProps {
 export function InteractionsPost({ handleExpandClick, expanded, commentsTotal, likesTotal, handleAddLike, isActiveLike }: InteractionsPostProps) {
 
   const theme = useTheme();
+  const {userInfo} = useAuth();
 
   return (
     <Container>
@@ -65,6 +65,7 @@ export function InteractionsPost({ handleExpandClick, expanded, commentsTotal, l
           checkedIcon={<Favorite />}
           checked={isActiveLike}
           onChange={handleAddLike}
+          style={{ cursor: userInfo.user.sneakPeak ? 'not-allowed' : 'pointer'}} disabled={userInfo.user.sneakPeak}
         />
         <p style={{
           fontSize: '0.8rem',

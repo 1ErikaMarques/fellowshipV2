@@ -52,12 +52,14 @@ export function CommentEntry({updateCommentList, postId}: CommentProps) {
                 ref={commentTextRef}
                 placeholder="Escreva um comentário"
                 onKeyDown={(event) => handleAddComment (event)}
+                disabled={userInfo.user.sneakPeak}
                 style={{
                     width: 500,
                     outline: 'none',
                     marginLeft: '0.9rem',
                     padding: '0.5rem',
                     color: theme.colors.gray_dark,
+                    cursor: userInfo.user.sneakPeak ? 'not-allowed' : 'pointer'
                 }}
             />
         </Container>
