@@ -65,7 +65,7 @@ export function ModalSneakPeak({ isOpen, handleCloseSneakPeak, postalCode, neigh
             <Link to={generatePath(ROUTES.CONFIGURATIONS)} onClick={handleCloseSneakPeak}>
               <ActionButtonSneakPeak> Clique aqui.  </ActionButtonSneakPeak>
             </Link>
-            {'\n'}Está curioso sobre o que está acontecendo nesse bairro? Você pode dar uma <ActionButtonSneakPeak onClick={handleSneakPeak}>Espiadinha</ActionButtonSneakPeak>
+            <br/>Está curioso sobre o que está acontecendo nesse bairro? Você pode dar uma <ActionButtonSneakPeak onClick={handleSneakPeak}>Espiadinha</ActionButtonSneakPeak>
             , a gente promete não contar pra ninguém. 🤭 🤐 😇 😜
           </TextSneakPeak>
         </Content>
