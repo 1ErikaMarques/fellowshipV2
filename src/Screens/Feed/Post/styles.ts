@@ -5,7 +5,7 @@ export const Container = styled.main`
   display: flex;
   align-items: center;
   height: auto;
-  margin-top: 3rem;
+  margin-top: 1.3rem;
   font-family: Poppins, Helvetica, sans-serif;
   background-color: ${({ theme }) => theme.colors.shape};
   border-radius: 0.25rem;
