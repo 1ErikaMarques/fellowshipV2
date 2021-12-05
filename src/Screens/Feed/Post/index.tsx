@@ -309,6 +309,8 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
         <InteractionsPost
           handleExpandClick={handleExpandClick}
           expanded={expanded}
+          commentsTotal={comments?comments.length : 0}
+          likesTotal={postData.likes?postData.likes.length : 0}
         />
         <CommentEntry
           updateCommentList={updateCommentList}
@@ -324,7 +326,6 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
             />
           )
         }
-
       </Content>
     </Container>
   );

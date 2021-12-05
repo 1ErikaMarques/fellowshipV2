@@ -11,7 +11,7 @@ export const UserInfoContent = styled.div`
 
     h3{
         height: auto;
-        font-size: 0.7rem;
+        font-size: 0.8rem;
         font-weight: 600;
         color: ${({ theme }) => theme.colors.gray_dark};
         cursor: pointer;

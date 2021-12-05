@@ -1,13 +1,8 @@
 import * as React from 'react';
-//reacoes
-import Rating, { IconContainerProps } from '@mui/material/Rating';
-import EmojiEmotionsTwoToneIcon from '@mui/icons-material/EmojiEmotionsTwoTone';
-import SentimentDissatisfiedTwoToneIcon from '@mui/icons-material/SentimentDissatisfiedTwoTone';
-import SentimentSatisfiedTwoToneIcon from '@mui/icons-material/SentimentSatisfiedTwoTone';
-import SentimentVeryDissatisfiedTwoToneIcon from '@mui/icons-material/SentimentVeryDissatisfiedTwoTone';
-import SentimentVerySatisfiedTwoToneIcon from '@mui/icons-material/SentimentVerySatisfiedTwoTone';
 
-
+import Checkbox from '@mui/material/Checkbox';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Favorite from '@mui/icons-material/Favorite';
 
 import {
   Container
@@ -17,40 +12,12 @@ import { styled } from '@mui/material/styles';
 import { ContentExpandMore } from '../InteractionsPost/styles';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { fontSize } from '@mui/system';
+import { useTheme } from 'styled-components';
 
-//reacoes
-const customIcons: {
-  [index: string]: {
-    icon: React.ReactElement;
-    label: string;
-  };
-} = {
-  1: {
-    icon: <EmojiEmotionsTwoToneIcon />,
-    label: 'Very Dissatisfied',
-  },
-  2: {
-    icon: <SentimentDissatisfiedTwoToneIcon />,
-    label: 'Dissatisfied',
-  },
-  3: {
-    icon: <SentimentSatisfiedTwoToneIcon />,
-    label: 'Neutral',
-  },
-  4: {
-    icon: <SentimentVeryDissatisfiedTwoToneIcon />,
-    label: 'Satisfied',
-  },
-  5: {
-    icon: <SentimentVerySatisfiedTwoToneIcon />,
-    label: 'Very Satisfied',
-  },
-};
+//interacao
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-function IconContainer(props: IconContainerProps) {
-  const { value, ...other } = props;
-  return <span {...other}>{customIcons[value].icon}</span>;
-}
 
 //expande comentarios
 interface ExpandMoreProps extends IconButtonProps {
@@ -71,23 +38,48 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 interface InteractionsPostProps {
   handleExpandClick: () => void;
   expanded: boolean;
+  commentsTotal: number;
+  likesTotal: number;
 }
 
-export function InteractionsPost({ handleExpandClick, expanded }: InteractionsPostProps) {
+export function InteractionsPost({ handleExpandClick, expanded, commentsTotal, likesTotal }: InteractionsPostProps) {
+  const theme = useTheme();
 
   return (
     <Container>
-      <Rating
-        name="highlight-selected-only"
-        defaultValue={2}
-        IconContainerComponent={IconContainer}
-        highlightSelectedOnly
-        size="small"
-        style={{ marginLeft: '1rem' }}
+      <div
+        style={{
+          marginLeft: '0.6rem',
+          display: 'flex',
+          alignItems: 'center'
+        }}>
+        <Checkbox
+          {...label}
+          icon={<FavoriteBorder />}
+          checkedIcon={<Favorite />} />
+        <p style={{
+          fontSize: '0.8rem',
+          fontFamily: 'Poppins, Helvetica, sans-serif',
+          fontWeight: 500,
+          color: theme.colors.gray_dark,
+          marginTop: '3px',
 
-      />
+        }}>{likesTotal}</p>
+      </div>
+
       <ContentExpandMore>
-        <p onClick={handleExpandClick}>Comentários</p>
+        <p style={{
+          fontSize: '0.9rem',
+          fontWeight: 500,
+          fontFamily: 'Poppins, Helvetica, sans-serif',
+          color: theme.colors.gray_dark,
+          marginTop: '1px'
+        }}>{commentsTotal}</p>
+        <p
+          onClick={handleExpandClick}
+        >
+          Comentários
+        </p>
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
