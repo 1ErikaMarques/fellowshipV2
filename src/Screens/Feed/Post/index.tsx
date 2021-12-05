@@ -28,6 +28,7 @@ import { Avatar } from '@mui/material';
 
 import { InteractionsPost } from '../../../components/InteractionsPost';
 import ColorChip from '../../../components/ColorChip';
+import { useAuth } from '../../../hooks/AuthContext';
 import { Comments, PostDataPros } from './types';
 import { PostType } from '../Timeline/types';
 import { api } from '../../../services/api';
@@ -53,6 +54,7 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
   const themeStyledComponents = useThemeStyledComponents();
   const history = useHistory();
   const theme = useTheme();
+  const {userInfo} = useAuth();
 
   //menu
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -137,7 +139,8 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
                   labelPink={postData.tag}
                 />
               )}
-            <div>
+
+              <div>
               <IconButton
                 aria-label="more"
                 id="long-button"
@@ -161,7 +164,8 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
                     width: '15ch',
                   },
                 }}>
-                <MenuItemStyles
+                  { userInfo.user.userId === postData.userId &&
+                      <MenuItemStyles
                   onClick={() => handleDeletePost(postData.postId)}
                   disableRipple
                   style={{
@@ -184,6 +188,7 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
                   </p>
 
                 </MenuItemStyles>
+                  }
                 <MenuItemStyles
                   onClick={handleClose}
                   disableRipple
@@ -309,8 +314,8 @@ export function Post({ postData, handleDeletePost }: PostDataPros) {
         <InteractionsPost
           handleExpandClick={handleExpandClick}
           expanded={expanded}
-          commentsTotal={comments?comments.length : 0}
-          likesTotal={postData.likes?postData.likes.length : 0}
+          commentsTotal={comments ? comments.length : 0}
+          likesTotal={postData.likes ? postData.likes.length : 0}
         />
         <CommentEntry
           updateCommentList={updateCommentList}

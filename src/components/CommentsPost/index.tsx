@@ -14,6 +14,7 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useTheme as useThemeStyledComponents } from 'styled-components';
+import { useAuth } from '../../hooks/AuthContext';
 import { Comments } from '../../Screens/Feed/Post/types';
 
 
@@ -33,6 +34,7 @@ export function CommentsPost({ expanded, commentsData, handleDeleteComment }: Co
 
   const themeStyledComponents = useThemeStyledComponents();
   const history = useHistory();
+  const {userInfo} = useAuth();
 
   //menu
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -98,29 +100,31 @@ export function CommentsPost({ expanded, commentsData, handleDeleteComment }: Co
               },
             }}
           >
+            {userInfo.user.userId === commentsData.userId &&
             <MenuItemStyles
-              onClick={() => handleDeleteComment(commentsData.commentId)}
-              disableRipple
-              style={{
-                padding: '0.6rem'
-              }}
+                onClick={() => handleDeleteComment (commentsData.commentId)}
+                disableRipple
+                style={{
+                  padding: '0.6rem'
+                }}
             >
               <DeleteOutlineOutlinedIcon
-                style={{
-                  marginRight: '0.8rem',
-                  color: themeStyledComponents.colors.gray_dark,
-                }}
+                  style={{
+                    marginRight: '0.8rem',
+                    color: themeStyledComponents.colors.gray_dark,
+                  }}
               />
               <p
-                style={{
-                  fontSize: '0.8rem',
-                  fontWeight: 500,
-                  color: themeStyledComponents.colors.gray_dark,
+                  style={{
+                    fontSize: '0.8rem',
+                    fontWeight: 500,
+                    color: themeStyledComponents.colors.gray_dark,
 
-                }}>
+                  }}>
                 Apagar
               </p>
             </MenuItemStyles>
+            }
             <MenuItemStyles
               onClick={handleClose}
               disableRipple

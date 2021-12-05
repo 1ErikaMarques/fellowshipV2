@@ -1,3 +1,4 @@
+import Menu from '@mui/material/Menu';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import React, {ChangeEvent, createRef, useEffect, useState} from 'react';
 import { useForm } from 'react-hook-form';
@@ -57,6 +58,7 @@ export function Profile() {
     const { userId } = useParams<{ userId: string }>();
     const {updateUserInfo} = useAuth();
     const theme = useTheme();
+    const {userInfo: owner} = useAuth();
 
     // Criando referencia no formulario para disparar submit programaticamente.
     const formRef: React.RefObject<HTMLFormElement> = createRef();
@@ -189,6 +191,8 @@ export function Profile() {
                     />
                 </label>
                 <h3>{userInfo.name}</h3>
+
+                {owner.user.userId === userId &&
                 <Button
                     form={'profile'}
                     onClick={handleChangeButtonName}
@@ -197,6 +201,7 @@ export function Profile() {
                     color={allowEditing ? theme.colors.shape : theme.colors.gray_medium}>
                     {buttonText}
                 </Button>
+                }
             </HeaderProfile>
 
 
