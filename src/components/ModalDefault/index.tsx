@@ -1,31 +1,25 @@
-import { ChangeEvent, useState } from 'react';
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { Avatar, CardMedia } from '@mui/material';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
-import { PostProps } from '../../Screens/Feed/Post/types';
-import { PostType } from '../../Screens/Feed/Timeline/types';
-
-import { CameraImg, VideoImg } from '../Svgs';
-import { Button } from '../Button';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
 
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import IconButton from '@mui/material/IconButton';
-import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import Modal from '@mui/material/Modal';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
+import { ChangeEvent, useState } from 'react';
+import { useTheme } from 'styled-components';
 
 import { useAuth } from '../../hooks/AuthContext';
-import { useTheme } from 'styled-components';
-import {
-  Content,
-  Header,
-  CloseButtonTW,
-  UserInfo,
-  Icons
-} from './styles';
 
 import { MediaPost } from '../../Screens/Feed/NewPost';
+import { PostProps } from '../../Screens/Feed/Post/types';
+import { PostType } from '../../Screens/Feed/Timeline/types';
+import { ButtonStyle } from '../Button/styles';
+
+import { CameraImg, VideoImg } from '../Svgs';
+import { CloseButtonTW, Content, Header, Icons, UserInfo } from './styles';
 
 export interface ModalProps {
   isOpen: boolean;
@@ -181,18 +175,14 @@ export function ModalDefault({ isOpen, handleClose, handleMediaToPost, handleRem
               <VideoImg />
             </label>
           </Icons>
-          <Button
-            title="Publicar"
+          <ButtonStyle
             onClick={handleSubmit}
             style={{
               height: '3rem',
               width: '16rem',
-              backgroundColor: theme.colors.primary,
               fontSize: '1rem',
-              color: theme.colors.ice,
-
             }}
-          />
+          >Publicar</ButtonStyle>
         </Content>
       </Box>
     </Modal>

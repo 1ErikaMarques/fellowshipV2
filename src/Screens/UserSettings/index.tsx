@@ -66,7 +66,6 @@ export function UserSettings() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [option, setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
   const [neighbourhood, setNeighbourhood] = useState(userInfo.user.neighbourhood);
-  const [isButtonVisibility, setIsButtonVisibility] = useState<boolean | undefined>(false);
 
   const {
     register: registerPersonalData,
@@ -209,7 +208,6 @@ export function UserSettings() {
                     value={userName}
                     {...registerPersonalData("fullName")}
                     onChange={e => { setUserName(e.target.value) }}
-                    onFocus={() => setIsButtonVisibility(true)}
                     style={{
                       maxWidth: "22rem",
                       marginTop: "0",
@@ -241,7 +239,7 @@ export function UserSettings() {
                     readOnly
                   />
                 </Campos>
-                {isButtonVisibility &&
+
                   <Button
                     title="Salvar"
                     form="personal_data"
@@ -251,8 +249,6 @@ export function UserSettings() {
 
                     }}
                   />
-                }
-
 
               </Card>
             </form>
