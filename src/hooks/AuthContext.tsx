@@ -11,6 +11,7 @@ interface User extends SignInCredentials {
     postalCode: string;
     birthdayDate: string;
     neighbourhood: string;
+    sneakPeak?:boolean;
 }
 
 export interface AuthState {
@@ -32,6 +33,7 @@ interface updateUserProfile {
     postalCode?: string;
     neighbourhood?: string;
     profilePic?: string;
+    sneakPeak?:boolean;
 }
 
 interface AuthContextData {
@@ -106,6 +108,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
         if (userInfo.postalCode != null) {
             oldUserInfo.user.postalCode = userInfo.postalCode;
+        }
+
+        if (userInfo.sneakPeak != null) {
+            oldUserInfo.user.sneakPeak = userInfo.sneakPeak;
         }
 
         sessionStorage.setItem('loggedUser', JSON.stringify({

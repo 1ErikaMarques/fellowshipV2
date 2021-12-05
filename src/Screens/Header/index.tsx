@@ -53,6 +53,7 @@ export function Header({ neighbourhoodName }: HeaderProps) {
   const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [neighbourhoods, setNeighbourhoods] = useState<ReadonlyArray<Neighbourhoods>>([]);
+  const [selectedNeighbourhood,setSelectedNeighbourhood] = useState<Neighbourhoods>({} as Neighbourhoods);
 
   const [isModalSneakPeakOpen, setIsModalSneakPeakOpen] = React.useState(false);
   const handleOpenModalSneakPeak = () => setIsModalSneakPeakOpen(true);
@@ -98,8 +99,13 @@ export function Header({ neighbourhoodName }: HeaderProps) {
 
   const handleNeighbourhoodChange = (newInputValue: string) => {
 
-    if (neighbourhoods.find(n => n.label === newInputValue)) {
-      handleOpenModalSneakPeak()
+    const neighbourhood: Neighbourhoods | undefined = neighbourhoods.find (n => n.label === newInputValue);
+    if (neighbourhood) {
+      handleOpenModalSneakPeak ();
+      setSelectedNeighbourhood ({
+        id: neighbourhood.id,
+        label: neighbourhood.label
+      });
     }
   };
 
@@ -112,7 +118,7 @@ export function Header({ neighbourhoodName }: HeaderProps) {
       <NeighborhoodName>
         {neighbourhoodName}
       </NeighborhoodName>
-      <ModalSneakPeak handleCloseSneakPeak={handleCloseModalSneakPeak}
+      <ModalSneakPeak neighbourhood={selectedNeighbourhood.label} postalCode={selectedNeighbourhood.id} handleCloseSneakPeak={handleCloseModalSneakPeak}
         isOpen={isModalSneakPeakOpen} />
       <AutoComplete
         id="combo-box-neighbourhood"

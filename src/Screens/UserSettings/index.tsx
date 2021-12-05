@@ -83,18 +83,19 @@ export function UserSettings() {
 
   //salva dados pessoais 
   const onSubmitPersonalData = async (personalData: UpdateFormPersonalData) => {
+    console.log(personalData)
     await api.put('/user/update_settings', {
-      name: personalData.fullName,
-      postalCode: personalData.postalCode,
-      neighbourhood: personalData.neighbourhood
+      name: userName,
+      postalCode: postalCode,
+      neighbourhood: neighbourhood
     }).then(response => {
       toast.success('Suas informações foram salvas com sucesso', {
         theme: 'colored'
       })
       updateUserInfo({
-        name: personalData.fullName,
-        postalCode: personalData.postalCode,
-        neighbourhood: personalData.neighbourhood
+        name: userName,
+        postalCode: postalCode,
+        neighbourhood: neighbourhood
       })
     })
   };

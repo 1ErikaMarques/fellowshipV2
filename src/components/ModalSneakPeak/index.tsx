@@ -1,26 +1,43 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import * as React from 'react';
-import {generatePath, Link} from 'react-router-dom';
-import {ROUTES} from '../../routes';
+import { generatePath, Link } from 'react-router-dom';
+import { useAuth } from '../../hooks/AuthContext';
+import { ROUTES } from '../../routes';
 import theme from '../../styles/theme';
-import {style} from '../ModalDefault';
-import {CloseButtonTW, Content, Header} from '../ModalDefault/styles';
-import {ActionButtonSneakPeak, TextSneakPeak} from './style';
+import { style } from '../ModalDefault';
+import { CloseButtonTW, Content, Header } from '../ModalDefault/styles';
+import { ActionButtonSneakPeak, TextSneakPeak } from './style';
 
 interface ModalProps {
     isOpen: boolean;
     handleCloseSneakPeak: () => void;
+    postalCode: string;
+    neighbourhood: string;
 }
 
-export function ModalSneakPeak({isOpen, handleCloseSneakPeak}: ModalProps) {
+export function ModalSneakPeak({isOpen, handleCloseSneakPeak, postalCode, neighbourhood}: ModalProps) {
+
+    const {updateUserInfo} = useAuth ();
+
+    const handleSneakPeak = () => {
+
+        updateUserInfo ({
+            postalCode: postalCode,
+            neighbourhood: neighbourhood,
+            sneakPeak: true
+        });
+        window.history.replaceState({}, document.title, '/');
+        handleCloseSneakPeak();
+    };
+
     return (
         <Modal
             open={isOpen}
             onClose={handleCloseSneakPeak}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description">
-            <Box sx={style} component={"div"}>
+            <Box sx={style} component={'div'}>
                 <Content>
                     <Header>
                         <CloseButtonTW onClick={handleCloseSneakPeak}>X</CloseButtonTW>
@@ -37,7 +54,7 @@ export function ModalSneakPeak({isOpen, handleCloseSneakPeak}: ModalProps) {
                             <ActionButtonSneakPeak>Clique aqui.</ActionButtonSneakPeak>
                         </Link>
                         Está curioso sobre o que está acontecendo nesse bairro? Você pode dar
-                        uma <ActionButtonSneakPeak>Espiadinha</ActionButtonSneakPeak>
+                        uma <ActionButtonSneakPeak onClick={handleSneakPeak}>Espiadinha</ActionButtonSneakPeak>
                         ,a gente promete não contar pra ninguém. 🤭🤐 😇 😜
                     </TextSneakPeak>
                     <hr
